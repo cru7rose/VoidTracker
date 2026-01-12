@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1-create-additional-services-table" author="architect">
+        <comment>ARCHITEKTURA: Tabela 'additional_services' działa jako konfigurowalny słownik wszystkich możliwych usług dodatkowych w systemie.</comment>
+        <createTable tableName="additional_services">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="service_code" type="VARCHAR(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="input_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2-create-order-required-services-table" author="architect">
+        <comment>ARCHITEKTURA: Tabela łącząca 'order_required_services' definiuje, które usługi są wymagane dla konkretnego zlecenia.</comment>
+        <createTable tableName="order_required_services">
+            <column name="order_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_req_svc_order" referencedTableName="vt_orders" referencedColumnNames="order_id"/>
+            </column>
+            <column name="service_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_req_svc_service" referencedTableName="additional_services" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="order_required_services" columnNames="order_id, service_id"/>
+    </changeSet>
+
+    <changeSet id="3-create-order-service-results-table" author="architect">
+        <comment>ARCHITEKTURA: Tabela 'order_service_results' przechowuje wyniki wykonanych usług. Kolumna 'result_payload' typu JSONB zapewnia elastyczność.</comment>
+        <createTable tableName="order_service_results">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_res_svc_order" referencedTableName="vt_orders" referencedColumnNames="order_id"/>
+            </column>
+            <column name="service_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_res_svc_service" referencedTableName="additional_services" referencedColumnNames="id"/>
+            </column>
+            <column name="user_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="result_payload" type="JSONB"/>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

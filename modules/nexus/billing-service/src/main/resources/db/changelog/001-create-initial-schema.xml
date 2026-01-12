@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="001-create-rate-cards-table" author="voidtracker-billing">
+        <createTable tableName="billing_rate_cards">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="currency" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valid_from" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="valid_to" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createIndex tableName="billing_rate_cards" indexName="idx_rate_card_client_active">
+            <column name="client_id"/>
+            <column name="active"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="002-create-pricing-rules-table" author="voidtracker-billing">
+        <createTable tableName="billing_pricing_rules">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rate_card_id" type="uuid">
+                <constraints nullable="false" 
+                            foreignKeyName="fk_pricing_rule_rate_card"
+                            references="billing_rate_cards(id)"
+                            deleteCascade="true"/>
+            </column>
+            <column name="metric" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="range_start" type="decimal(19,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="range_end" type="decimal(19,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="base_price" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_price" type="decimal(19,2)" defaultValueNumeric="0.00">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createIndex tableName="billing_pricing_rules" indexName="idx_pricing_rule_rate_card">
+            <column name="rate_card_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

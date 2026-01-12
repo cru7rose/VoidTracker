@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="006-add-address-package-fk-fields" author="void-refactor">
+        <comment>Add FK fields to vt_orders for proper relational design (addresses and package)</comment>
+        
+        <!-- Add missing fields to vt_addresses -->
+        <addColumn tableName="vt_addresses">
+            <column name="apartment" type="VARCHAR(50)"/>
+            <column name="sla" type="TIMESTAMP"/>
+        </addColumn>
+        
+        <!-- Add missing field to vt_packages -->
+        <addColumn tableName="vt_packages">
+            <column name="description" type="TEXT"/>
+        </addColumn>
+        
+        <!-- Add FK columns to vt_orders (Time windows only - others exist in 001) -->
+        <addColumn tableName="vt_orders">
+            <column name="pickup_time_from" type="TIMESTAMP"/>
+            <column name="pickup_time_to" type="TIMESTAMP"/>
+            <column name="delivery_time_from" type="TIMESTAMP"/>
+            <column name="delivery_time_to" type="TIMESTAMP"/>
+        </addColumn>
+        
+        <!-- FK Constraints already exist in 001, skipping addForeignKeyConstraint -->
+
+        <!-- Create indexes for performance -->
+        <createIndex tableName="vt_orders" indexName="idx_order_pickup_addr">
+            <column name="pickup_address_id"/>
+        </createIndex>
+        
+        <createIndex tableName="vt_orders" indexName="idx_order_delivery_addr">
+            <column name="delivery_address_id"/>
+        </createIndex>
+        
+        <createIndex tableName="vt_orders" indexName="idx_order_package">
+            <column name="package_id"/>
+        </createIndex>
+        
+        <createIndex tableName="vt_addresses" indexName="idx_address_city_006">
+            <column name="city"/>
+        </createIndex>
+        
+        <createIndex tableName="vt_addresses" indexName="idx_address_postal_006">
+            <column name="postal_code"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

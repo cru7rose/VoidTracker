@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver xmlns="https://timefold.ai/xsd/solver" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://timefold.ai/xsd/solver https://timefold.ai/xsd/solver/solver.xsd">
+    
+    <!-- Solution and Entity classes -->
+    <solutionClass>com.example.planning_service.domain.timefold.VehicleRoutingSolution</solutionClass>
+    <entityClass>com.example.planning_service.domain.timefold.RouteStop</entityClass>
+    
+    <!-- Score calculation via Constraint Provider -->
+    <scoreDirectorFactory>
+        <constraintProviderClass>com.example.planning_service.solver.VoidConstraintProvider</constraintProviderClass>
+    </scoreDirectorFactory>
+    
+    <!-- Termination conditions -->
+    <termination>
+        <!-- Stop after 30 seconds maximum -->
+        <secondsSpentLimit>30</secondsSpentLimit>
+        
+        <!-- Or stop if no improvement for 10 seconds -->
+        <unimprovedSecondsSpentLimit>10</unimprovedSecondsSpentLimit>
+    </termination>
+    
+    <!-- Construction heuristic (initial solution) -->
+    <constructionHeuristic>
+        <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
+    </constructionHeuristic>
+    
+    <!-- Local search (improvement phase) -->
+    <localSearch>
+        <unionMoveSelector>
+            <!-- Change vehicle assignment -->
+            <changeMoveSelector/>
+            
+            <!-- Swap two stops -->
+            <swapMoveSelector/>
+            
+            <!-- Reorder chain of stops -->
+            <tailChainSwapMoveSelector/>
+        </unionMoveSelector>
+        
+        <!-- Acceptance strategy (Late Acceptance) -->
+        <acceptor>
+            <lateAcceptanceSize>200</lateAcceptanceSize>
+        </acceptor>
+        
+        <!-- Forager (how many moves to evaluate) -->
+        <forager>
+            <acceptedCountLimit>1</acceptedCountLimit>
+        </forager>
+    </localSearch>
+    
+</solver>

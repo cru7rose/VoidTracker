@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: analytics-service
+  # --- Konfiguracja Bazy Danych ---
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/vt_analytics_service}
+    username: ${POSTGRES_USER:danxils}
+    password: ${POSTGRES_PASSWORD:danxils123}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  # --- Konfiguracja Liquibase ---
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+  # --- Konfiguracja Kafka ---
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9093}
+    consumer:
+      group-id: ${spring.application.name}
+
+# --- Klucz JWT ---
+jwt:
+  secret:
+    key: ${JWT_SECRET_BASE64:dGVzdC1zZWNyZXQta2V5LWZvci1sb2NhbC1kZXZlbG9wbWVudC1vbmx5LXBsZWFzZS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==}
+
+# --- Właściwości Aplikacji ---
+app:
+  kafka:
+    topics:
+      # Tematy, które ten serwis konsumuje
+      orders-created: "orders.created"
+      order-status-changed: "orders.status.changed"
+      orders-assigned: "orders.assigned"
+      route-planned: "routes.planned"
+      driver-location-updated: "driver.location.updated"
+      # Tematy DLT (Dead Letter Topic)
+      orders-created-dlt: "orders.created.dlt"
+      order-status-changed-dlt: "orders.status.changed.dlt"
+      orders-assigned-dlt: "orders.assigned.dlt"
+      route-planned-dlt: "routes.planned.dlt"
+      driver-location-updated-dlt: "driver.location.updated.dlt"
+
+# --- Konfiguracja Obserwowalności ---
+management:
+  tracing:
+    enabled: false
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: tracking-service
+  # --- Server Configuration ---
+  server:
+    port: 8094
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9093}
+    producer:
+      acks: all
+      enable-idempotence: true
+
+app:
+  kafka:
+    topics:
+      driver-location-updated: "driver.location.updated"
+
+management:
+  tracing:
+    enabled: false
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+jwt:
+  secret:
+    key: ${JWT_SECRET_BASE64:dGVzdC1zZWNyZXQta2V5LWZvci1sb2NhbC1kZXZlbG9wbWVudC1vbmx5LXBsZWFzZS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==}

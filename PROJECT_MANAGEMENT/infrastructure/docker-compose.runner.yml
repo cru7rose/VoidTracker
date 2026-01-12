@@ -1,0 +1,17 @@
+# PLIK: docker-compose.runner.yml (POPRAWIONY)
+version: '3.8'
+services:
+  github-runner:
+    image: myoung34/github-runner:latest
+    container_name: github-runner
+    env_file:
+      - ./github-runner.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/app
+    networks:
+      - danxils-global-network # Używamy poprawnej nazwy sieci
+    restart: unless-stopped
+networks:
+  danxils-global-network:
+    external: true

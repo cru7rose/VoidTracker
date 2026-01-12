@@ -1,0 +1,1024 @@
+
+================================================================================
+### PLIK: pom.xml
+================================================================================
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.6</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.example</groupId>
+	<artifactId>iam</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>iam</name>
+	<description>iam</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\IamApplication.java
+================================================================================
+
+package com.example.iam;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class IamApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(IamApplication.class, args);
+	}
+
+}
+
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\config\JwtAuthFilter.java
+================================================================================
+
+package com.example.iam.config;
+
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+// ARCHITEKTURA: Ten filtr jest kluczowym elementem integracji JWT ze Spring Security.
+// Działając jako część łańcucha filtrów, przechwytuje każde żądanie, wyodrębnia token JWT
+// z nagłówka 'Authorization', a następnie waliduje go. Jeśli token jest poprawny, filtr
+// ustawia obiekt Authentication w SecurityContextHolder, co jest standardowym mechanizmem
+// Spring Security do reprezentowania tożsamości zalogowanego użytkownika w trakcie obsługi żądania.
+@Component
+@RequiredArgsConstructor
+public class JwtAuthFilter extends OncePerRequestFilter {
+
+    private final JwtUtil jwtUtil;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
+        final String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        final String jwt = authHeader.substring(7);
+        final String username = jwtUtil.extractUsername(jwt);
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            Claims claims = jwtUtil.extractAllClaims(jwt);
+            List<String> roles = claims.get("roles", List.class);
+            List<SimpleGrantedAuthority> authorities = roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+
+            if (!jwtUtil.isTokenExpired(jwt)) {
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        username,
+                        null,
+                        authorities);
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+        filterChain.doFilter(request, response);
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\config\JwtUtil.java
+================================================================================
+
+package com.example.iam.config;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+@Service
+public class JwtUtil {
+
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 godzin
+
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    public Claims extractAllClaims(String token) {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    }
+
+    public Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+
+        return createToken(claims, userDetails.getUsername());
+    }
+
+    private String createToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+}
+
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\config\SecurityConfig.java
+================================================================================
+
+// Plik: iam-service/src/main/java/com/example/iam/config/SecurityConfig.java
+package com.example.iam.config;
+
+import com.example.iam.service.CustomUserDetailsService;
+import com.example.iam.entity.UserRole;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+/**
+ * ARCHITEKTURA: Centralna klasa konfiguracyjna dla Spring Security w serwisie IAM.
+ * Została radykalnie uproszczona, aby zarządzać dostępem WYŁĄCZNIE do endpointów
+ * tego mikroserwisu. Zgodnie z Zasadą Pojedynczej Odpowiedzialności, nie zawiera
+ * żadnych reguł dotyczących innych domen (jak zlecenia czy analityka).
+ */
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final JwtAuthFilter jwtAuthFilter;
+    private final CustomUserDetailsService customUserDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(customUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // Publiczne endpointy do logowania i finalizacji rejestracji
+                        .requestMatchers("/api/auth/**").permitAll()
+                        // Endpointy do zarządzania użytkownikami - tylko dla administratora
+                        .requestMatchers("/api/users/**").hasAuthority(UserRole.ROLE_ADMIN.name())
+                        // Wszystkie inne żądania w tym serwisie wymagają uwierzytelnienia
+                        .anyRequest().authenticated()
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\controller\AuthController.java
+================================================================================
+
+package com.example.iam.controller;
+
+import com.example.iam.config.JwtUtil;
+import com.example.iam.dto.LoginRequestDto;
+import com.example.iam.dto.LoginResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * ARCHITEKTURA: Dedykowany kontroler do obsługi procesu uwierzytelniania.
+ * Udostępnia publiczny endpoint /api/auth/login, który jest wyłączony z ogólnych reguł
+ * bezpieczeństwa. Jego jedynym zadaniem jest wygenerowanie i zwrócenie tokenu JWT.
+ */
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> createAuthenticationToken(@RequestBody LoginRequestDto loginRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+        );
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new LoginResponseDto(jwt));
+    }
+}
+
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\controller\RegistrationController.java
+================================================================================
+
+package com.example.iam.controller;
+
+import com.example.iam.dto.CompleteRegistrationRequest;
+import com.example.iam.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * ARCHITEKTURA: Publicznie dostępny kontroler dedykowany do finalizacji procesu rejestracji.
+ * Jego jedynym zadaniem jest obsługa żądania z tokenem i hasłem, co pozwala na aktywację konta.
+ * Endpoint ten jest wyłączony z ogólnych reguł bezpieczeństwa w SecurityConfig.
+ */
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+public class RegistrationController {
+
+    private final UserService userService;
+
+    @PostMapping("/complete-registration")
+    public ResponseEntity<String> completeRegistration(@RequestBody CompleteRegistrationRequest request) {
+        try {
+            userService.completeRegistration(request.getToken(), request.getPassword());
+            return ResponseEntity.ok("Rejestracja zakończona pomyślnie.");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\controller\UserController.java
+================================================================================
+
+package com.example.iam.controller;
+
+import com.example.iam.dto.InitiateRegistrationRequest;
+import com.example.iam.dto.UserResponseDto;
+import com.example.iam.entity.UserEntity;
+import com.example.iam.mapper.UserMapper;
+import com.example.iam.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * ARCHITEKTURA: Kontroler REST odpowiedzialny za administracyjne zarządzanie użytkownikami.
+ * Dostęp do jego zasobów jest ściśle ograniczony do ról administracyjnych, co jest
+ * konfigurowane w centralnej klasie SecurityConfig.
+ */
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
+    private final UserMapper userMapper; // Dodany mapper
+
+    @PostMapping
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserEntity user) {
+        UserEntity createdUser = userService.createUser(user);
+        // Zwracamy bezpieczne DTO zamiast encji
+        return new ResponseEntity<>(userMapper.toResponseDto(createdUser), HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/initiate-registration")
+    public ResponseEntity<Void> initiateRegistration(@RequestBody InitiateRegistrationRequest request) {
+        userService.initiateRegistration(request.getEmail(), request.getRoles());
+        return ResponseEntity.accepted().build();
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\dto\CompleteRegistrationRequest.java
+================================================================================
+
+package com.example.iam.dto;
+import lombok.Data;
+
+@Data
+public class CompleteRegistrationRequest {
+    private String token;
+    private String password;
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\dto\InitiateRegistrationRequest.java
+================================================================================
+
+package com.example.iam.dto;
+
+import com.example.iam.entity.UserRole;
+import lombok.Data;
+
+import java.util.Set;
+
+@Data
+public class InitiateRegistrationRequest {
+    private String email;
+    private Set<UserRole> roles;
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\dto\LoginRequestDto.java
+================================================================================
+
+package com.example.iam.dto;
+import lombok.Data;
+
+@Data
+public class LoginRequestDto {
+    private String username;
+    private String password;
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\dto\LoginResponseDto.java
+================================================================================
+
+package com.example.iam.dto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class LoginResponseDto {
+    private String jwt;
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\dto\UserResponseDto.java
+================================================================================
+
+package com.example.iam.dto;
+import com.example.iam.entity.UserRole;
+import lombok.Data;
+import java.util.Set;
+
+/**
+ * ARCHITEKTURA: DTO używane w odpowiedziach API dotyczących użytkowników.
+ * Celowo nie zawiera pola 'password', aby zapobiec wyciekowi zahaszowanego hasła.
+ */
+@Data
+public class UserResponseDto {
+    private String userId;
+    private String username;
+    private String email;
+    private boolean enabled;
+    private Set<UserRole> roles;
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\entity\RegistrationTokenEntity.java
+================================================================================
+
+package com.example.iam.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.Instant;
+import java.util.UUID;
+
+/**
+ * ARCHITEKTURA: Encja reprezentująca jednorazowy token rejestracyjny powiązany z nowo tworzonym kontem użytkownika.
+ * Token posiada określony czas ważności i jest usuwany po pomyślnym zakończeniu rejestracji.
+ * Zapewnia to bezpieczny, dwuetapowy proces tworzenia konta.
+ */
+@Entity
+@Table(name = "iam_registration_tokens")
+@Data
+@NoArgsConstructor
+public class RegistrationTokenEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID tokenId;
+
+    @Column(nullable = false, unique = true)
+    private String token;
+
+    @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
+    private UserEntity user;
+
+    @Column(nullable = false)
+    private Instant expiryDate;
+
+    public RegistrationTokenEntity(UserEntity user) {
+        this.user = user;
+        this.token = UUID.randomUUID().toString();
+        // Domyślna ważność tokenu ustawiona na 24 godziny
+        this.expiryDate = Instant.now().plusSeconds(86400);
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\entity\UserEntity.java
+================================================================================
+
+package com.example.iam.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Set;
+import java.util.UUID; // Zaimportuj klasę UUID
+
+@Entity
+@Table(name = "iam_users")
+@Data
+@NoArgsConstructor
+public class UserEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    // --- POPRAWKA: Zmieniono typ z String na UUID ---
+    private UUID userId;
+
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    private boolean enabled = true;
+
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "iam_user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<UserRole> roles;
+}
+
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\entity\UserRole.java
+================================================================================
+
+package com.example.iam.entity;
+
+public enum UserRole {
+    ROLE_ADMIN,
+    ROLE_OPERATOR,
+    ROLE_DRIVER,
+    ROLE_CUSTOMER
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\mapper\UserMapper.java
+================================================================================
+
+package com.example.iam.mapper;
+import com.example.iam.dto.UserResponseDto;
+import com.example.iam.entity.UserEntity;
+import org.springframework.stereotype.Component;
+
+/**
+ * ARCHITEKTURA: Komponent mapujący encję UserEntity na bezpieczne UserResponseDto.
+ * Centralizuje logikę transformacji i zapewnia separację warstw.
+ */
+@Component
+public class UserMapper {
+    public UserResponseDto toResponseDto(UserEntity entity) {
+        if (entity == null) return null;
+        UserResponseDto dto = new UserResponseDto();
+        dto.setUserId(entity.getUserId().toString());
+        dto.setUsername(entity.getUsername());
+        dto.setEmail(entity.getEmail());
+        dto.setEnabled(entity.isEnabled());
+        dto.setRoles(entity.getRoles());
+        return dto;
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\repository\RegistrationTokenRepository.java
+================================================================================
+
+package com.example.iam.repository;
+
+import com.example.iam.entity.RegistrationTokenEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * ARCHITEKTURA: Repozytorium JPA dla encji RegistrationTokenEntity.
+ * Zapewnia standardowe operacje CRUD oraz dedykowaną metodę do wyszukiwania tokenu
+ * na podstawie jego wartości tekstowej, co jest kluczowe dla procesu weryfikacji.
+ */
+@Repository
+public interface RegistrationTokenRepository extends JpaRepository<RegistrationTokenEntity, UUID> {
+    Optional<RegistrationTokenEntity> findByToken(String token);
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\repository\UserRepository.java
+================================================================================
+
+package com.example.iam.repository;
+
+import com.example.iam.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
+// --- POPRAWKA: Zmieniono typ ID z UUID na java.util.UUID w generyku ---
+// To jest konieczne, ponieważ zmieniliśmy typ pola @Id w UserEntity
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
+    Optional<UserEntity> findByUsername(String username);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+}
+
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\service\CustomUserDetailsService.java
+================================================================================
+
+package com.example.iam.service;
+
+import com.example.iam.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class CustomUserDetailsService implements UserDetailsService {
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .map(user -> new User(
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getRoles().stream()
+                                .map(role -> new SimpleGrantedAuthority(role.name()))
+                                .collect(Collectors.toList())
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\service\UserService.java
+================================================================================
+
+package com.example.iam.service;
+
+import com.example.iam.support.email.EmailService;
+import com.example.iam.entity.RegistrationTokenEntity;
+import com.example.iam.entity.UserEntity;
+import com.example.iam.entity.UserRole;
+import com.example.iam.repository.RegistrationTokenRepository;
+import com.example.iam.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.Set;
+import java.util.UUID;
+
+/**
+ * ARCHITEKTURA: Serwis centralny do zarządzania użytkownikami.
+ * Rozbudowany o logikę dwuetapowej rejestracji. Hermetyzuje logikę biznesową związaną
+ * z tworzeniem użytkowników, walidacją, generowaniem tokenów i koordynacją z serwisem email.
+ * Użycie @Transactional zapewnia spójność danych w operacjach obejmujących wiele repozytoriów.
+ */
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RegistrationTokenRepository tokenRepository;
+    private final EmailService emailService;
+
+    /**
+     * Metoda do bezpośredniego tworzenia w pełni aktywnego użytkownika.
+     * Przeznaczona do użytku przez administratorów systemu.
+     */
+    public UserEntity createUser(UserEntity user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new IllegalStateException("Użytkownik o podanej nazwie już istnieje.");
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new IllegalStateException("Użytkownik o podanym adresie email już istnieje.");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    /**
+     * Inicjuje proces rejestracji dla nowego użytkownika. Tworzy nieaktywne konto,
+     * generuje token rejestracyjny i wysyła email weryfikacyjny.
+     */
+    @Transactional
+    public void initiateRegistration(String email, Set<UserRole> roles) {
+        if (userRepository.existsByEmail(email)) {
+            throw new IllegalStateException("Użytkownik o takim adresie email już istnieje.");
+        }
+
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername(email); // Nazwa użytkownika jest tymczasowo adresem email
+        newUser.setEmail(email);
+        newUser.setPassword(passwordEncoder.encode(UUID.randomUUID().toString())); // Hasło jest losowe i musi zostać zmienione
+        newUser.setEnabled(false); // Konto jest nieaktywne do czasu weryfikacji
+        newUser.setRoles(roles);
+        userRepository.save(newUser);
+
+        RegistrationTokenEntity registrationToken = new RegistrationTokenEntity(newUser);
+        tokenRepository.save(registrationToken);
+
+        emailService.sendRegistrationEmail(newUser.getEmail(), registrationToken.getToken());
+    }
+
+    /**
+     * Finalizuje proces rejestracji. Weryfikuje token, aktywuje konto użytkownika
+     * i ustawia jego docelowe hasło.
+     */
+    @Transactional
+    public void completeRegistration(String token, String password) {
+        RegistrationTokenEntity tokenEntity = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalStateException("Nieprawidłowy token rejestracyjny."));
+
+        if (tokenEntity.getExpiryDate().isBefore(Instant.now())) {
+            // Token jest usuwany, aby zapobiec ponownemu użyciu
+            tokenRepository.delete(tokenEntity);
+            throw new IllegalStateException("Token rejestracyjny wygasł.");
+        }
+
+        UserEntity user = tokenEntity.getUser();
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        // Token jest usuwany po pomyślnym użyciu
+        tokenRepository.delete(tokenEntity);
+    }
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\support\email\EmailService.java
+================================================================================
+
+package com.example.iam.support.email;
+
+public interface EmailService {
+    void sendRegistrationEmail(String to, String token);
+}
+
+================================================================================
+### PLIK: src\main\java\com\example\iam\support\email\LogEmailService.java
+================================================================================
+
+package com.example.iam.support.email;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
+public class LogEmailService implements EmailService {
+    @Override
+    public void sendRegistrationEmail(String to, String token) {
+        String registrationLink = "http://localhost:5173/register?token=" + token; // Przykładowy link do frontendu
+        log.info("---- EMAIL SIMULATION ----");
+        log.info("To: {}", to);
+        log.info("Subject: Zaproszenie do systemu Voidtracker");
+        log.info("Body: Aby dokończyć rejestrację, kliknij w link: {}", registrationLink);
+        log.info("--------------------------");
+    }
+}
+
+================================================================================
+### PLIK: src\main\resources\db\changelog\001-create-iam-tables.xml
+================================================================================
+
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1-create-users-table" author="qodo.architect">
+        <comment>Create the main table for user identity</comment>
+        <createTable tableName="iam_users">
+            <!-- POPRAWKA: Zmieniono typ z VARCHAR(36) na UUID -->
+            <column name="user_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="enabled" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2-create-user-roles-table" author="qodo.architect">
+        <comment>Create a join table for user roles</comment>
+        <createTable tableName="iam_user_roles">
+            <!-- POPRAWKA: Zmieniono typ z VARCHAR(36) na UUID -->
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_userroles_user" referencedTableName="iam_users" referencedColumnNames="user_id"/>
+            </column>
+            <column name="roles" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="iam_user_roles" columnNames="user_id, roles"/>
+    </changeSet>
+
+    <changeSet id="3-create-registration-tokens-table" author="qodo.architect">
+        <comment>Create a table for one-time registration tokens</comment>
+        <createTable tableName="iam_registration_tokens">
+            <!-- POPRAWKA: Zmieniono typ z VARCHAR(36) na UUID -->
+            <column name="token_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <!-- POPRAWKA: Zmieniono typ z VARCHAR(36) na UUID -->
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" unique="true" foreignKeyName="fk_regtoken_user" referencedTableName="iam_users" referencedColumnNames="user_id"/>
+            </column>
+            <column name="expiry_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
+
+
+
+================================================================================
+### PLIK: src\main\resources\db\changelog\db.changelog-master.xml
+================================================================================
+
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- ARCHITEKTURA: Główny plik Liquibase. Agreguje wszystkie skrypty migracyjne.
+         Kolejność dołączania plików jest kluczowa dla poprawnego tworzenia schematu. -->
+    <include file="001-create-iam-tables.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
+
+
+
+================================================================================
+### PLIK: src\test\java\com\example\iam\IamApplicationTests.java
+================================================================================
+
+package com.example.iam;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class IamApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
+

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="010-create-customers-table" author="enterprise-schema">
+        <createTable tableName="vt_customers">
+            <!-- Primary Key -->
+            <column name="customer_id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Identity -->
+            <column name="customer_number" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="customer_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Business -->
+            <column name="tax_id" type="VARCHAR(50)"/>
+            <column name="payment_terms" type="INTEGER" defaultValue="30"/>
+            <column name="credit_limit" type="DECIMAL(12,2)"/>
+            <column name="currency" type="VARCHAR(3)" defaultValue="PLN"/>
+
+            <!-- Contact -->
+            <column name="primary_contact_name" type="VARCHAR(255)"/>
+            <column name="primary_email" type="VARCHAR(255)"/>
+            <column name="primary_phone" type="VARCHAR(50)"/>
+            <column name="billing_email" type="VARCHAR(255)"/>
+
+            <!-- Preferences -->
+            <column name="default_priority" type="VARCHAR(20)"/>
+            <column name="auto_assign" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="requires_pod" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="special_instructions" type="TEXT"/>
+
+            <!-- SLA -->
+            <column name="sla_delivery_hours" type="INTEGER"/>
+            <column name="sla_compliance_target" type="DECIMAL(3,2)" defaultValue="0.95"/>
+
+            <!-- Account Status -->
+            <column name="status" type="VARCHAR(50)" defaultValue="ACTIVE"/>
+            <column name="credit_hold" type="BOOLEAN" defaultValueBoolean="false"/>
+
+            <!-- Audit Fields -->
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="UUID"/>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="UUID"/>
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="version" type="INTEGER" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="vt_customers" indexName="idx_customers_tenant">
+            <column name="tenant_id"/>
+        </createIndex>
+        
+        <createIndex tableName="vt_customers" indexName="idx_customers_number">
+            <column name="customer_number"/>
+        </createIndex>
+        
+        <createIndex tableName="vt_customers" indexName="idx_customers_active">
+            <column name="status"/>
+            <column name="deleted_at"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="vt_customers"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="011-create-updated-at-trigger-customers" author="enterprise-schema">
+        <sql splitStatements="false">
+            CREATE OR REPLACE FUNCTION update_updated_at_column()
+            RETURNS TRIGGER AS $$
+            BEGIN
+                NEW.updated_at = NOW();
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;
+
+            CREATE TRIGGER update_customers_updated_at
+            BEFORE UPDATE ON vt_customers
+            FOR EACH ROW
+            EXECUTE FUNCTION update_updated_at_column();
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS update_customers_updated_at ON vt_customers;
+            DROP FUNCTION IF EXISTS update_updated_at_column();
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

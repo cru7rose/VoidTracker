@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="030-create-asset-definitions-table" author="enterprise-schema">
+        <createTable tableName="vt_asset_definitions">
+            <!-- Primary Key -->
+            <column name="asset_def_id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Identity -->
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="category" type="VARCHAR(50)"/>
+            <column name="icon" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+
+            <!-- Physical Constraints -->
+            <column name="max_weight_kg" type="DECIMAL(10,2)"/>
+            <column name="max_volume_m3" type="DECIMAL(10,3)"/>
+            <column name="stackable" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="requires_climate_control" type="BOOLEAN" defaultValueBoolean="false"/>
+
+            <!-- Compliance -->
+            <column name="requires_certification" type="VARCHAR(100)"/>
+            <column name="handling_instructions" type="TEXT"/>
+
+            <!-- Active/Retired -->
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="retired_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+            <!-- Audit Fields -->
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="vt_asset_definitions" indexName="idx_asset_def_name">
+            <column name="name"/>
+        </createIndex>
+
+        <createIndex tableName="vt_asset_definitions" indexName="idx_asset_def_active">
+            <column name="is_active"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="vt_asset_definitions"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="031-create-updated-at-trigger-asset-definitions" author="enterprise-schema">
+        <sql>
+            CREATE TRIGGER update_asset_definitions_updated_at
+            BEFORE UPDATE ON vt_asset_definitions
+            FOR EACH ROW
+            EXECUTE FUNCTION update_updated_at_column();
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS update_asset_definitions_updated_at ON vt_asset_definitions;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

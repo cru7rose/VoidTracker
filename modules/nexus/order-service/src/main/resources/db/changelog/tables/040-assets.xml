@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="040-create-assets-table" author="enterprise-schema">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="vt_assets"/>
+            </not>
+        </preConditions>
+        
+        <createTable tableName="vt_assets">
+            <!-- Primary Key -->
+            <column name="asset_id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <!-- Foreign Keys -->
+            <column name="order_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="asset_def_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Identity -->
+            <column name="barcode" type="VARCHAR(100)"/>
+            <column name="tracking_number" type="VARCHAR(100)"/>
+            <column name="customer_ref" type="VARCHAR(255)"/>
+
+            <!-- Physical Properties -->
+            <column name="weight_kg" type="DECIMAL(10,2)"/>
+            <column name="length_cm" type="DECIMAL(6,2)"/>
+            <column name="width_cm" type="DECIMAL(6,2)"/>
+            <column name="height_cm" type="DECIMAL(6,2)"/>
+            <!-- volume_m3 will be generated column -->
+
+            <!-- Status -->
+            <column name="status" type="VARCHAR(50)" defaultValue="PENDING"/>
+            <column name="current_location_id" type="UUID"/>
+            <column name="scanned_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="scanned_by" type="UUID"/>
+
+            <!-- Value -->
+            <column name="declared_value" type="DECIMAL(12,2)"/>
+            <column name="insurance_value" type="DECIMAL(12,2)"/>
+
+            <!-- Audit Fields -->
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="vt_assets" indexName="idx_assets_order">
+            <column name="order_id"/>
+        </createIndex>
+
+        <createIndex tableName="vt_assets" indexName="idx_assets_barcode">
+            <column name="barcode"/>
+        </createIndex>
+
+        <createIndex tableName="vt_assets" indexName="idx_assets_tracking">
+            <column name="tracking_number"/>
+        </createIndex>
+
+        <createIndex tableName="vt_assets" indexName="idx_assets_status">
+            <column name="status"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="vt_assets"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="041-add-volume-generated-column" author="enterprise-schema">
+        <sql dbms="postgresql">
+            ALTER TABLE vt_assets 
+            ADD COLUMN volume_m3 DECIMAL(10,3) 
+            GENERATED ALWAYS AS (
+                CASE 
+                    WHEN length_cm IS NOT NULL AND width_cm IS NOT NULL AND height_cm IS NOT NULL 
+                    THEN (length_cm * width_cm * height_cm) / 1000000
+                    ELSE NULL
+                END
+            ) STORED;
+        </sql>
+        <rollback>
+            ALTER TABLE vt_assets DROP COLUMN IF EXISTS volume_m3;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="042-create-updated-at-trigger-assets" author="enterprise-schema">
+        <sql>
+            CREATE TRIGGER update_assets_updated_at
+            BEFORE UPDATE ON vt_assets
+            FOR EACH ROW
+            EXECUTE FUNCTION update_updated_at_column();
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS update_assets_updated_at ON vt_assets;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

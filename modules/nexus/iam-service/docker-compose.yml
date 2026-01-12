@@ -1,0 +1,50 @@
+# ARCHITEKTURA: Ten plik orkiestruje uruchomienie całego systemu IAM.
+# Definiuje dwie usługi (aplikację i bazę danych), łączy je w sieć
+# i w bezpieczny sposób wstrzykuje sekrety z pliku .env.
+services:
+  # Definicja serwisu dla naszej aplikacji IAM
+  iam-app:
+    build: . # Zbuduj obraz z Dockerfile w bieżącym katalogu
+    container_name: iam-app
+    ports:
+      - "8080:8080" # Mapuj port 8080 kontenera na port 8080 na serwerze
+    environment:
+      # Wstrzykujemy zmienne środowiskowe z pliku .env
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://iam-database:5432/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    networks:
+      - danxils-network
+    depends_on:
+      iam-database:
+        condition: service_healthy # Uruchom aplikację dopiero, gdy baza danych będzie w pełni gotowa
+
+  # Definicja serwisu dla bazy danych PostgreSQL
+  iam-database:
+    image: postgres:14-alpine
+    container_name: iam-db
+    ports:
+      - "5432:5432" # Mapuj port bazy danych (przydatne do debugowania z zewnątrz)
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - iam-db-data:/var/lib/postgresql/data # Zapewnia trwałość danych bazy
+    networks:
+      - danxils-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Definicja sieci, w której będą komunikować się nasze serwisy
+networks:
+  danxils-network:
+    driver: bridge
+
+# Definicja wolumenu do przechowywania danych bazy
+volumes:
+  iam-db-data:

@@ -1,0 +1,1 @@
+package com.example.order_service.service; import org.springframework.stereotype.Service; @Service public class PricingService { public java.math.BigDecimal calculatePrice(com.example.order_service.entity.OrderEntity o) { return java.math.BigDecimal.ZERO; } }

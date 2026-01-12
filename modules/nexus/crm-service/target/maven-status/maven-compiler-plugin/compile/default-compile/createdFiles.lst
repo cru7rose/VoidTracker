@@ -1,0 +1,14 @@
+com/example/crm_service/repository/ClientFeedbackRepository.class
+com/example/crm_service/CrmServiceApplication.class
+com/example/crm_service/service/ClientPreferenceService.class
+com/example/crm_service/dto/CrmStatsDto.class
+com/example/crm_service/repository/ClientProfileRepository.class
+com/example/crm_service/controller/ClientPreferenceController.class
+com/example/crm_service/service/RatingTriggerService.class
+com/example/crm_service/service/CrmStatsService.class
+com/example/crm_service/dto/ClientPreferenceDto.class
+com/example/crm_service/entity/ClientProfileEntity.class
+com/example/crm_service/entity/ClientFeedbackEntity.class
+com/example/crm_service/config/SecurityConfig.class
+com/example/crm_service/controller/CrmStatsController.class
+com/example/crm_service/dto/CrmStatsDto$CrmStatsDtoBuilder.class

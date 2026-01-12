@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: admin-panel-service
+  # --- Konfiguracja Bazy Danych (opcjonalna, ale zadeklarowana w pom.xml) ---
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/vt_admin_panel_service}
+    username: ${POSTGRES_USER:user}
+    password: ${POSTGRES_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: false  # Admin panel doesn't need Liquibase migrations
+  # --- Konfiguracja Feign ---
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 10000
+          order-service:
+            url: ${ORDER_SERVICE_URL:http://localhost:8091}
+          planning-service:
+            url: ${PLANNING_SERVICE_URL:http://localhost:8092}
+          address-verification-service:
+            url: ${ADDRESS_VERIFICATION_SERVICE_URL:http://localhost:8093}
+          iam-app:
+            url: ${IAM_SERVICE_URL:http://localhost:8090}
+
+# --- Konfiguracja Obserwowalności ---
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# --- Konfiguracja Odporności na Błędy ---
+resilience4j:
+  circuitbreaker:
+    instances:
+      order-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        slidingWindowType: COUNT_BASED
+      planning-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        slidingWindowType: COUNT_BASED
+      iam-app:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        slidingWindowType: COUNT_BASED
+      address-verification-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        slidingWindowType: COUNT_BASED

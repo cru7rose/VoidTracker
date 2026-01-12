@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1-create-analytics-orders-table" author="architect">
+        <comment>ARCHITEKTURA: Tabela analytics_orders jest zdenormalizowanym modelem odczytu (CQRS). Agreguje dane z różnych zdarzeń w celu szybkiego dostarczania KPI.</comment>
+        <createTable tableName="analytics_orders">
+            <column name="order_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_id" type="VARCHAR(255)"/>
+            <column name="current_status" type="VARCHAR(50)"/>
+            <column name="created_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="assigned_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="pickup_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="load_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="pod_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="sla_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="plan_id" type="UUID"/>
+            <column name="planned_distance_meters" type="DOUBLE"/>
+            <column name="planned_time_millis" type="BIGINT"/>
+            <column name="last_known_latitude" type="DOUBLE"/>
+            <column name="last_known_longitude" type="DOUBLE"/>
+            <column name="last_location_update_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

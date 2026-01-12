@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1-create-iam-users-table" author="architect">
+        <comment>ARCHITEKTURA: Tworzy tabelę iam_users, która jest centralnym repozytorium tożsamości użytkowników w całym systemie.</comment>
+        <createTable tableName="iam_users">
+            <column name="user_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="enabled" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2-create-iam-user-roles-table" author="architect">
+        <comment>ARCHITEKTURA: Tworzy tabelę łączącą iam_user_roles do zarządzania rolami, co umożliwia elastyczną autoryzację opartą na rolach (RBAC).</comment>
+        <createTable tableName="iam_user_roles">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_iam_userroles_user" referencedTableName="iam_users" referencedColumnNames="user_id"/>
+            </column>
+            <column name="roles" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="iam_user_roles" columnNames="user_id, roles"/>
+    </changeSet>
+
+    <changeSet id="3-create-iam-registration-tokens-table" author="architect">
+        <comment>ARCHITEKTURA: Tworzy tabelę iam_registration_tokens, która wspiera bezpieczny, dwuetapowy proces rejestracji użytkowników.</comment>
+        <createTable tableName="iam_registration_tokens">
+            <column name="token_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" unique="true" foreignKeyName="fk_iam_regtoken_user" referencedTableName="iam_users" referencedColumnNames="user_id"/>
+            </column>
+            <column name="expiry_date" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

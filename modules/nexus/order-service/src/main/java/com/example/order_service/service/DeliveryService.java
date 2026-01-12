@@ -1,0 +1,1 @@
+package com.example.order_service.service; import org.springframework.stereotype.Service; @Service public class DeliveryService { public com.example.order_service.entity.OrderEntity confirmDelivery(java.util.UUID id, Object req, String user) { return new com.example.order_service.entity.OrderEntity(); } }

@@ -1,0 +1,17 @@
+[0;32m🚀 Starting E2E Workflow Test for VoidTracker...[0m
+
+🔹 1. Authenticating as dispatcher...
+[0;32m✅ Login Successful! Token acquired.[0m
+
+🔹 2. Creating New Order...
+[0;32m✅ Order Created! ID: [0m
+
+🔹 3. Verifying Planning Service (Flux)...
+[0;32m✅ Route Instantiation triggered on Flux.[0m
+
+🔹 4. Calculating Billing Preview...
+[0;32m✅ Billing Calculated:  EUR[0m
+
+[0;32m✨ E2E Workflow Test Complete![0m
+---------------------------------------------------
+You can view the full UI at http://localhost:8090

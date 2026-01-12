@@ -1,0 +1,13 @@
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/entity/ClientFeedbackEntity.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/controller/CrmStatsController.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/config/SecurityConfig.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/entity/ClientProfileEntity.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/CrmServiceApplication.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/service/RatingTriggerService.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/service/ClientPreferenceService.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/repository/ClientFeedbackRepository.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/repository/ClientProfileRepository.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/controller/ClientPreferenceController.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/service/CrmStatsService.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/dto/CrmStatsDto.java
+/Users/VoidTracker/modules/nexus/crm-service/src/main/java/com/example/crm_service/dto/ClientPreferenceDto.java

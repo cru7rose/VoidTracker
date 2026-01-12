@@ -1,0 +1,89 @@
+spring:
+  application:
+    name: iam-service
+
+
+  # --- Mail Configuration (Dummy for startup) ---
+  mail:
+    host: localhost
+    port: 1025
+    username: user
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  # --- Konfiguracja Bazy Danych ---
+  datasource:
+    # Updated to match start-sup.sh infrastructure (Port 5434)
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/vt_iam_service}
+    # Updated to match planning-service credentials
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  # --- Konfiguracja Liquibase ---
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+  # --- Konfiguracja Kafka ---
+  kafka:
+    # Updated to match start-sup.sh infrastructure (Port 9094)
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    producer:
+      # Konfiguracja dla idempotentnego producenta (gwarancja exactly-once)
+      acks: all
+      enable-idempotence: true
+      retries: 3
+      max-in-flight-requests-per-connection: 5
+
+# --- Właściwości Aplikacji ---
+app:
+  kafka:
+    topics:
+      users-created: "users.created"
+      users-updated: "users.updated"
+      users-deleted: "users.deleted"
+
+# --- Konfiguracja Obserwowalności ---
+management:
+  tracing:
+    enabled: false
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    health:
+      show-details: always
+
+# --- Klucz JWT ---
+jwt:
+  secret:
+    key: ${JWT_SECRET_BASE64:dGVzdC1zZWNyZXQta2V5LWZvci1sb2NhbC1kZXZlbG9wbWVudC1vbmx5LXBsZWFzZS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==}
+# --- Server Configuration ---
+server:
+  # Updated to match Vite proxy (Port 8081)
+  port: 8081
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

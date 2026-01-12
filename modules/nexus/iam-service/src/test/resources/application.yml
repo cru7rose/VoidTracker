@@ -1,0 +1,16 @@
+spring:
+  # Wyłącz Liquibase dla profilu testowego
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+jwt:
+  secret:
+    key: V2VyeUxvbmdBbmRTZWN1cmVUZXN0S2V5Rm9ySldUU2lnbmluZ1B1cnBvc2VzMTIzNDU2Nzg5MA==

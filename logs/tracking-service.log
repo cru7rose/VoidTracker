@@ -1,0 +1,68 @@
+2026-01-05 10:54:39.861 [main] INFO  c.e.t.TrackingServiceApplication - Starting TrackingServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 10:54:39.877 [main] INFO  c.e.t.TrackingServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 10:54:41.414 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-05 10:54:41.422 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 10:54:41.423 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 10:54:41.461 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 10:54:41.461 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1500 ms
+2026-01-05 10:54:41.851 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: dc82cb31-3560-493c-b9a9-f0d286881b0c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-05 10:54:42.117 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-05 10:54:42.167 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@cf08c97, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37c87fcc, org.springframework.security.web.context.SecurityContextHolderFilter@5a7e81, org.springframework.security.web.header.HeaderWriterFilter@431babe6, org.springframework.web.filter.CorsFilter@ca2be53, org.springframework.security.web.authentication.logout.LogoutFilter@25421809, com.example.danxils_commons.security.JwtAuthFilter@383cdd4d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@341ccfd1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@53ba25ff, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@78f5cbc5, org.springframework.security.web.session.SessionManagementFilter@6ae42248, org.springframework.security.web.access.ExceptionTranslationFilter@241d1052, org.springframework.security.web.access.intercept.AuthorizationFilter@7c8df667]
+2026-01-05 10:54:42.532 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-05 10:54:42.552 [main] INFO  c.e.t.TrackingServiceApplication - Started TrackingServiceApplication in 3.257 seconds (process running for 3.72)
+2026-01-05 11:13:48.542 [main] INFO  c.e.t.TrackingServiceApplication - Starting TrackingServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 11:13:48.547 [main] INFO  c.e.t.TrackingServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 11:13:57.884 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-05 11:13:57.929 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 11:13:57.932 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 11:13:58.155 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 11:13:58.164 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 9351 ms
+2026-01-05 11:14:01.723 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: aaea2c34-607e-4bd3-a759-90202025078c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-05 11:14:03.083 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-05 11:14:03.396 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@e91facf, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5e8f0f98, org.springframework.security.web.context.SecurityContextHolderFilter@59e0d521, org.springframework.security.web.header.HeaderWriterFilter@5b5b53c6, org.springframework.web.filter.CorsFilter@6bf0f70a, org.springframework.security.web.authentication.logout.LogoutFilter@5a7e81, com.example.danxils_commons.security.JwtAuthFilter@3b28b7b0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@75805562, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5341641d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5310e451, org.springframework.security.web.session.SessionManagementFilter@1be3f8f8, org.springframework.security.web.access.ExceptionTranslationFilter@4f541e67, org.springframework.security.web.access.intercept.AuthorizationFilter@7a62d697]
+2026-01-05 11:14:05.996 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-05 11:14:06.316 [main] INFO  c.e.t.TrackingServiceApplication - Started TrackingServiceApplication in 20.293 seconds (process running for 23.262)
+2026-01-05 11:52:40.382 [main] INFO  c.e.t.TrackingServiceApplication - Starting TrackingServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 11:52:40.400 [main] INFO  c.e.t.TrackingServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 11:52:48.531 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-05 11:52:48.588 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 11:52:48.596 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 11:52:48.763 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 11:52:48.774 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 7869 ms
+2026-01-05 11:52:51.578 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 29f4a58d-bea0-4b5d-ad40-76cdb414f33a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-05 11:52:53.567 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-05 11:52:54.050 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6bf0f70a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5310e451, org.springframework.security.web.context.SecurityContextHolderFilter@5ad0c70a, org.springframework.security.web.header.HeaderWriterFilter@3350ab4, org.springframework.web.filter.CorsFilter@52d63b7e, org.springframework.security.web.authentication.logout.LogoutFilter@13ee97af, com.example.danxils_commons.security.JwtAuthFilter@566c1e71, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4fedf908, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7b3c0ecb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74830d73, org.springframework.security.web.session.SessionManagementFilter@2ceb68a1, org.springframework.security.web.access.ExceptionTranslationFilter@3514ac7d, org.springframework.security.web.access.intercept.AuthorizationFilter@3e01796a]
+2026-01-05 11:52:57.078 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-05 11:52:57.254 [main] INFO  c.e.t.TrackingServiceApplication - Started TrackingServiceApplication in 19.24 seconds (process running for 21.711)
+2026-01-05 12:39:34.885 [main] INFO  c.e.t.TrackingServiceApplication - Starting TrackingServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 12:39:34.901 [main] INFO  c.e.t.TrackingServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 12:39:41.823 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-05 12:39:41.842 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 12:39:41.846 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 12:39:41.928 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 12:39:41.929 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 6636 ms
+2026-01-05 12:39:43.639 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 7cd53920-f2b6-4201-9c4b-e6c0572ae794
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-05 12:39:45.401 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-05 12:39:45.913 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@d13379e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7c8df667, org.springframework.security.web.context.SecurityContextHolderFilter@6ae42248, org.springframework.security.web.header.HeaderWriterFilter@5bb99d1d, org.springframework.web.filter.CorsFilter@498e41a4, org.springframework.security.web.authentication.logout.LogoutFilter@1827fc4e, com.example.danxils_commons.security.JwtAuthFilter@3b218c74, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@54941dfd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@13ee97af, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@be616f0, org.springframework.security.web.session.SessionManagementFilter@6ebbc06, org.springframework.security.web.access.ExceptionTranslationFilter@2a16d4dc, org.springframework.security.web.access.intercept.AuthorizationFilter@3221588e]
+2026-01-05 12:39:48.185 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-05 12:39:48.342 [main] INFO  c.e.t.TrackingServiceApplication - Started TrackingServiceApplication in 16.246 seconds (process running for 18.665)

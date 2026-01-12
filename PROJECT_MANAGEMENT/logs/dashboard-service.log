@@ -1,0 +1,394 @@
+2026-01-02 00:51:48.725 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 00:51:48.730 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 00:51:48.732 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 00:51:48.733 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 00:51:48.734 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 00:51:48.734 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 00:51:48.836 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 02:12:18.243 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Disconnecting from node 1 due to request timeout.
+2026-01-02 02:12:18.247 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Cancelled in-flight FETCH request with correlation id 18994 due to node 1 being disconnected (elapsed time since creation: 4799967ms, elapsed time since send: 4799967ms, request timeout: 30000ms)
+2026-01-02 02:12:18.248 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.clients.FetchSessionHandler - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Error sending fetch request (sessionId=1847222680, epoch=117) to node 1:
+org.apache.kafka.common.errors.DisconnectException: null
+2026-01-02 02:12:18.248 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 02:12:18.249 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 02:12:18.249 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 02:12:18.346 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 03:25:28.708 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 03:25:28.711 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 03:25:28.711 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 03:25:28.714 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 03:25:28.714 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 03:25:28.716 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 03:25:28.820 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 04:46:42.222 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 04:46:42.225 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 04:46:42.226 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 04:46:42.229 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 04:46:42.230 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 04:46:42.230 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 04:46:42.362 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 06:12:15.114 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Disconnecting from node 1 due to request timeout.
+2026-01-02 06:12:15.118 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Cancelled in-flight FETCH request with correlation id 19213 due to node 1 being disconnected (elapsed time since creation: 5103313ms, elapsed time since send: 5103313ms, request timeout: 30000ms)
+2026-01-02 06:12:15.120 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 06:12:15.119 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.clients.FetchSessionHandler - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Error sending fetch request (sessionId=832948958, epoch=176) to node 1:
+org.apache.kafka.common.errors.DisconnectException: null
+2026-01-02 06:12:15.121 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 06:12:15.122 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 06:12:15.221 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:20:42.320 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Disconnecting from node 1 due to request timeout.
+2026-01-02 07:20:42.322 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Cancelled in-flight FETCH request with correlation id 19286 due to node 1 being disconnected (elapsed time since creation: 4077635ms, elapsed time since send: 4077635ms, request timeout: 30000ms)
+2026-01-02 07:20:42.323 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.clients.FetchSessionHandler - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Error sending fetch request (sessionId=1749520347, epoch=58) to node 1:
+org.apache.kafka.common.errors.DisconnectException: null
+2026-01-02 07:20:42.323 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 07:20:42.324 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:20:42.324 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 07:20:42.427 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:32:28.466 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 07:32:28.471 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:32:28.471 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 07:32:28.481 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:32:28.483 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:32:28.484 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 07:32:28.487 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:32:28.590 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:46:36.975 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Disconnecting from node 1 due to request timeout.
+2026-01-02 07:46:36.982 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Cancelled in-flight FETCH request with correlation id 20951 due to node 1 being disconnected (elapsed time since creation: 130780ms, elapsed time since send: 130780ms, request timeout: 30000ms)
+2026-01-02 07:46:36.983 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 07:46:36.983 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:46:36.982 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.clients.FetchSessionHandler - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Error sending fetch request (sessionId=54215007, epoch=1413) to node 1:
+org.apache.kafka.common.errors.DisconnectException: null
+2026-01-02 07:46:36.984 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 07:46:37.040 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:50:13.418 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 07:50:13.433 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:50:13.438 [kafka-coordinator-heartbeat-thread | dashboard-service] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Client requested disconnect from node 2147483646
+2026-01-02 07:50:13.444 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:50:13.444 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:50:13.445 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Group coordinator kafka:29092 (id: 2147483646 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: false. Rediscovery will be attempted.
+2026-01-02 07:50:13.445 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Requesting disconnect from last known coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:50:13.547 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 07:50:33.799 [MessageBroker-2] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 6, active threads = 1, queued tasks = 0, completed tasks = 5]
+2026-01-02 08:20:33.818 [MessageBroker-4] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 7, active threads = 1, queued tasks = 0, completed tasks = 6]
+2026-01-02 08:25:33.651 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2026-01-02 08:25:33.680 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@432448]]
+2026-01-02 08:25:33.683 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2026-01-02 08:25:33.799 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Revoke previously assigned partitions driver-location-updated-0
+2026-01-02 08:25:33.822 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: partitions revoked: [driver-location-updated-0]
+2026-01-02 08:25:33.833 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Member consumer-dashboard-service-1-045a5411-e57e-43d7-8689-ed2d4be10c6b sending LeaveGroup request to coordinator kafka:29092 (id: 2147483646 rack: null) due to the consumer unsubscribed from all topics
+2026-01-02 08:25:33.850 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-01-02 08:25:33.856 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: consumer pro-actively leaving the group
+2026-01-02 08:25:33.869 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.c.DefaultKafkaConsumerFactory$ExtendedKafkaConsumer - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Unsubscribed all topics or patterns and assigned partitions
+2026-01-02 08:25:33.904 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-01-02 08:25:33.919 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: consumer pro-actively leaving the group
+2026-01-02 08:25:33.995 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Metrics scheduler closed
+2026-01-02 08:25:33.996 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-01-02 08:25:33.997 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Metrics reporters closed
+2026-01-02 08:25:34.018 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.utils.AppInfoParser - App info kafka.consumer for consumer-dashboard-service-1 unregistered
+2026-01-02 08:25:34.034 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: Consumer stopped
+2026-01-02 08:26:23.397 [main] INFO  c.e.d.DashboardServiceApplication - Starting DashboardServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-02 08:26:23.502 [main] INFO  c.e.d.DashboardServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-02 08:26:29.876 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=bf5c8183-a3d3-34f1-a37e-15018bcb8a6c
+2026-01-02 08:26:31.476 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-02 08:26:31.504 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-02 08:26:31.507 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-02 08:26:31.572 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-02 08:26:31.580 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 7814 ms
+2026-01-02 08:26:37.689 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 23404ea9-8efe-421b-a5fc-f9d17f2bacc8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-02 08:26:38.590 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-02 08:26:38.717 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2270f58d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@50e1f3fc, org.springframework.security.web.context.SecurityContextHolderFilter@af3295f, org.springframework.security.web.header.HeaderWriterFilter@7d5a0b14, org.springframework.web.filter.CorsFilter@54737322, org.springframework.security.web.csrf.CsrfFilter@1e50eb3f, org.springframework.security.web.authentication.logout.LogoutFilter@2d3c501b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5018b56b, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@6f428e6e, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@56da8847, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3a69014e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3595086b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@627d35ff, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7323c38c, org.springframework.security.web.access.ExceptionTranslationFilter@77a4bac, org.springframework.security.web.access.intercept.AuthorizationFilter@a6fc1bc]
+2026-01-02 08:26:39.999 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-02 08:26:40.292 [main] INFO  o.a.k.c.consumer.ConsumerConfig - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [kafka:29092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-dashboard-service-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = dashboard-service
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+2026-01-02 08:26:40.794 [main] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka version: 3.6.2
+2026-01-02 08:26:40.805 [main] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka commitId: c4deed513057c94e
+2026-01-02 08:26:40.815 [main] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka startTimeMs: 1767338800791
+2026-01-02 08:26:40.909 [main] INFO  o.s.k.c.DefaultKafkaConsumerFactory$ExtendedKafkaConsumer - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Subscribed to topic(s): driver-location-updated
+2026-01-02 08:26:40.963 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2026-01-02 08:26:40.971 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2079fcfc]]
+2026-01-02 08:26:40.974 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2026-01-02 08:26:41.160 [main] INFO  c.e.d.DashboardServiceApplication - Started DashboardServiceApplication in 20.464 seconds (process running for 22.807)
+2026-01-02 08:26:41.846 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  org.apache.kafka.clients.Metadata - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-01-02 08:26:41.859 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 08:26:41.874 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] (Re-)joining group
+2026-01-02 08:26:41.918 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: need to re-join with the given member-id: consumer-dashboard-service-1-d0d35ed5-925f-48ae-a7fc-3302567a01f7
+2026-01-02 08:26:41.925 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: rebalance failed due to 'The group member needs to have a valid member id before actually entering a consumer group.' (MemberIdRequiredException)
+2026-01-02 08:26:41.926 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] (Re-)joining group
+2026-01-02 08:26:44.933 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Successfully joined group with generation Generation{generationId=13, memberId='consumer-dashboard-service-1-d0d35ed5-925f-48ae-a7fc-3302567a01f7', protocol='range'}
+2026-01-02 08:26:44.948 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Finished assignment for group at generation 13: {consumer-dashboard-service-1-d0d35ed5-925f-48ae-a7fc-3302567a01f7=Assignment(partitions=[driver-location-updated-0])}
+2026-01-02 08:26:44.966 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Successfully synced group in generation Generation{generationId=13, memberId='consumer-dashboard-service-1-d0d35ed5-925f-48ae-a7fc-3302567a01f7', protocol='range'}
+2026-01-02 08:26:44.970 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Notifying assignor about the new Assignment(partitions=[driver-location-updated-0])
+2026-01-02 08:26:44.979 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Adding newly assigned partitions: driver-location-updated-0
+2026-01-02 08:26:45.018 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Setting offset for partition driver-location-updated-0 to the committed offset FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[kafka:29092 (id: 1 rack: null)], epoch=0}}
+2026-01-02 08:26:45.035 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: partitions assigned: [driver-location-updated-0]
+2026-01-02 08:27:39.729 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-01-02 08:35:42.258 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Node -1 disconnected.
+2026-01-02 08:57:39.821 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
+2026-01-02 09:27:39.820 [MessageBroker-2] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 3, active threads = 1, queued tasks = 0, completed tasks = 2]
+2026-01-02 09:57:39.794 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 4, active threads = 1, queued tasks = 0, completed tasks = 3]
+2026-01-02 10:27:39.803 [MessageBroker-3] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 5, active threads = 1, queued tasks = 0, completed tasks = 4]
+2026-01-02 10:57:39.868 [MessageBroker-2] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 6, active threads = 1, queued tasks = 0, completed tasks = 5]
+2026-01-02 11:10:26.408 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2026-01-02 11:10:26.481 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2079fcfc]]
+2026-01-02 11:10:26.509 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2026-01-02 11:10:26.589 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Revoke previously assigned partitions driver-location-updated-0
+2026-01-02 11:10:26.598 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: partitions revoked: [driver-location-updated-0]
+2026-01-02 11:10:26.604 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Member consumer-dashboard-service-1-d0d35ed5-925f-48ae-a7fc-3302567a01f7 sending LeaveGroup request to coordinator kafka:29092 (id: 2147483646 rack: null) due to the consumer unsubscribed from all topics
+2026-01-02 11:10:26.606 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-01-02 11:10:26.608 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: consumer pro-actively leaving the group
+2026-01-02 11:10:26.616 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.c.DefaultKafkaConsumerFactory$ExtendedKafkaConsumer - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Unsubscribed all topics or patterns and assigned partitions
+2026-01-02 11:10:26.660 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-01-02 11:10:26.664 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: consumer pro-actively leaving the group
+2026-01-02 11:10:27.053 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Metrics scheduler closed
+2026-01-02 11:10:27.053 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-01-02 11:10:27.054 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Metrics reporters closed
+2026-01-02 11:10:27.061 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.utils.AppInfoParser - App info kafka.consumer for consumer-dashboard-service-1 unregistered
+2026-01-02 11:10:27.093 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: Consumer stopped
+2026-01-02 11:11:21.618 [main] INFO  c.e.d.DashboardServiceApplication - Starting DashboardServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-02 11:11:21.651 [main] INFO  c.e.d.DashboardServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-02 11:11:28.400 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=bf5c8183-a3d3-34f1-a37e-15018bcb8a6c
+2026-01-02 11:11:29.488 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-02 11:11:29.561 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-02 11:11:29.569 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-02 11:11:29.825 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-02 11:11:29.834 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 7797 ms
+2026-01-02 11:11:35.794 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 214d4b39-570a-4bfe-99e8-2066fd5812b0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-02 11:11:36.425 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-02 11:11:36.501 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5ca4c88a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1791e231, org.springframework.security.web.context.SecurityContextHolderFilter@335cdd2, org.springframework.security.web.header.HeaderWriterFilter@6dde1bf5, org.springframework.web.filter.CorsFilter@55397d15, org.springframework.security.web.csrf.CsrfFilter@2904bc56, org.springframework.security.web.authentication.logout.LogoutFilter@534fc1f7, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@48da64f2, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@1e50eb3f, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@5e360c3b, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6585df70, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@60a99f3d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@57515944, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@24ac6fef, org.springframework.security.web.access.ExceptionTranslationFilter@4b22214d, org.springframework.security.web.access.intercept.AuthorizationFilter@7846913f]
+2026-01-02 11:11:37.588 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-02 11:11:37.701 [main] INFO  o.a.k.c.consumer.ConsumerConfig - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [kafka:29092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-dashboard-service-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = dashboard-service
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+2026-01-02 11:11:38.239 [main] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka version: 3.6.2
+2026-01-02 11:11:38.252 [main] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka commitId: c4deed513057c94e
+2026-01-02 11:11:38.259 [main] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka startTimeMs: 1767348698238
+2026-01-02 11:11:38.357 [main] INFO  o.s.k.c.DefaultKafkaConsumerFactory$ExtendedKafkaConsumer - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Subscribed to topic(s): driver-location-updated
+2026-01-02 11:11:38.368 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2026-01-02 11:11:38.376 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@126d0868]]
+2026-01-02 11:11:38.378 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2026-01-02 11:11:38.515 [main] INFO  c.e.d.DashboardServiceApplication - Started DashboardServiceApplication in 19.715 seconds (process running for 21.881)
+2026-01-02 11:11:39.458 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  org.apache.kafka.clients.Metadata - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-01-02 11:11:39.462 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Discovered group coordinator kafka:29092 (id: 2147483646 rack: null)
+2026-01-02 11:11:39.466 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] (Re-)joining group
+2026-01-02 11:11:39.505 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: need to re-join with the given member-id: consumer-dashboard-service-1-0bfa193c-0946-4447-8122-2ca67461b8d4
+2026-01-02 11:11:39.509 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: rebalance failed due to 'The group member needs to have a valid member id before actually entering a consumer group.' (MemberIdRequiredException)
+2026-01-02 11:11:39.511 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] (Re-)joining group
+2026-01-02 11:11:42.520 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Successfully joined group with generation Generation{generationId=15, memberId='consumer-dashboard-service-1-0bfa193c-0946-4447-8122-2ca67461b8d4', protocol='range'}
+2026-01-02 11:11:42.543 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Finished assignment for group at generation 15: {consumer-dashboard-service-1-0bfa193c-0946-4447-8122-2ca67461b8d4=Assignment(partitions=[driver-location-updated-0])}
+2026-01-02 11:11:42.571 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Successfully synced group in generation Generation{generationId=15, memberId='consumer-dashboard-service-1-0bfa193c-0946-4447-8122-2ca67461b8d4', protocol='range'}
+2026-01-02 11:11:42.572 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Notifying assignor about the new Assignment(partitions=[driver-location-updated-0])
+2026-01-02 11:11:42.588 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Adding newly assigned partitions: driver-location-updated-0
+2026-01-02 11:11:42.615 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Setting offset for partition driver-location-updated-0 to the committed offset FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[kafka:29092 (id: 1 rack: null)], epoch=0}}
+2026-01-02 11:11:42.617 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: partitions assigned: [driver-location-updated-0]
+2026-01-02 11:12:37.312 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-01-02 11:20:39.709 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Node -1 disconnected.
+2026-01-02 11:42:37.326 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
+2026-01-02 12:12:37.341 [MessageBroker-2] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 3, active threads = 1, queued tasks = 0, completed tasks = 2]
+2026-01-02 12:17:21.624 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2026-01-02 12:17:21.634 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@126d0868]]
+2026-01-02 12:17:21.639 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2026-01-02 12:17:21.663 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Revoke previously assigned partitions driver-location-updated-0
+2026-01-02 12:17:21.666 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: partitions revoked: [driver-location-updated-0]
+2026-01-02 12:17:21.668 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Member consumer-dashboard-service-1-0bfa193c-0946-4447-8122-2ca67461b8d4 sending LeaveGroup request to coordinator kafka:29092 (id: 2147483646 rack: null) due to the consumer unsubscribed from all topics
+2026-01-02 12:17:21.675 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-01-02 12:17:21.679 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: consumer pro-actively leaving the group
+2026-01-02 12:17:21.680 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.c.DefaultKafkaConsumerFactory$ExtendedKafkaConsumer - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Unsubscribed all topics or patterns and assigned partitions
+2026-01-02 12:17:21.703 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-01-02 12:17:21.707 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-dashboard-service-1, groupId=dashboard-service] Request joining group due to: consumer pro-actively leaving the group
+2026-01-02 12:17:21.887 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Metrics scheduler closed
+2026-01-02 12:17:21.889 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-01-02 12:17:21.890 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.metrics.Metrics - Metrics reporters closed
+2026-01-02 12:17:22.098 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.a.kafka.common.utils.AppInfoParser - App info kafka.consumer for consumer-dashboard-service-1 unregistered
+2026-01-02 12:17:22.125 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - dashboard-service: Consumer stopped

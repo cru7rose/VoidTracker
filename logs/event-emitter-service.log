@@ -1,0 +1,132 @@
+2026-01-05 10:44:42.129 [main] INFO  c.e.e.EventEmitterServiceApplication - Starting EventEmitterServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 10:44:42.194 [main] INFO  c.e.e.EventEmitterServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 10:44:45.235 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-05 10:44:45.296 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 0 JPA repository interfaces.
+2026-01-05 10:44:47.365 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8100 (http)
+2026-01-05 10:44:47.384 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 10:44:47.385 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 10:44:47.465 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 10:44:47.466 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4915 ms
+2026-01-05 10:44:47.645 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2026-01-05 10:44:47.668 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-01-05 10:44:47.718 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-05 10:44:47.771 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2026-01-05 11:17:04.652 [main] INFO  c.e.e.EventEmitterServiceApplication - Starting EventEmitterServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 11:17:04.663 [main] INFO  c.e.e.EventEmitterServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 11:17:05.445 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-05 11:17:05.463 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 0 JPA repository interfaces.
+2026-01-05 11:17:06.020 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8100 (http)
+2026-01-05 11:17:06.032 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 11:17:06.033 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 11:17:06.073 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 11:17:06.074 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1341 ms
+2026-01-05 11:17:06.135 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2026-01-05 11:17:06.139 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-01-05 11:17:06.162 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-05 11:17:06.184 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2026-01-05 11:52:39.482 [main] INFO  c.e.e.EventEmitterServiceApplication - Starting EventEmitterServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 11:52:39.501 [main] INFO  c.e.e.EventEmitterServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 11:52:42.748 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-05 11:52:42.852 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 63 ms. Found 0 JPA repository interfaces.
+2026-01-05 11:52:45.306 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8100 (http)
+2026-01-05 11:52:45.333 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 11:52:45.346 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 11:52:45.541 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 11:52:45.548 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5783 ms
+2026-01-05 11:52:45.914 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2026-01-05 11:52:45.922 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-01-05 11:52:45.997 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-05 11:52:46.138 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2026-01-05 12:39:34.554 [main] INFO  c.e.e.EventEmitterServiceApplication - Starting EventEmitterServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-05 12:39:34.564 [main] INFO  c.e.e.EventEmitterServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-05 12:39:37.966 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-05 12:39:38.017 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 0 JPA repository interfaces.
+2026-01-05 12:39:40.399 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8100 (http)
+2026-01-05 12:39:40.429 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-05 12:39:40.430 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-05 12:39:40.514 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-05 12:39:40.522 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5802 ms
+2026-01-05 12:39:40.660 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2026-01-05 12:39:40.674 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-01-05 12:39:40.700 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-01-05 12:39:40.719 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+

@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: dashboard-service
+  # --- Server Configuration ---
+  server:
+    port: 8098
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9093}
+    consumer:
+      group-id: ${spring.application.name}
+  cloud:
+    openfeign:
+      client:
+        config:
+          order-service:
+            url: ${ORDER_SERVICE_URL:http://localhost:8091}
+          analytics-service:
+            url: ${ANALYTICS_SERVICE_URL:http://localhost:8095}
+          iam-app:
+            url: ${IAM_SERVICE_URL:http://localhost:8090}
+
+app:
+  kafka:
+    topics:
+      driver-location-updated: driver-location-updated
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# --- Klucz JWT ---
+jwt:
+  secret:
+    key: ${JWT_SECRET_BASE64:dGVzdC1zZWNyZXQta2V5LWZvci1sb2NhbC1kZXZlbG9wbWVudC1vbmx5LXBsZWFzZS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==}

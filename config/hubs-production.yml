@@ -1,0 +1,365 @@
+# Real Hub Locations - Geocoded Data
+# Source: Production system export (20 hubs)
+# Coordinates: City-level approximations (sufficient for testing)
+
+hubs:
+  # MAIN HUBS - High volume centers
+  - id: HZA
+    name: "HZA Zakroczym"
+    type: MAIN_HUB
+    location:
+      latitude: 52.4378
+      longitude: 20.6097
+    address:
+      street: "Swobodnia 35"
+      postal: "05-180"
+      city: "Zakroczym"
+    catchment-radius-km: 80
+    active: true
+    max-vehicles: 40
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Mazowieckie"
+    alias: "DanxHub"
+
+  - id: HSN
+    name: "HSN - ILS HUB Sosnowiec"
+    type: MAIN_HUB
+    location:
+      latitude: 50.2862
+      longitude: 19.1040
+    address:
+      street: "Logistyczna 1"
+      postal: "41-208"
+      city: "Sosnowiec"
+    catchment-radius-km: 90
+    active: true
+    max-vehicles: 50
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Śląskie"
+    alias: "DanxHub"
+
+  - id: NDS2
+    name: "NDS2/HSN Sosnowiec"
+    type: MIDI_HUB
+    location:
+      latitude: 50.2862
+      longitude: 19.1040
+    address:
+      street: "Inwestycyjna 7A"
+      postal: "41-208"
+      city: "Sosnowiec"
+    catchment-radius-km: 60
+    active: true
+    max-vehicles: 30
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Śląskie"
+    alias: "DanxHub"
+
+  - id: KOM
+    name: "KOM Komorniki (Poznań area)"
+    type: MAIN_HUB
+    location:
+      latitude: 52.3055
+      longitude: 16.8025
+    address:
+      street: "Wawrzyniaka 25"
+      postal: "62-052"
+      city: "Komorniki"
+    catchment-radius-km: 95
+    active: true
+    max-vehicles: 45
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Wielkopolskie"
+    alias: "DanxHub"
+
+  - id: SZM
+    name: "SZM Szczecin"
+    type: MIDI_HUB
+    location:
+      latitude: 53.4285
+      longitude: 14.5528
+    address:
+      street: "Kablowa 1"
+      postal: "70-895"
+      city: "Szczecin"
+    catchment-radius-km: 85
+    active: true
+    max-vehicles: 28
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Zachodniopomorskie"
+    alias: "DanxHub"
+
+  - id: HWR
+    name: "HWR Wrocław"
+    type: MAIN_HUB
+    location:
+      latitude: 51.1079
+      longitude: 17.0385
+    address:
+      street: "Graniczna 8c"
+      postal: "54-610"
+      city: "Wrocław"
+    catchment-radius-km: 90
+    active: true
+    max-vehicles: 38
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Dolnośląskie"
+    alias: "DanxHub"
+
+  - id: HLD
+    name: "HLD Łódź"
+    type: MAIN_HUB
+    location:
+      latitude: 51.7592
+      longitude: 19.4560
+    address:
+      street: "Dostawcza 10"
+      postal: "93-231"
+      city: "Łódź"
+    catchment-radius-km: 75
+    active: true
+    max-vehicles: 35
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Łódzkie"
+    alias: "DanxHub"
+
+  - id: PRG
+    name: "PRG Pruszcz Gdański"
+    type: MIDI_HUB
+    location:
+      latitude: 54.2631
+      longitude: 18.6328
+    address:
+      street: "Tczewska 22"
+      postal: "83-000"
+      city: "Roszkowo"
+    catchment-radius-km: 70
+    active: true
+    max-vehicles: 32
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Pomorskie"
+    alias: "DanxHub"
+
+  - id: LDC
+    name: "LDC Teresin (Łódź area)"
+    type: MIDI_HUB
+    location:
+      latitude: 51.9394
+      longitude: 20.1231
+    address:
+      street: "AL. XX-LECIA 23B"
+      postal: "96-515"
+      city: "Teresin"
+    catchment-radius-km: 65
+    active: true
+    max-vehicles: 25
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Łódzkie"
+    alias: "DanxHub"
+
+  - id: RZE
+    name: "RZE Rzeszów"
+    type: MIDI_HUB
+    location:
+      latitude: 50.0412
+      longitude: 21.9991
+    address:
+      street: "Rzecha 5"
+      postal: "35-322"
+      city: "Rzeszów"
+    catchment-radius-km: 80
+    active: true
+    max-vehicles: 30
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Podkarpackie"
+    alias: "DanxHub"
+
+  - id: LUG
+    name: "LUG Lublin"
+    type: MIDI_HUB
+    location:
+      latitude: 51.2465
+      longitude: 22.5684
+    address:
+      street: "Józefa Franczaka Lalka 14"
+      postal: "20-325"
+      city: "Lublin"
+    catchment-radius-km: 75
+    active: true
+    max-vehicles: 28
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Lubelskie"
+    alias: "DanxHub"
+
+  - id: OSS
+    name: "OSS Ostrowiec Świętokrzyski"
+    type: MIDI_HUB
+    location:
+      latitude: 50.9294
+      longitude: 21.3859
+    address:
+      street: "Żabia 29"
+      postal: "27-400"
+      city: "Ostrowiec Świętokrzyski"
+    catchment-radius-km: 60
+    active: true
+    max-vehicles: 20
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Świętokrzyskie"
+    alias: "DanxHub"
+
+  - id: ELK
+    name: "ELK Ełk"
+    type: MIDI_HUB
+    location:
+      latitude: 53.8285
+      longitude: 22.3606
+    address:
+      street: "Słoneczna 2C"
+      postal: "19-300"
+      city: "Ełk"
+    catchment-radius-km: 70
+    active: true
+    max-vehicles: 22
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Warmińsko-Mazurskie"
+    alias: "DanxHub"
+
+  - id: NAR
+    name: "NAR Białystok"
+    type: MIDI_HUB
+    location:
+      latitude: 53.1325
+      longitude: 23.1688
+    address:
+      street: "Welurowa 4"
+      postal: "15-680"
+      city: "Białystok"
+    catchment-radius-km: 75
+    active: true
+    max-vehicles: 26
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Podlaskie"
+    alias: "DanxHub"
+
+  - id: KET
+    name: "KET Kętrzyn"
+    type: MICRO_HUB
+    location:
+      latitude: 54.0767
+      longitude: 21.3761
+    address:
+      street: "BAŁTYCKA 3"
+      postal: "11-400"
+      city: "Kętrzyn"
+    catchment-radius-km: 55
+    active: true
+    max-vehicles: 18
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Warmińsko-Mazurskie"
+    alias: "DanxHub"
+
+  - id: SDL
+    name: "SDL Siedlce"
+    type: MIDI_HUB
+    location:
+      latitude: 52.1676
+      longitude: 22.2902
+    address:
+      street: "TERESPOLSKA 15"
+      postal: "08-110"
+      city: "Siedlce"
+    catchment-radius-km: 65
+    active: true
+    max-vehicles: 24
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Mazowieckie"
+    alias: "DanxHub"
+
+  - id: NDB
+    name: "NDB Błonie (Warszawa area)"
+    type: MIDI_HUB
+    location:
+      latitude: 52.2025
+      longitude: 20.6167
+    address:
+      street: "Sochaczewska 98"
+      postal: "05-870"
+      city: "Błonie"
+    catchment-radius-km: 60
+    active: true
+    max-vehicles: 28
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Mazowieckie"
+    alias: "DanxHub"
+
+  - id: GIZ
+    name: "GIZ Giżycko"
+    type: MICRO_HUB
+    location:
+      latitude: 54.0404
+      longitude: 21.7656
+    address:
+      street: "Obwodowa 1A"
+      postal: "11-500"
+      city: "Giżycko"
+    catchment-radius-km: 50
+    active: true
+    max-vehicles: 16
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Warmińsko-Mazurskie"
+    alias: "DanxHub"
+
+  - id: CTP
+    name: "CTP Czosnów (Warszawa area)"
+    type: MIDI_HUB
+    location:
+      latitude: 52.3686
+      longitude: 20.7900
+    address:
+      street: "Wiśniowa 1"
+      postal: "05-152"
+      city: "Czosnów"
+    catchment-radius-km: 65
+    active: true
+    max-vehicles: 30
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Mazowieckie"
+    alias: "DanxHub"
+
+  - id: M06
+    name: "M06 Szigetszentmiklós (Hungary)"
+    type: MIDI_HUB
+    location:
+      latitude: 47.3456
+      longitude: 19.0336
+    address:
+      street: "Leshegy utca 30"
+      postal: "2310"
+      city: "Szigetszentmiklós"
+    catchment-radius-km: 70
+    active: true
+    max-vehicles: 25
+    shift-start-time: "23:00"
+    shift-end-time: "09:00"
+    region: "Hungary"
+    alias: "DanxHub"

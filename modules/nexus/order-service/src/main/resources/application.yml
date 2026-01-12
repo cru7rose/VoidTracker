@@ -1,0 +1,79 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: order-service
+  
+  # --- Konfiguracja Bazy Danych ---
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/voidtracker_orders}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  
+  # --- Konfiguracja Liquibase ---
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  
+  # --- Konfiguracja Kafka ---
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    consumer:
+      group-id: ${spring.application.name}
+    producer:
+      acks: all
+      enable-idempotence: true
+
+# --- Właściwości Aplikacji ---
+app:
+  kafka:
+    topics:
+      # Tematy, na które ten serwis publikuje
+      orders-created: "orders.created"
+      orders-assigned: "orders.assigned"
+      orders-status-changed: "orders.status.changed"
+      # Temat, który ten serwis konsumuje
+      route-planned: "routes.planned"
+  nominatim-url: "https://nominatim.openstreetmap.org/search"
+  n8n-url: ${N8N_URL:http://localhost:5678}
+
+# --- Konfiguracja Obserwowalności ---
+management:
+  tracing:
+    enabled: false
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      environment: ${SPRING_PROFILES_ACTIVE:dev}
+    export:
+      prometheus:
+        enabled: true
+
+# --- Klucz JWT ---
+jwt:
+  secret:
+    key: ${JWT_SECRET_BASE64:dGVzdC1zZWNyZXQta2V5LWZvci1sb2NhbC1kZXZlbG9wbWVudC1vbmx5LXBsZWFzZS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==}

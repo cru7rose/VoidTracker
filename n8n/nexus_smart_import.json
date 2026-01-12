@@ -1,0 +1,113 @@
+{
+    "name": "Nexus: Smart Import (Email to API)",
+    "nodes": [
+        {
+            "parameters": {},
+            "name": "Start",
+            "type": "n8n-nodes-base.start",
+            "typeVersion": 1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "getAll",
+                "limit": 1,
+                "simple": false
+            },
+            "name": "IMAP Email Read",
+            "type": "n8n-nodes-base.emailReadImap",
+            "typeVersion": 1,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "imap": {
+                    "id": "YOUR_CREDENTIAL_ID",
+                    "name": "Corporate Gmail"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "functionCode": "// Mock PDF Parsing Logic\nconst emailSubject = items[0].json.subject;\n// In a real scenario, we would parse binary attachment\n\nreturn [\n  {\n    json: {\n      externalId: \"ORD-\" + Math.floor(Math.random() * 100000),\n      clientExternalId: \"CLIENT-TEST\",\n      properties: {\n        priority: emailSubject.includes(\"URGENT\") ? \"HIGH\" : \"STANDARD\",\n        source: \"EMAIL_GATEWAY\"\n      }\n    }\n  }\n];"
+            },
+            "name": "PDF Parser (Mock)",
+            "type": "n8n-nodes-base.function",
+            "typeVersion": 1,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "http://order-service:8080/api/ingestion/orders",
+                "jsonParameters": true,
+                "options": {},
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "externalId",
+                            "value": "={{$node[\"PDF Parser (Mock)\"].json[\"externalId\"]}}"
+                        },
+                        {
+                            "name": "clientExternalId",
+                            "value": "={{$node[\"PDF Parser (Mock)\"].json[\"clientExternalId\"]}}"
+                        },
+                        {
+                            "name": "properties",
+                            "value": "={{$node[\"PDF Parser (Mock)\"].json[\"properties\"]}}"
+                        }
+                    ]
+                }
+            },
+            "name": "POST Ingestion API",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 1,
+            "position": [
+                850,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Start": {
+            "main": [
+                [
+                    {
+                        "node": "IMAP Email Read",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "IMAP Email Read": {
+            "main": [
+                [
+                    {
+                        "node": "PDF Parser (Mock)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "PDF Parser (Mock)": {
+            "main": [
+                [
+                    {
+                        "node": "POST Ingestion API",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

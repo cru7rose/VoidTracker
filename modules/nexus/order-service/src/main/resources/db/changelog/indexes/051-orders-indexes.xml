@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="051-create-orders-indexes" author="enterprise-schema">
+        <!-- Primary Access Patterns -->
+        <createIndex tableName="vt_orders" indexName="idx_orders_customer">
+            <column name="ordering_customer_id"/>
+        </createIndex>
+
+        <createIndex tableName="vt_orders" indexName="idx_orders_status">
+            <column name="status"/>
+        </createIndex>
+
+        <createIndex tableName="vt_orders" indexName="idx_orders_delivery_date">
+            <column name="requested_delivery_date"/>
+        </createIndex>
+
+        <createIndex tableName="vt_orders" indexName="idx_orders_assigned_driver">
+            <column name="assigned_driver_id"/>
+        </createIndex>
+
+        <createIndex tableName="vt_orders" indexName="idx_orders_route">
+            <column name="assigned_route_id"/>
+        </createIndex>
+
+        <createIndex tableName="vt_orders" indexName="idx_orders_tenant">
+            <column name="tenant_id"/>
+        </createIndex>
+
+        <!-- Composite Indexes for Common Queries -->
+        <createIndex tableName="vt_orders" indexName="idx_orders_status_date">
+            <column name="status"/>
+            <column name="requested_delivery_date"/>
+        </createIndex>
+
+        <createIndex tableName="vt_orders" indexName="idx_orders_customer_status">
+            <column name="ordering_customer_id"/>
+            <column name="status"/>
+        </createIndex>
+
+        <!-- Soft Delete Support -->
+        <createIndex tableName="vt_orders" indexName="idx_orders_active">
+            <column name="deleted_at"/>
+        </createIndex>
+
+        <!-- JSONB Indexes for Extensibility -->
+        <sql>
+            CREATE INDEX idx_orders_custom_fields ON vt_orders USING GIN(custom_fields);
+            CREATE INDEX idx_orders_metadata ON vt_orders USING GIN(metadata);
+            CREATE INDEX idx_orders_tags ON vt_orders USING GIN(tags);
+        </sql>
+
+        <!-- Performance: Index for SLA monitoring (partial index) -->
+        <sql>
+            CREATE INDEX idx_orders_sla_active ON vt_orders(sla_deadline) 
+                WHERE status NOT IN ('DELIVERED', 'CANCELLED', 'COMPLETED') 
+                AND deleted_at IS NULL;
+        </sql>
+
+        <!-- Performance: On-time delivery metrics -->
+        <sql>
+            CREATE INDEX idx_orders_delivery_metrics ON vt_orders(on_time_delivery, delivered_at)
+                WHERE delivered_at IS NOT NULL;
+        </sql>
+
+        <rollback>
+            DROP INDEX IF EXISTS idx_orders_customer;
+            DROP INDEX IF EXISTS idx_orders_status;
+            DROP INDEX IF EXISTS idx_orders_delivery_date;
+            DROP INDEX IF EXISTS idx_orders_assigned_driver;
+            DROP INDEX IF EXISTS idx_orders_route;
+            DROP INDEX IF EXISTS idx_orders_tenant;
+            DROP INDEX IF EXISTS idx_orders_status_date;
+            DROP INDEX IF EXISTS idx_orders_customer_status;
+            DROP INDEX IF EXISTS idx_orders_active;
+            DROP INDEX IF EXISTS idx_orders_custom_fields;
+            DROP INDEX IF EXISTS idx_orders_metadata;
+            DROP INDEX IF EXISTS idx_orders_tags;
+            DROP INDEX IF EXISTS idx_orders_sla_active;
+            DROP INDEX IF EXISTS idx_orders_delivery_metrics;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

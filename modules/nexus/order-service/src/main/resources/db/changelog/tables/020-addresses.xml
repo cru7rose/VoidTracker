@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="020-create-addresses-table" author="enterprise-schema">
+        <createTable tableName="vt_addresses">
+            <!-- Primary Key -->
+            <column name="address_id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Identity & Ownership -->
+            <column name="owner_customer_id" type="UUID"/>
+            <column name="address_type" type="VARCHAR(20)"/>
+            <column name="legacy_id" type="VARCHAR(255)"/>
+
+            <!-- Address Components -->
+            <column name="street" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street_number" type="VARCHAR(50)"/>
+            <column name="apartment" type="VARCHAR(50)"/>
+            <column name="postal_code" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="VARCHAR(100)"/>
+            <column name="country" type="VARCHAR(3)" defaultValue="POL"/>
+
+            <!-- Contact -->
+            <column name="contact_name" type="VARCHAR(255)"/>
+            <column name="contact_phone" type="VARCHAR(50)"/>
+            <column name="contact_email" type="VARCHAR(255)"/>
+            <column name="delivery_instructions" type="TEXT"/>
+
+            <!-- Geolocation -->
+            <column name="latitude" type="DECIMAL(10,8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="DECIMAL(11,8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="geocode_accuracy" type="VARCHAR(50)"/>
+            <column name="geohash" type="VARCHAR(12)"/>
+            <column name="plus_code" type="VARCHAR(20)"/>
+
+            <!-- Geocoding Metadata -->
+            <column name="geocoded_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="geocoding_provider" type="VARCHAR(50)"/>
+            <column name="confidence_score" type="DECIMAL(3,2)"/>
+
+            <!-- Operational -->
+            <column name="access_restrictions" type="JSONB"/>
+            <column name="operating_hours" type="JSONB"/>
+            <column name="is_verified" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="verified_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="verified_by" type="UUID"/>
+
+            <!-- Legacy Fields (for compatibility) -->
+            <column name="customer_name" type="VARCHAR(255)"/>
+            <column name="attention" type="VARCHAR(255)"/>
+            <column name="mail" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="note" type="TEXT"/>
+            <column name="lat" type="DOUBLE PRECISION"/>
+            <column name="lon" type="DOUBLE PRECISION"/>
+            <column name="route" type="VARCHAR(100)"/>
+            <column name="route_part" type="VARCHAR(10)"/>
+            <column name="type" type="CHAR(1)"/>
+            <column name="source" type="VARCHAR(50)"/>
+
+            <!-- Audit Fields -->
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="version" type="INTEGER" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="vt_addresses" indexName="idx_addr_customer">
+            <column name="owner_customer_id"/>
+        </createIndex>
+
+        <createIndex tableName="vt_addresses" indexName="idx_addr_geohash">
+            <column name="geohash"/>
+        </createIndex>
+
+        <createIndex tableName="vt_addresses" indexName="idx_addr_postal_city">
+            <column name="postal_code"/>
+            <column name="city"/>
+        </createIndex>
+
+        <createIndex tableName="vt_addresses" indexName="idx_addr_active">
+            <column name="deleted_at"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="vt_addresses"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="021-add-geospatial-index-addresses" author="enterprise-schema">
+        <!-- PostGIS features temporarily disabled -->
+        <!--
+        <sql>
+            ALTER TABLE vt_addresses ADD COLUMN geo_point GEOGRAPHY(POINT, 4326);
+            UPDATE vt_addresses SET geo_point = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)
+            WHERE latitude IS NOT NULL AND longitude IS NOT NULL;
+            CREATE INDEX idx_addr_geo_point ON vt_addresses USING GIST(geo_point);
+            CREATE OR REPLACE FUNCTION update_geo_point()
+            RETURNS TRIGGER AS $$
+            BEGIN
+                IF NEW.latitude IS NOT NULL AND NEW.longitude IS NOT NULL THEN
+                    NEW.geo_point = ST_SetSRID(ST_MakePoint(NEW.longitude, NEW.latitude), 4326);
+                END IF;
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;
+            CREATE TRIGGER update_addresses_geo_point
+            BEFORE INSERT OR UPDATE OF latitude, longitude ON vt_addresses
+            FOR EACH ROW
+            EXECUTE FUNCTION update_geo_point();
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS update_addresses_geo_point ON vt_addresses;
+            DROP FUNCTION IF EXISTS update_geo_point();
+            DROP INDEX IF EXISTS idx_addr_geo_point;
+            ALTER TABLE vt_addresses DROP COLUMN IF EXISTS geo_point;
+        </rollback>
+        -->
+    </changeSet>
+
+    <changeSet id="022-create-updated-at-trigger-addresses" author="enterprise-schema">
+        <sql>
+            CREATE TRIGGER update_addresses_updated_at
+            BEFORE UPDATE ON vt_addresses
+            FOR EACH ROW
+            EXECUTE FUNCTION update_updated_at_column();
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS update_addresses_updated_at ON vt_addresses;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

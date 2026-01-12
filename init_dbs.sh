@@ -1,0 +1,10 @@
+#!/bin/bash
+echo "Creating missing databases..."
+docker exec -i postgres psql -U postgres -d active_db -c "CREATE DATABASE iam_db;"
+docker exec -i postgres psql -U postgres -d active_db -c "CREATE DATABASE voidtracker_orders;"
+docker exec -i postgres psql -U postgres -d active_db -c "CREATE DATABASE voidtracker_planning;"
+docker exec -i postgres psql -U postgres -d active_db -c "CREATE DATABASE voidtracker_billing;"
+docker exec -i postgres psql -U postgres -d active_db -c "CREATE DATABASE voidtracker_analytics;"
+docker exec -i postgres psql -U postgres -d active_db -c "CREATE DATABASE voidtracker_audit;"
+docker exec -i postgres psql -U postgres -d active_db -c "CREATE DATABASE voidtracker_admin;"
+echo "Databases created."

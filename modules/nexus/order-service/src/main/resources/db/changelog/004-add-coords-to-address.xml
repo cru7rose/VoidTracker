@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1-add-lat-lon-to-vt-addresses" author="architect">
+        <comment>ARCHITEKTURA: Adds latitude and longitude columns to the address table for geospatial capabilities.</comment>
+        <addColumn tableName="vt_addresses">
+            <column name="lat" type="DOUBLE"/>
+            <column name="lon" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

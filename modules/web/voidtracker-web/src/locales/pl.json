@@ -1,0 +1,110 @@
+{
+    "logout": "Wyloguj",
+    "view_notifications": "Zobacz Powiadomienia",
+    "common": {
+        "dashboard": "Panel Główny",
+        "dispatch": "Dyspozytornia",
+        "orders": "Zamówienia",
+        "users": "Użytkownicy",
+        "settings": "Ustawienia",
+        "logout": "Wyloguj",
+        "save": "Zapisz",
+        "cancel": "Anuluj",
+        "delete": "Usuń",
+        "edit": "Edytuj",
+        "status": "Status",
+        "actions": "Akcje",
+        "loading": "Ładowanie...",
+        "no_data": "Brak danych",
+        "search": "Szukaj...",
+        "filter": "Filtruj",
+        "all": "Wszystkie",
+        "view": "Podgląd",
+        "download": "Pobierz PDF",
+        "view_notifications": "Zobacz Powiadomienia"
+    },
+    "sidebar": {
+        "dashboard": "Panel Główny",
+        "my_orders": "Moje Zamówienia",
+        "new_order": "Nowe Zamówienie",
+        "bulk_upload": "Masowe Przesyłanie",
+        "address_book": "Książka Adresowa",
+        "invoices": "Faktury",
+        "manifests": "Listy Przewozowe",
+        "zone_management": "Zarządzanie Strefami",
+        "vehicle_profiles": "Profile Pojazdów",
+        "carrier_compliance": "Zgodność Przewoźników",
+        "report_builder": "Kreator Raportów",
+        "communications": "Komunikacja",
+        "audit_logs": "Dzienniki Audytu",
+        "configuration": "Konfiguracja",
+        "organizations": "Organizacje",
+        "leaderboard": "Ranking"
+    },
+    "customer": {
+        "dashboard": {
+            "title": "Panel Klienta",
+            "active_orders": "Aktywne Zamówienia",
+            "delivered_month": "Dostarczone w tym miesiącu",
+            "total_orders": "Wszystkie Zamówienia",
+            "pending_invoices": "Oczekujące Faktury",
+            "total_spend": "Wydatki (Miesiąc)",
+            "recent_orders": "Ostatnie Zamówienia",
+            "create_order": "Utwórz Nowe Zamówienie",
+            "no_orders": "Brak zamówień. Utwórz swoje pierwsze zamówienie!",
+            "order_id": "ID Zamówienia",
+            "delivery_address": "Adres Dostawy",
+            "date": "Data"
+        },
+        "orders": {
+            "title": "Moje Zamówienia",
+            "create_new": "Utwórz Nowe Zamówienie",
+            "search_placeholder": "Szukaj zamówień...",
+            "all_statuses": "Wszystkie Statusy",
+            "all_departments": "Wszystkie Działy",
+            "pickup": "Odbiór",
+            "delivery": "Dostawa",
+            "dept": "Dział",
+            "type": "Typ",
+            "time_windows": "Okna Czasowe",
+            "services": "Usługi",
+            "status": {
+                "NEW": "Nowe",
+                "INGESTED": "Przyjęte",
+                "PLANNED": "Zaplanowane",
+                "PICKUP": "Odbiór",
+                "OUT_FOR_DELIVERY": "W Doręczeniu",
+                "DELIVERED": "Dostarczone",
+                "EXCEPTION": "Wyjątek",
+                "CANCELLED": "Anulowane"
+            }
+        },
+        "invoices": {
+            "title": "Faktury",
+            "invoice_number": "Nr Faktury",
+            "month": "Miesiąc",
+            "amount": "Kwota",
+            "status": "Status",
+            "paid": "Opłacona",
+            "unpaid": "Nieopłacona"
+        }
+    },
+    "settings": {
+        "title": "Ustawienia Systemu",
+        "general": "Ogólne",
+        "branding": "Branding",
+        "workflow": "Przepływ Pracy",
+        "billing": "Rozliczenia",
+        "communication": "Komunikacja",
+        "onboarding": "Wdrożenie Kierowcy",
+        "automation": "Automatyzacja",
+        "notifications": "Powiadomienia"
+    },
+    "driver": {
+        "tasks": "Moje Zadania",
+        "scan": "Skanuj",
+        "complete": "Zakończ",
+        "failed": "Nieudane",
+        "map": "Mapa"
+    }
+}

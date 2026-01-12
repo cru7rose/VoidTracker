@@ -1,0 +1,16 @@
+{
+    "name": "sqlserver-source",
+    "config": {
+        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+        "database.hostname": "danxils-sqlserver",
+        "database.port": "1433",
+        "database.user": "sa",
+        "database.password": "Password123!",
+        "database.names": "legacy_db",
+        "topic.prefix": "legacy",
+        "table.include.list": "dbo.orders,dbo.customers",
+        "schema.history.internal.kafka.bootstrap.servers": "danxils-kafka:9092",
+        "schema.history.internal.kafka.topic": "schema-changes.legacy",
+        "database.encrypt": "false"
+    }
+}

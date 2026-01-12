@@ -1,0 +1,1 @@
+package com.example.order_service.service; import org.springframework.stereotype.Service; @Service public class ePoDService { public com.example.danxils_commons.dto.ePoDDto addEpod(java.util.UUID id, com.example.danxils_commons.dto.ePoDDto dto, String user) { return null; } }

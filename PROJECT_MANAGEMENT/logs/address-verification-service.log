@@ -1,0 +1,36 @@
+2026-01-02 08:26:22.827 [main] INFO  c.e.a.AddressVerificationServiceApplication - Starting AddressVerificationServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-02 08:26:22.929 [main] INFO  c.e.a.AddressVerificationServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-02 08:26:30.390 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-02 08:26:30.538 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-02 08:26:30.551 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-02 08:26:30.767 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-02 08:26:30.769 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 7246 ms
+2026-01-02 08:26:34.686 [main] INFO  c.e.a.service.ConfigurationService - ConfigurationService initialized. Default active provider: NOMINATIM. Available providers: [GOOGLE, HERE, NOMINATIM]
+2026-01-02 08:26:34.944 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: f9be79df-046f-4968-b633-b590a9337d8d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-02 08:26:36.402 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-02 08:26:36.517 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@43b4ec0c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@148b6f95, org.springframework.security.web.context.SecurityContextHolderFilter@77d95e5a, org.springframework.security.web.header.HeaderWriterFilter@4bff28e7, org.springframework.web.filter.CorsFilter@5ee581db, org.springframework.security.web.authentication.logout.LogoutFilter@3a8b9458, com.example.danxils_commons.security.JwtAuthFilter@6b6def36, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4f8900b0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e7e455d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5a6efe33, org.springframework.security.web.session.SessionManagementFilter@f237ae7, org.springframework.security.web.access.ExceptionTranslationFilter@8d29719, org.springframework.security.web.access.intercept.AuthorizationFilter@77f4038c]
+2026-01-02 08:26:38.652 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-02 08:26:38.739 [main] INFO  c.e.a.AddressVerificationServiceApplication - Started AddressVerificationServiceApplication in 18.541 seconds (process running for 20.345)
+2026-01-02 11:11:21.424 [main] INFO  c.e.a.AddressVerificationServiceApplication - Starting AddressVerificationServiceApplication v1.0.0-SNAPSHOT using Java 17.0.15 with PID 1 (/app/app.jar started by root in /app)
+2026-01-02 11:11:21.434 [main] INFO  c.e.a.AddressVerificationServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-02 11:11:30.488 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-01-02 11:11:30.535 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-02 11:11:30.580 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-01-02 11:11:30.766 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-01-02 11:11:30.776 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 8915 ms
+2026-01-02 11:11:33.782 [main] INFO  c.e.a.service.ConfigurationService - ConfigurationService initialized. Default active provider: NOMINATIM. Available providers: [GOOGLE, HERE, NOMINATIM]
+2026-01-02 11:11:34.248 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 799ad64c-3eb9-4953-9943-a1f6fb52a34c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-02 11:11:35.456 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-02 11:11:35.830 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@af9dd34, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@48692405, org.springframework.security.web.context.SecurityContextHolderFilter@6bdedbbd, org.springframework.security.web.header.HeaderWriterFilter@3d718248, org.springframework.web.filter.CorsFilter@151659dd, org.springframework.security.web.authentication.logout.LogoutFilter@47ffdbba, com.example.danxils_commons.security.JwtAuthFilter@3e151e1f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@d2cb2d0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2d230cff, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4a58e0e9, org.springframework.security.web.session.SessionManagementFilter@45ad3cd8, org.springframework.security.web.access.ExceptionTranslationFilter@6cc90398, org.springframework.security.web.access.intercept.AuthorizationFilter@66048ac4]
+2026-01-02 11:11:37.804 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-01-02 11:11:37.953 [main] INFO  c.e.a.AddressVerificationServiceApplication - Started AddressVerificationServiceApplication in 18.531 seconds (process running for 21.464)

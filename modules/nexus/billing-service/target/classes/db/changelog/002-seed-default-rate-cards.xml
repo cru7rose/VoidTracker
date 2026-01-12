@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Default Rate Card for Testing/Demo -->
+    <changeSet id="003-seed-default-rate-card" author="voidtracker-billing">
+        <insert tableName="billing_rate_cards">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Default Standard Rate Card"/>
+            <column name="client_id" value="ORG_DEFAULT"/>
+            <column name="currency" value="EUR"/>
+            <column name="valid_from" valueDate="2024-01-01"/>
+            <column name="valid_to" valueDate="2099-12-31"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <!-- Pricing Rules: WEIGHT-based tiers -->
+    <changeSet id="004-seed-weight-pricing-rules" author="voidtracker-billing">
+        <!-- Tier 1: Light packages 0-10kg -->
+        <sql>
+            INSERT INTO billing_pricing_rules (id, rate_card_id, metric, range_start, range_end, base_price, unit_price)
+            SELECT 
+                gen_random_uuid(),
+                id,
+                'WEIGHT',
+                0.00,
+                10.00,
+                15.00,  -- Base €15
+                1.50    -- €1.50 per kg
+            FROM billing_rate_cards WHERE client_id = 'ORG_DEFAULT';
+        </sql>
+        
+        <!-- Tier 2: Medium packages 10-50kg -->
+        <sql>
+            INSERT INTO billing_pricing_rules (id, rate_card_id, metric, range_start, range_end, base_price, unit_price)
+            SELECT 
+                gen_random_uuid(),
+                id,
+                'WEIGHT',
+                10.00,
+                50.00,
+                30.00,  -- Base €30
+                2.00    -- €2 per kg
+            FROM billing_rate_cards WHERE client_id = 'ORG_DEFAULT';
+        </sql>
+        
+        <!-- Tier 3: Heavy packages 50kg+ -->
+        <sql>
+            INSERT INTO billing_pricing_rules (id, rate_card_id, metric, range_start, range_end, base_price, unit_price)
+            SELECT 
+                gen_random_uuid(),
+                id,
+                'WEIGHT',
+                50.00,
+                NULL,   -- Infinity
+                60.00,  -- Base €60
+                2.50    -- €2.50 per kg
+            FROM billing_rate_cards WHERE client_id = 'ORG_DEFAULT';
+        </sql>
+    </changeSet>
+
+    <!-- Pricing Rules: DISTANCE-based tiers -->
+    <changeSet id="005-seed-distance-pricing-rules" author="voidtracker-billing">
+        <!-- Tier 1: Short distance 0-10km -->
+        <sql>
+            INSERT INTO billing_pricing_rules (id, rate_card_id, metric, range_start, range_end, base_price, unit_price)
+            SELECT 
+                gen_random_uuid(),
+                id,
+                'DISTANCE',
+                0.00,
+                10.00,
+                5.00,   -- Base €5
+                0.00    -- Flat rate
+            FROM billing_rate_cards WHERE client_id = 'ORG_DEFAULT';
+        </sql>
+        
+        <!-- Tier 2: Medium distance 10-50km -->
+        <sql>
+            INSERT INTO billing_pricing_rules (id, rate_card_id, metric, range_start, range_end, base_price, unit_price)
+            SELECT 
+                gen_random_uuid(),
+                id,
+                'DISTANCE',
+                10.00,
+                50.00,
+                10.00,  -- Base €10
+                0.50    -- €0.50 per km
+            FROM billing_rate_cards WHERE client_id = 'ORG_DEFAULT';
+        </sql>
+        
+        <!-- Tier 3: Long distance 50km+ -->
+        <sql>
+            INSERT INTO billing_pricing_rules (id, rate_card_id, metric, range_start, range_end, base_price, unit_price)
+            SELECT 
+                gen_random_uuid(),
+                id,
+                'DISTANCE',
+                50.00,
+                NULL,   -- Infinity
+                25.00,  -- Base €25
+                1.00    -- €1 per km
+            FROM billing_rate_cards WHERE client_id = 'ORG_DEFAULT';
+        </sql>
+    </changeSet>
+
+    <!-- Pricing Rules: ITEM-based (per-order handling fee) -->
+    <changeSet id="006-seed-item-pricing-rule" author="voidtracker-billing">
+        <sql>
+            INSERT INTO billing_pricing_rules (id, rate_card_id, metric, range_start, range_end, base_price, unit_price)
+            SELECT 
+                gen_random_uuid(),
+                id,
+                'ITEM',
+                0.00,
+                NULL,
+                3.00,   -- €3 handling fee per order
+                0.00
+            FROM billing_rate_cards WHERE client_id = 'ORG_DEFAULT';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

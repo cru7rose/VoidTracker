@@ -1,0 +1,111 @@
+Logging in...
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:8090 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8090...
+* Connected to localhost (::1) port 8090
+> POST /api/auth/login HTTP/1.1
+> Host: localhost:8090
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 50
+> 
+} [50 bytes data]
+* upload completely sent off: 50 bytes
+< HTTP/1.1 200 
+< Vary: Origin
+< Vary: Access-Control-Request-Method
+< Vary: Access-Control-Request-Headers
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 0
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Tue, 30 Dec 2025 13:01:12 GMT
+< 
+{ [798 bytes data]
+100   841    0   791  100    50   2230    141 --:--:-- --:--:-- --:--:--  2375
+* Connection #0 to host localhost left intact
+Login successful.
+Creating Order A...
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:8091 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8091...
+* Connected to localhost (::1) port 8091
+> POST /api/orders HTTP/1.1
+> Host: localhost:8091
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NVUEVSX1VTRVIiXSwidXNlcklkIjoiYWIyZDFlNjUtMjZlOC00ZWYzLTlhYjgtMzJkNGFkMjlhMjhlIiwic3ViIjoiZGlzcGF0Y2hlciIsImlhdCI6MTc2NzA5OTY3MiwiZXhwIjoxNzY3MTM1NjcyfQ.oPozL-__8_m7Ka0-ynSz_IbIV5BpRmkxuLUG-d63OJ8
+> Content-Type: application/json
+> Content-Length: 686
+> 
+} [686 bytes data]
+* upload completely sent off: 686 bytes
+< HTTP/1.1 201 
+< Vary: Origin
+< Vary: Access-Control-Request-Method
+< Vary: Access-Control-Request-Headers
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 0
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Tue, 30 Dec 2025 13:01:12 GMT
+< 
+{ [1042 bytes data]
+100  1721    0  1035  100   686  30155  19987 --:--:-- --:--:-- --:--:-- 50617
+* Connection #0 to host localhost left intact
+{"orderId":"53e6f703-07ff-4e7e-be89-0c6e5c6490db","status":"NEW","priority":"STANDARD","pickup":null,"delivery":{"customerName":null,"attention":null,"street":"ul. Zlota","streetNumber":"44","postalCode":"00-120","city":"Warsaw","country":"POL","mail":null,"phone":"+48111111111","note":null,"lat":52.2297,"lon":21.0122,"sla":null,"route":null,"routePart":null,"type":null,"confidenceScore":null,"source":null},"aPackage":{"barcode1":null,"barcode2":null,"colli":null,"weight":1.0,"volume":null,"length":null,"width":null,"height":null,"adr":null,"routeDistance":null,"serviceType":null,"driverNote":null,"invoiceNote":null,"price":null,"currency":null},"timestamps":{"created":"2025-12-30T13:01:12.633457886Z","lastStatusChange":"2025-12-30T13:01:12.633279428Z"},"assignedDriver":null,"epods":null,"requiredServices":[],"remark":null,"pickupTimeFrom":"2025-12-30T13:01:12.631084095Z","pickupTimeTo":"2025-12-30T21:01:12.631084095Z","deliveryTimeFrom":"2025-12-31T13:01:12.631084095Z","deliveryTimeTo":"2025-12-31T21:01:12.631084095Z"}
+Creating Order B...
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:8091 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8091...
+* Connected to localhost (::1) port 8091
+> POST /api/orders HTTP/1.1
+> Host: localhost:8091
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NVUEVSX1VTRVIiXSwidXNlcklkIjoiYWIyZDFlNjUtMjZlOC00ZWYzLTlhYjgtMzJkNGFkMjlhMjhlIiwic3ViIjoiZGlzcGF0Y2hlciIsImlhdCI6MTc2NzA5OTY3MiwiZXhwIjoxNzY3MTM1NjcyfQ.oPozL-__8_m7Ka0-ynSz_IbIV5BpRmkxuLUG-d63OJ8
+> Content-Type: application/json
+> Content-Length: 684
+> 
+} [684 bytes data]
+* upload completely sent off: 684 bytes
+< HTTP/1.1 201 
+< Vary: Origin
+< Vary: Access-Control-Request-Method
+< Vary: Access-Control-Request-Headers
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 0
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Tue, 30 Dec 2025 13:01:12 GMT
+< 
+{ [1040 bytes data]
+100  1717    0  1033  100   684  35951  23805 --:--:-- --:--:-- --:--:-- 61321
+* Connection #0 to host localhost left intact
+{"orderId":"c3f1445c-a6e8-46f5-bb5c-62027c6af9cd","status":"NEW","priority":"HIGH","pickup":null,"delivery":{"customerName":null,"attention":null,"street":"ul. Wilcza","streetNumber":"10","postalCode":"00-500","city":"Warsaw","country":"POL","mail":null,"phone":"+48222222222","note":null,"lat":52.2297,"lon":21.0122,"sla":null,"route":null,"routePart":null,"type":null,"confidenceScore":null,"source":null},"aPackage":{"barcode1":null,"barcode2":null,"colli":null,"weight":50.0,"volume":null,"length":null,"width":null,"height":null,"adr":null,"routeDistance":null,"serviceType":null,"driverNote":null,"invoiceNote":null,"price":null,"currency":null},"timestamps":{"created":"2025-12-30T13:01:12.672595178Z","lastStatusChange":"2025-12-30T13:01:12.672427303Z"},"assignedDriver":null,"epods":null,"requiredServices":[],"remark":null,"pickupTimeFrom":"2025-12-30T13:01:12.670917220Z","pickupTimeTo":"2025-12-30T21:01:12.670917220Z","deliveryTimeFrom":"2025-12-31T13:01:12.670917220Z","deliveryTimeTo":"2025-12-31T21:01:12.670917220Z"}
+Orders created.

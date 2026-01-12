@@ -1,0 +1,124 @@
+--- Basic Check ---
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0   467    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.1 200 OK
+Server: nginx/1.28.1
+Date: Fri, 02 Jan 2026 10:09:04 GMT
+Content-Type: text/html
+Content-Length: 467
+Last-Modified: Fri, 02 Jan 2026 10:08:24 GMT
+Connection: keep-alive
+ETag: "69579918-1d3"
+Cache-Control: no-store, no-cache, must-revalidate
+Accept-Ranges: bytes
+
+--- Login ---
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:81 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:81...
+* Connected to localhost (::1) port 81
+> POST /api/auth/login HTTP/1.1
+> Host: localhost:81
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 44
+> 
+} [44 bytes data]
+* upload completely sent off: 44 bytes
+100    44    0     0  100    44      0    212 --:--:-- --:--:-- --:--:--   212< HTTP/1.1 200 
+< Server: nginx/1.28.1
+< Date: Fri, 02 Jan 2026 10:09:05 GMT
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< Vary: Origin
+< Vary: Access-Control-Request-Method
+< Vary: Access-Control-Request-Headers
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 0
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< 
+{ [755 bytes data]
+100   787    0   743  100    44   1681     99 --:--:-- --:--:-- --:--:--  1780
+* Connection #0 to host localhost left intact
+Token Acquired: eyJhbGciOi...
+--- Check Manifests ---
+Note: Unnecessary use of -X or --request, GET is already inferred.
+* Host localhost:81 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:81...
+* Connected to localhost (::1) port 81
+> GET /api/planning/manifests?date=2026-01-02 HTTP/1.1
+> Host: localhost:81
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInVzZXJJZCI6IjZmNDRiNWZhLTBiOWQtNDY2Zi04NTA0LTczYzVkNjlhNzM4NCIsInN1YiI6ImNydXoiLCJpYXQiOjE3NjczNDg1NDUsImV4cCI6MTc2NzM4NDU0NX0.a4zBUWqH6BVVtNriuiSaT8G3sM1eZilEGMXeyTWSgCM
+> 
+* Request completely sent off
+< HTTP/1.1 200 
+< Server: nginx/1.28.1
+< Date: Fri, 02 Jan 2026 10:09:05 GMT
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< Vary: Origin
+< Vary: Access-Control-Request-Method
+< Vary: Access-Control-Request-Headers
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 0
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< 
+{ [1034 bytes data]
+100  1022    0  1022    0     0  12907      0 --:--:-- --:--:-- --:--:-- 12936
+* Connection #0 to host localhost left intact
+[{"id":"e56c2237-d330-43cd-a7fc-7b2387a620bf","driverId":"6f44b5fa-0b9d-466f-8504-73c5d69a7384","driverName":null,"date":"2026-01-02","vehicleId":"6890fa2c-317e-44b6-ade6-ddc62e099de0","vehicleName":null,"status":"ASSIGNED","optimizationScore":0.0,"totalDistanceMeters":0.0,"estimatedDurationMillis":0,"externalReference":"MAN-20260102-6890","vehiclePlate":null,"metadata":"{\"source\": \"manual_publish\", \"ecrm_version\": \"v1.0\"}","routes":[{"id":"4e60a4f7-77af-4515-8ffb-12b2745aacca","orderId":"ba6090eb-fdba-4ece-b4cb-ccd73453e561","sequence":1,"address":"Order ba6090eb-fdba-4ece-b4cb-ccd73453e561","timeWindow":"09:00-17:00","estimatedArrival":"00:00","status":"PENDING","latitude":0.0,"longitude":0.0,"activityType":null},{"id":"7068549c-efd8-41fb-9019-650f9ac84ac8","orderId":"8deac2b4-6ef7-4322-a514-a78e887e9572","sequence":2,"address":"Order 8deac2b4-6ef7-4322-a514-a78e887e9572","timeWindow":"09:00-17:00","estimatedArrival":"00:00","status":"PENDING","latitude":0.0,"longitude":0.0,"activityType":null}]}]--- Check Users ---
+Note: Unnecessary use of -X or --request, GET is already inferred.
+* Host localhost:81 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:81...
+* Connected to localhost (::1) port 81
+> GET /api/users HTTP/1.1
+> Host: localhost:81
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInVzZXJJZCI6IjZmNDRiNWZhLTBiOWQtNDY2Zi04NTA0LTczYzVkNjlhNzM4NCIsInN1YiI6ImNydXoiLCJpYXQiOjE3NjczNDg1NDUsImV4cCI6MTc2NzM4NDU0NX0.a4zBUWqH6BVVtNriuiSaT8G3sM1eZilEGMXeyTWSgCM
+> 
+* Request completely sent off
+< HTTP/1.1 200 
+< Server: nginx/1.28.1
+< Date: Fri, 02 Jan 2026 10:09:05 GMT
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< Vary: Origin
+< Vary: Access-Control-Request-Method
+< Vary: Access-Control-Request-Headers
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 0
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< 
+{ [1072 bytes data]
+100  1060    0  1060    0     0  28183      0 --:--:-- --:--:-- --:--:-- 28648
+* Connection #0 to host localhost left intact
+[{"userId":"61251759-0fde-4e55-be5a-6348fd99b308","username":"demo","email":"demo@customer.com","enabled":true,"legacyId":null,"fullName":null,"avatarUrl":null,"bio":null,"roles":[],"organizationConfig":null},{"userId":"aa5635fa-c57d-4e96-b535-3b4442f80dd7","username":"dispatcher","email":"dispatcher@danxils.com","enabled":true,"legacyId":null,"fullName":null,"avatarUrl":null,"bio":null,"roles":[],"organizationConfig":null},{"userId":"6a500acb-eab8-4ebd-b6a4-0f04b5081b04","username":"driver","email":"driver@danxils.com","enabled":true,"legacyId":null,"fullName":null,"avatarUrl":null,"bio":null,"roles":[],"organizationConfig":null},{"userId":"6f44b5fa-0b9d-466f-8504-73c5d69a7384","username":"cruz","email":"cruz@voidtracker.com","enabled":true,"legacyId":null,"fullName":null,"avatarUrl":null,"bio":null,"roles":[],"organizationConfig":null},{"userId":"81640bc3-feab-4959-b45a-ef80ce713d48","username":"test_admin","email":"abcd@1234.123","enabled":true,"legacyId":null,"fullName":null,"avatarUrl":null,"bio":null,"roles":[],"organizationConfig":null}]

@@ -1,0 +1,270 @@
+# version: '3.8' # Obsolete in newer Docker Compose
+
+# Szablon dla wszystkich mikroserwisów (Extension Field)
+x-app-template: &app-template
+  restart: unless-stopped
+  networks: [ "danxils-network" ]
+  env_file: .env
+  environment:
+    - SERVER_PORT=8080
+    - SPRING_PROFILES_ACTIVE=docker
+    - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+    - SPRING_DATASOURCE_USERNAME=postgres
+    - SPRING_DATASOURCE_USERNAME=postgres
+    - SPRING_DATASOURCE_PASSWORD=password
+  volumes:
+    - ./logs:/app/logs
+    - ./logback-override.xml:/app/logback-override.xml
+
+services:
+  # --- Serwisy z Dostępem do Bazy Danych ---
+  iam-service:
+    <<: *app-template
+    build: ./modules/nexus/iam-service
+    image: danxils/iam-service:latest
+    container_name: iam-service
+    ports: [ "8090:8080" ]
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${IAM_DB_NAME}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/iam-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  order-service:
+    <<: *app-template
+    build: ./modules/nexus/order-service
+    image: danxils/order-service:latest
+    container_name: order-service
+    ports: [ "8091:8080" ]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${ORDERS_DB_NAME}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/order-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  event-emitter-service:
+    build: ./modules/titan/event-emitter-service
+    image: danxils/event-emitter-service:latest
+    ports:
+      - "8100:8100"
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - N8N_BASE_URL=${N8N_BASE_URL:-http://n8n:5678}
+      - LOGGING_FILE_NAME=/app/logs/event-emitter-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+    volumes:
+      - ./logs:/app/logs
+      - ./logback-override.xml:/app/logback-override.xml
+    networks:
+      - danxils-network
+
+  planning-service:
+    <<: *app-template
+    build: ./modules/flux/planning-service
+    image: danxils/planning-service:latest
+    container_name: planning-service
+    ports: [ "8092:8080" ]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${PLANNING_DB_NAME}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - FEIGN_CLIENT_CONFIG_ORDER-SERVICE_URL=${ORDER_SERVICE_URL}
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/planning-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+    volumes:
+      - ./logs:/app/logs
+      - ./logback-override.xml:/app/logback-override.xml
+      - ./DANXILS_HUBS.xlsx:/app/DANXILS_HUBS.xlsx
+
+  analytics-service:
+    <<: *app-template
+    build: ./modules/nexus/analytics-service
+    image: danxils/analytics-service:latest
+    container_name: analytics-service
+    ports: [ "8095:8080" ]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${ANALYTICS_DB_NAME}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/analytics-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  audit-service:
+    <<: *app-template
+    build: ./modules/titan/audit-service
+    image: danxils/audit-service:latest
+    container_name: audit-service
+    ports: [ "8096:8080" ]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${AUDIT_DB_NAME}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/audit-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  crm-service:
+    <<: *app-template
+    build: ./modules/nexus/crm-service
+    image: danxils/crm-service:latest
+    container_name: crm-service
+    ports: [ "8094:8080" ]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/voidtracker_crm
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/crm-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  admin-panel-service:
+    <<: *app-template
+    build: ./modules/nexus/admin-panel-service
+    image: danxils/admin-panel-service:latest
+    container_name: admin-panel-service
+    ports: [ "8097:8080" ]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${ADMIN_PANEL_DB_NAME}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - FEIGN_CLIENT_CONFIG_ADDRESS-VERIFICATION-SERVICE_URL=${ADDRESS_VERIFICATION_SERVICE_URL}
+      - FEIGN_CLIENT_CONFIG_IAM-APP_URL=${IAM_SERVICE_URL}
+      - FEIGN_CLIENT_CONFIG_ORDER-SERVICE_URL=${ORDER_SERVICE_URL}
+      - FEIGN_CLIENT_CONFIG_PLANNING-SERVICE_URL=${PLANNING_SERVICE_URL}
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/admin-panel-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  billing-service:
+    <<: *app-template
+    build: ./modules/nexus/billing-service
+    image: danxils/billing-service:latest
+    container_name: billing-service
+    ports: [ "8101:8080" ]
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY=${JWT_SECRET_BASE64}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${BILLING_DB_NAME}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_PASSWORD=password
+      - LOGGING_FILE_NAME=/app/logs/billing-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  # --- Serwisy bez Bazy Danych ---
+  address-verification-service:
+    <<: *app-template
+    build: ./modules/nexus/address-verification-service
+    image: danxils/address-verification-service:latest
+    container_name: address-verification-service
+    ports: [ "8093:8080" ]
+    environment:
+      - LOGGING_FILE_NAME=/app/logs/address-verification-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  tracking-service:
+    <<: *app-template
+    build: ./modules/titan/tracking-service
+    image: danxils/tracking-service:latest
+    container_name: tracking-service
+    ports: [ "8102:8080" ]
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - LOGGING_FILE_NAME=/app/logs/tracking-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  dashboard-service:
+    <<: *app-template
+    build: ./modules/nexus/dashboard-service
+    image: danxils/dashboard-service:latest
+    container_name: dashboard-service
+    ports: [ "8098:8080" ]
+    environment:
+      - FEIGN_CLIENT_CONFIG_ANALYTICS-SERVICE_URL=${ANALYTICS_SERVICE_URL}
+      - FEIGN_CLIENT_CONFIG_IAM-APP_URL=${IAM_SERVICE_URL}
+      - FEIGN_CLIENT_CONFIG_ORDER-SERVICE_URL=${ORDER_SERVICE_URL}
+      - FEIGN_CLIENT_CONFIG_ORDER-SERVICE_URL=${ORDER_SERVICE_URL}
+      - LOGGING_FILE_NAME=/app/logs/dashboard-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+
+  driver-app-service:
+    <<: *app-template
+    build: ./modules/titan/driver-app-service
+    image: danxils/driver-app-service:latest
+    container_name: driver-app-service
+    ports: [ "8099:8080" ]
+    environment:
+      - LOGGING_FILE_NAME=/app/logs/driver-app-service.log
+      - LOGGING_CONFIG=/app/logback-override.xml
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/active_db
+
+  admin-frontend:
+    build: ./modules/web/voidtracker-web
+    container_name: admin-frontend
+    ports: [ "81:80" ]
+    depends_on:
+      - iam-service
+      - order-service
+    networks:
+      - danxils-network
+    environment:
+      - FEIGN_CLIENT_CONFIG_ORDER-SERVICE_URL=${ORDER_SERVICE_URL}
+
+  driver-pwa:
+    image: nginx:alpine
+    container_name: driver-pwa
+    ports: [ "4173:80" ]
+    volumes:
+      - ./modules/ghost/driver-pwa/dist:/usr/share/nginx/html
+      - ./modules/ghost/driver-pwa/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - danxils-network
+    depends_on:
+      - driver-app-service
+  # --- Infrastruktura (Moved to docker-compose.infra.yml) ---
+  # Services should now connect to 'kafka' and 'postgres' on the external network.
+
+networks:
+  danxils-network:
+    external: true
+    name: voidtracker_danxils-network

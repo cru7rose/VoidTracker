@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="001-enable-uuid-extension" author="system">
+        <sql>
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+            CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+        </sql>
+        <rollback>
+            DROP EXTENSION IF EXISTS "uuid-ossp";
+            DROP EXTENSION IF EXISTS "pgcrypto";
+        </rollback>
+    </changeSet>
+
+    <!-- PostGIS temporarily disabled - not available in current PostgreSQL image -->
+    <!--
+    <changeSet id="002-enable-postgis" author="system">
+        <sql>
+            CREATE EXTENSION IF NOT EXISTS "postgis";
+            CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
+        </sql>
+        <rollback>
+            DROP EXTENSION IF EXISTS "earthdistance";
+            DROP EXTENSION IF EXISTS "postgis";
+        </rollback>
+    </changeSet>
+    -->
+
+</databaseChangeLog>

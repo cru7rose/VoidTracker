@@ -1,0 +1,62 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.danxils:order-service >----------------------
+[INFO] Building order-service 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ order-service ---
+[INFO] Deleting /Users/VoidTracker/order-service/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ order-service ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 7 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ order-service ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 107 source files with javac [debug release 17] to target/classes
+[INFO] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/service/AddressVerificationService.java: /Users/VoidTracker/order-service/src/main/java/com/example/order_service/service/AddressVerificationService.java uses unchecked or unsafe operations.
+[INFO] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/service/AddressVerificationService.java: Recompile with -Xlint:unchecked for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[77,43] cannot find symbol
+  symbol:   variable CustomerType
+  location: class com.example.order_service.config.DataInitializer
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[140,22] cannot find symbol
+  symbol:   method setBarcode(java.lang.String)
+  location: variable asset of type com.example.order_service.entity.AssetEntity
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[141,22] cannot find symbol
+  symbol:   method setWeight(java.lang.Double)
+  location: variable asset of type com.example.order_service.entity.AssetEntity
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[142,22] cannot find symbol
+  symbol:   method setAssetType(java.lang.String)
+  location: variable asset of type com.example.order_service.entity.AssetEntity
+[INFO] 4 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.402 s
+[INFO] Finished at: 2025-12-09T20:20:16+01:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project order-service: Compilation failure: Compilation failure: 
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[77,43] cannot find symbol
+[ERROR]   symbol:   variable CustomerType
+[ERROR]   location: class com.example.order_service.config.DataInitializer
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[140,22] cannot find symbol
+[ERROR]   symbol:   method setBarcode(java.lang.String)
+[ERROR]   location: variable asset of type com.example.order_service.entity.AssetEntity
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[141,22] cannot find symbol
+[ERROR]   symbol:   method setWeight(java.lang.Double)
+[ERROR]   location: variable asset of type com.example.order_service.entity.AssetEntity
+[ERROR] /Users/VoidTracker/order-service/src/main/java/com/example/order_service/config/DataInitializer.java:[142,22] cannot find symbol
+[ERROR]   symbol:   method setAssetType(java.lang.String)
+[ERROR]   location: variable asset of type com.example.order_service.entity.AssetEntity
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

@@ -1,0 +1,1 @@
+MATCH (d:Driver {driverId: 'D1'})-[:OPERATES]->(r:Route)-[:SERVES]->(l:Location) RETURN d, r, l

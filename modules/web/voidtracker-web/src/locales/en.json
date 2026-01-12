@@ -1,0 +1,110 @@
+{
+    "logout": "Logout",
+    "view_notifications": "View Notifications",
+    "common": {
+        "dashboard": "Dashboard",
+        "dispatch": "Dispatch Board",
+        "orders": "Orders",
+        "users": "Users",
+        "settings": "Settings",
+        "logout": "Logout",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "status": "Status",
+        "actions": "Actions",
+        "loading": "Loading...",
+        "no_data": "No data",
+        "search": "Search...",
+        "filter": "Filter",
+        "all": "All",
+        "view": "View",
+        "download": "Download PDF",
+        "view_notifications": "View Notifications"
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "my_orders": "My Orders",
+        "new_order": "New Order",
+        "bulk_upload": "Bulk Upload",
+        "address_book": "Address Book",
+        "invoices": "Invoices",
+        "manifests": "Manifests",
+        "zone_management": "Zone Management",
+        "vehicle_profiles": "Vehicle Profiles",
+        "carrier_compliance": "Carrier Compliance",
+        "report_builder": "Report Builder",
+        "communications": "Communications",
+        "audit_logs": "Audit Logs",
+        "configuration": "Configuration",
+        "organizations": "Organizations",
+        "leaderboard": "Leaderboard"
+    },
+    "customer": {
+        "dashboard": {
+            "title": "Customer Dashboard",
+            "active_orders": "Active Orders",
+            "delivered_month": "Delivered This Month",
+            "total_orders": "Total Orders",
+            "pending_invoices": "Pending Invoices",
+            "total_spend": "Total Spend (Month)",
+            "recent_orders": "Recent Orders",
+            "create_order": "Create New Order",
+            "no_orders": "No orders yet. Create your first order!",
+            "order_id": "Order ID",
+            "delivery_address": "Delivery Address",
+            "date": "Date"
+        },
+        "orders": {
+            "title": "My Orders",
+            "create_new": "Create New Order",
+            "search_placeholder": "Search orders...",
+            "all_statuses": "All Statuses",
+            "all_departments": "All Departments",
+            "pickup": "Pickup",
+            "delivery": "Delivery",
+            "dept": "Dept",
+            "type": "Type",
+            "time_windows": "Time Windows",
+            "services": "Services",
+            "status": {
+                "NEW": "New",
+                "INGESTED": "Ingested",
+                "PLANNED": "Planned",
+                "PICKUP": "Pickup",
+                "OUT_FOR_DELIVERY": "Out for Delivery",
+                "DELIVERED": "Delivered",
+                "EXCEPTION": "Exception",
+                "CANCELLED": "Cancelled"
+            }
+        },
+        "invoices": {
+            "title": "Invoices",
+            "invoice_number": "Invoice #",
+            "month": "Month",
+            "amount": "Amount",
+            "status": "Status",
+            "paid": "Paid",
+            "unpaid": "Unpaid"
+        }
+    },
+    "settings": {
+        "title": "System Settings",
+        "general": "General",
+        "branding": "Branding",
+        "workflow": "Workflow",
+        "billing": "Billing",
+        "communication": "Communication",
+        "onboarding": "Driver Onboarding",
+        "automation": "Automation",
+        "notifications": "Notifications"
+    },
+    "driver": {
+        "tasks": "My Tasks",
+        "scan": "Scan",
+        "complete": "Complete",
+        "failed": "Failed",
+        "map": "Map"
+    }
+}

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="007-create-invoices-table" author="voidtracker-billing">
+        <createTable tableName="billing_invoices">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="invoice_number" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="client_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subtotal" type="decimal(19,2)" defaultValueNumeric="0.00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tax_amount" type="decimal(19,2)" defaultValueNumeric="0.00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_amount" type="decimal(19,2)" defaultValueNumeric="0.00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issued_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="paid_date" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="payment_reference" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="notes" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        
+        <createIndex tableName="billing_invoices" indexName="idx_invoice_client_status">
+            <column name="client_id"/>
+            <column name="status"/>
+        </createIndex>
+        
+        <createIndex tableName="billing_invoices" indexName="idx_invoice_order">
+            <column name="order_id"/>
+        </createIndex>
+        
+        <createIndex tableName="billing_invoices" indexName="idx_invoice_issued_date">
+            <column name="issued_date"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="008-create-invoice-line-items-table" author="voidtracker-billing">
+        <createTable tableName="billing_invoice_line_items">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="invoice_id" type="uuid">
+                <constraints nullable="false" 
+                            foreignKeyName="fk_line_item_invoice"
+                            references="billing_invoices(id)"
+                            deleteCascade="true"/>
+            </column>
+            <column name="line_number" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="decimal(19,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unit" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unit_price" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_price" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        
+        <createIndex tableName="billing_invoice_line_items" indexName="idx_line_item_invoice">
+            <column name="invoice_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

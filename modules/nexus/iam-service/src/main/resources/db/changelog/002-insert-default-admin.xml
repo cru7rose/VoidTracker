@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="4-insert-default-admin-user" author="system">
+        <comment>SEED: Inserts default 'cruz' admin user</comment>
+        
+        <insert tableName="iam_users">
+            <column name="user_id" value="79CDDB0B-FDFE-4E01-8A23-E315F8A64D22"/>
+            <column name="username" value="cruz"/>
+            <!-- Hash for 'meduza91' -->
+            <column name="password" value="$2y$10$vHWwC29mhwH82hozWNZuuui/yTWCGIekkT4o3HduinhzrQpld0GZK"/>
+            <column name="email" value="cruz@voidtracker.com"/>
+            <column name="enabled" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="iam_user_roles">
+            <column name="user_id" value="79CDDB0B-FDFE-4E01-8A23-E315F8A64D22"/>
+            <column name="roles" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

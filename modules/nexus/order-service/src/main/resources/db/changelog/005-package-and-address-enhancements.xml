@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="005-add-package-enhancements" author="danxils-system">
+        <comment>
+            Add missing package fields from Oder_Map.txt specification:
+            - route_distance: Dystans trasy w km
+            - service_type: Typ usługi transportowej
+            - driver_note: Uwagi dla kierowcy
+            - invoice_note: Uwagi do faktury
+            - price: Cena usługi
+            - currency: Waluta (ISO 4217)
+        </comment>
+
+        <!-- Add route_distance column -->
+        <addColumn tableName="vt_packages">
+            <column name="route_distance" type="DOUBLE">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add service_type column -->
+        <addColumn tableName="vt_packages">
+            <column name="service_type" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add driver_note column -->
+        <addColumn tableName="vt_packages">
+            <column name="driver_note" type="VARCHAR(1000)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add invoice_note column -->
+        <addColumn tableName="vt_packages">
+            <column name="invoice_note" type="VARCHAR(500)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add price column -->
+        <addColumn tableName="vt_packages">
+            <column name="price" type="DECIMAL(10,2)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add currency column -->
+        <addColumn tableName="vt_packages">
+            <column name="currency" type="CHAR(3)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="vt_packages" columnName="route_distance"/>
+            <dropColumn tableName="vt_packages" columnName="service_type"/>
+            <dropColumn tableName="vt_packages" columnName="driver_note"/>
+            <dropColumn tableName="vt_packages" columnName="invoice_note"/>
+            <dropColumn tableName="vt_packages" columnName="price"/>
+            <dropColumn tableName="vt_packages" columnName="currency"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="006-add-address-route-fields" author="danxils-system">
+        <comment>
+            Add route-related fields to address table:
+            - route: Numer trasy
+            - route_part: Część trasy
+            - type: Typ adresu (F=From, D=Delivery)
+        </comment>
+
+        <!-- Add route column -->
+        <addColumn tableName="vt_addresses">
+            <column name="route" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add route_part column -->
+        <addColumn tableName="vt_addresses">
+            <column name="route_part" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add type column -->
+        <addColumn tableName="vt_addresses">
+            <column name="type" type="CHAR(1)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="vt_addresses" columnName="route"/>
+            <dropColumn tableName="vt_addresses" columnName="route_part"/>
+            <dropColumn tableName="vt_addresses" columnName="type"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="007-add-indexes-for-performance" author="danxils-system">
+        <comment>
+            Add indexes to improve query performance:
+            - Index on service_type for filtering orders by service level
+            - Index on route for route-based queries
+        </comment>
+
+        <createIndex indexName="idx_package_service_type" tableName="vt_packages">
+            <column name="service_type"/>
+        </createIndex>
+
+        <createIndex indexName="idx_address_route" tableName="vt_addresses">
+            <column name="route"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex indexName="idx_package_service_type" tableName="vt_packages"/>
+            <dropIndex indexName="idx_address_route" tableName="vt_addresses"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

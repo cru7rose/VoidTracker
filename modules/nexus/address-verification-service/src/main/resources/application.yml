@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: address-verification-service
+
+# Konfiguracja kluczy API dla serwisów zewnętrznych
+google:
+  maps:
+    api:
+      key: ${GOOGLE_MAPS_API_KEY}
+      url: https://maps.googleapis.com/maps/api/geocode/json
+here:
+  api:
+    key: ${HERE_API_KEY}
+    url: https://geocode.search.hereapi.com/v1/geocode
+app:
+  nominatim:
+    api:
+      email: ${NOMINATIM_API_EMAIL:admin@voidtracker.local}
+      url: https://nominatim.openstreetmap.org/search
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+jwt:
+  secret:
+    key: ${JWT_SECRET_BASE64}

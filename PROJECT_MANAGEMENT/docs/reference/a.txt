@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCPmoH+6bFtixHHy1jUrr/y8c61tfrfYLWs6zRjEhDjP4G9TSI+NJTzEen+ypiwG2A7wWRtnAFFaFcy7Ato0WIlMJjrFNwvFk+Vg5gDeIKw0PvhaLNSt2odZfiX0gA7/q6YN90ZBXFmeDaJ+ffRYH4AYuENevsFzAWN4jOKZFNhhVgbRSYhKYYcC6ufCRPkdqMitAh/RVQ3tZDPgBVQWWSXdQmTZOFV8x4DDv9cX9qtOC+pDmsAntvWfQC3r19IRUovm4kheVZmQTsmiHZN6AJNiEFEY2IizrGVXhR1ZrPp8NxgO9G6Rodjc+YqJG5VxuwooiiSbK2BN9BXz3ZoKxyx+Jn1HtYzDb0m3oDbQfby5LFJIZ6Kkcgg16HKtVee2pCZ2dsqkXCssou2OzjT/89bGXvStchSMsV3hlM+geARnjpbuj8DKtNxtYdkdPuQVArhuWKCRJeVXMVxOAivQ7XsisgByzWFrzZ0e8zAg7cz21F5RKPga0kBsFz3HtIMFnM= student@network-protocols" > /home/developer/.ssh/authorized_keys
+chmod 700 /home/developer/.ssh
+chmod 600 /home/developer/.ssh/authorized_keys
+sh -c "rm /tmp/*; sleep 60"
+SecretTOOR12345

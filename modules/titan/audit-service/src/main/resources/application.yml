@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: audit-service
+  # --- Konfiguracja Bazy Danych ---
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/vt_audit_service}
+    username: ${POSTGRES_USER:user}
+    password: ${POSTGRES_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  # --- Konfiguracja Liquibase ---
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+  # --- Konfiguracja Kafka ---
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${spring.application.name}
+
+# --- Właściwości Aplikacji ---
+app:
+  kafka:
+    topics:
+      # Tematy, które ten serwis konsumuje
+      orders-status-changed: "orders.status.changed"
+      orders-assigned: "orders.assigned"
+      users-created: "users.created"
+      users-updated: "users.updated"
+      users-deleted: "users.deleted"
+
+# --- Konfiguracja Obserwowalności ---
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="050-create-order-number-sequence" author="enterprise-schema">
+        <sql splitStatements="false">
+            CREATE SEQUENCE IF NOT EXISTS vt_order_seq START WITH 1000000;
+        </sql>
+        <rollback>
+            DROP SEQUENCE IF EXISTS vt_order_seq;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="051-create-orders-table" author="enterprise-schema">
+        <createTable tableName="vt_orders">
+            <!-- Primary Identification -->
+            <column name="order_id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_number" type="VARCHAR(50)">
+                <constraints unique="true"/>
+            </column>
+            <column name="legacy_id" type="VARCHAR(255)"/>
+            <column name="external_reference" type="VARCHAR(255)"/>
+
+            <!-- Customer & Ownership -->
+            <column name="ordering_customer_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="billing_customer_id" type="UUID"/>
+            <column name="department" type="VARCHAR(100)"/>
+            <column name="cost_center" type="VARCHAR(50)"/>
+
+            <!-- Order Classification -->
+            <column name="order_type" type="VARCHAR(50)" defaultValue="STANDARD"/>
+            <column name="service_level" type="VARCHAR(50)" defaultValue="STANDARD"/>
+            <column name="priority" type="VARCHAR(20)" defaultValue="NORMAL"/>
+            <column name="is_return" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="is_transfer" type="BOOLEAN" defaultValueBoolean="false"/>
+
+            <!-- Addresses & Routing -->
+            <column name="pickup_address_id" type="UUID"/>
+            <column name="delivery_address_id" type="UUID"/>
+            <column name="actual_pickup_address_id" type="UUID"/>
+            <column name="actual_delivery_address_id" type="UUID"/>
+
+            <!-- Time Windows & SLA -->
+            <column name="pickup_time_from" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="pickup_time_to" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="delivery_time_from" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="delivery_time_to" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="requested_delivery_date" type="DATE"/>
+            <column name="promised_delivery_date" type="DATE"/>
+            <column name="sla_deadline" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="sla_buffer_minutes" type="INTEGER" defaultValue="30"/>
+
+            <!-- Actual Timestamps (Event-driven) -->
+            <column name="order_placed_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="accepted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="dispatched_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="picked_up_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="in_transit_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="out_for_delivery_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="delivered_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="completed_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="cancelled_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+            <!-- Status & Lifecycle -->
+            <column name="status" type="VARCHAR(50)" defaultValue="PENDING">
+                <constraints nullable="false"/>
+            </column>
+            <column name="substatus" type="VARCHAR(50)"/>
+            <column name="status_reason" type="VARCHAR(255)"/>
+            <column name="last_status_change_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="is_on_hold" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="hold_reason" type="VARCHAR(255)"/>
+
+            <!-- Assignment & Execution -->
+            <column name="assigned_driver_id" type="UUID"/>
+            <column name="assigned_vehicle_id" type="UUID"/>
+            <column name="assigned_route_id" type="UUID"/>
+            <column name="route_sequence_number" type="INTEGER"/>
+            <column name="planned_pickup_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="planned_delivery_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+            <!-- Cargo & Requirements -->
+            <column name="total_weight_kg" type="DECIMAL(10,2)"/>
+            <column name="total_volume_m3" type="DECIMAL(10,3)"/>
+            <column name="total_pieces" type="INTEGER"/>
+            <column name="requires_refrigeration" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="requires_tail_lift" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="requires_adr" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="requires_signature" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="stackable" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="fragile" type="BOOLEAN" defaultValueBoolean="false"/>
+
+            <!-- Proof of Delivery -->
+            <column name="pod_signature" type="TEXT"/>
+            <column name="pod_signer_name" type="VARCHAR(255)"/>
+            <column name="pod_timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="pod_location_lat" type="DOUBLE PRECISION"/>
+            <column name="pod_location_lon" type="DOUBLE PRECISION"/>
+            <column name="pod_photos" type="JSONB"/>
+            <column name="pod_notes" type="TEXT"/>
+
+            <!-- Financial & Billing -->
+            <column name="estimated_cost" type="DECIMAL(12,2)"/>
+            <column name="actual_cost" type="DECIMAL(12,2)"/>
+            <column name="customer_price" type="DECIMAL(12,2)"/>
+            <column name="currency" type="VARCHAR(3)" defaultValue="PLN"/>
+            <column name="billing_status" type="VARCHAR(50)" defaultValue="PENDING"/>
+            <column name="invoice_number" type="VARCHAR(100)"/>
+            <column name="invoiced_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+            <!-- Performance Metrics -->
+            <column name="distance_km" type="DECIMAL(10,2)"/>
+            <column name="duration_minutes" type="INTEGER"/>
+            <column name="waiting_time_minutes" type="INTEGER" defaultValue="0"/>
+            <column name="on_time_delivery" type="BOOLEAN"/>
+            <column name="delivery_delay_minutes" type="INTEGER"/>
+            <column name="attempted_deliveries" type="INTEGER" defaultValue="0"/>
+
+            <!-- Instructions & Notes -->
+            <column name="pickup_instructions" type="TEXT"/>
+            <column name="delivery_instructions" type="TEXT"/>
+            <column name="special_instructions" type="TEXT"/>
+            <column name="internal_notes" type="TEXT"/>
+            <column name="customer_notes" type="TEXT"/>
+            <column name="remark" type="TEXT"/>
+
+            <!-- Integration & Sync -->
+            <column name="forwarded_to_tms_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="tms_sync_status" type="VARCHAR(50)"/>
+            <column name="external_system_id" type="VARCHAR(255)"/>
+            <column name="external_system_name" type="VARCHAR(100)"/>
+            <column name="last_synced_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+            <!-- Extensibility -->
+            <column name="custom_fields" type="JSONB"/>
+            <column name="metadata" type="JSONB"/>
+            <column name="tags" type="TEXT[]"/>
+
+            <!-- Audit Trail -->
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="UUID"/>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="UUID"/>
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="version" type="INTEGER" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            DROP TABLE IF EXISTS vt_orders;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="052-add-order-number-trigger" author="enterprise-schema">
+        <sql splitStatements="false">
+            CREATE OR REPLACE FUNCTION generate_order_number()
+            RETURNS TRIGGER AS $$
+            BEGIN
+                IF NEW.order_number IS NULL THEN
+                    NEW.order_number := 'ORD-' || TO_CHAR(CURRENT_DATE, 'YYYYMMDD') || '-' || 
+                                       LPAD(nextval('vt_order_seq')::TEXT, 6, '0');
+                END IF;
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;
+
+            CREATE TRIGGER set_order_number
+                BEFORE INSERT ON vt_orders
+                FOR EACH ROW
+                EXECUTE FUNCTION generate_order_number();
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS set_order_number ON vt_orders;
+            DROP FUNCTION IF EXISTS generate_order_number();
+        </rollback>
+    </changeSet>
+
+    <changeSet id="053-add-orders-updated-at-trigger" author="enterprise-schema">
+        <sql splitStatements="false">
+            CREATE TRIGGER update_orders_updated_at
+                BEFORE UPDATE ON vt_orders
+                FOR EACH ROW
+                EXECUTE FUNCTION update_updated_at_column();
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS update_orders_updated_at ON vt_orders;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="054-add-orders-foreign-keys" author="enterprise-schema">
+        <addForeignKeyConstraint
+                baseTableName="vt_orders"
+                baseColumnNames="ordering_customer_id"
+                constraintName="fk_orders_ordering_customer"
+                referencedTableName="vt_customers"
+                referencedColumnNames="customer_id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="vt_orders"
+                baseColumnNames="billing_customer_id"
+                constraintName="fk_orders_billing_customer"
+                referencedTableName="vt_customers"
+                referencedColumnNames="customer_id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="vt_orders"
+                baseColumnNames="pickup_address_id"
+                constraintName="fk_orders_pickup_address"
+                referencedTableName="vt_addresses"
+                referencedColumnNames="address_id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="vt_orders"
+                baseColumnNames="delivery_address_id"
+                constraintName="fk_orders_delivery_address"
+                referencedTableName="vt_addresses"
+                referencedColumnNames="address_id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="vt_orders"
+                baseColumnNames="actual_pickup_address_id"
+                constraintName="fk_orders_actual_pickup_address"
+                referencedTableName="vt_addresses"
+                referencedColumnNames="address_id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="vt_orders"
+                baseColumnNames="actual_delivery_address_id"
+                constraintName="fk_orders_actual_delivery_address"
+                referencedTableName="vt_addresses"
+                referencedColumnNames="address_id"/>
+    </changeSet>
+
+</databaseChangeLog>

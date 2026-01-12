@@ -1,0 +1,17 @@
+spring:
+  kafka:
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
+    test:
+      embedded:
+        enabled: true
+
+# Definiuje fikcyjny klucz JWT
+jwt:
+  secret:
+    key: V2VyeUxvbmdBbmRTZWN1cmVUZXN0S2V5Rm9ySldUU2lnbmluZ1B1cnBvc2VzMTIzNDU2Nzg5MA==
+
+# Definiuje konfigurację aplikacji, w tym temat Kafki
+app:
+  kafka:
+    topics:
+      driver-location-updated: test.driver.location.updated

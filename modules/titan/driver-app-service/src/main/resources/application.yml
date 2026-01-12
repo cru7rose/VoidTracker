@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: driver-app-service
+  cloud:
+    openfeign:
+      client:
+        config:
+          order-service:
+            url: ${ORDER_SERVICE_URL:http://localhost:8091}
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+jwt:
+  secret:
+    key: ${JWT_SECRET_BASE64}

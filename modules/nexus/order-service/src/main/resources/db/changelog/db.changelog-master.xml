@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Schemas -->
+    <include file="schemas/001-create-base-schema.xml" relativeToChangelogFile="true"/>
+
+    <!-- Tables -->
+    <include file="001-create-order-tables.xml" relativeToChangelogFile="true"/>
+    <include file="002-create-outbox-table.xml" relativeToChangelogFile="true"/>
+    <include file="003-create-additional-services-tables.xml" relativeToChangelogFile="true"/>
+    
+    <!-- Enhancements -->
+    <include file="004-add-coords-to-address.xml" relativeToChangelogFile="true"/>
+    <include file="005-package-and-address-enhancements.xml" relativeToChangelogFile="true"/>
+    
+    <!-- Relational Refactor (Current Task) -->
+    <include file="006-add-address-package-fk-relationships.xml" relativeToChangelogFile="true"/>
+
+    <!-- Data Seeding -->
+    <!-- <include file="data/300-seed-asset-definitions.xml" relativeToChangelogFile="true"/> -->
+    <!-- <include file="data/310-seed-test-customer.xml" relativeToChangelogFile="true"/> -->
+
+</databaseChangeLog>

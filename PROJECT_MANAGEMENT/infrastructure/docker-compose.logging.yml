@@ -1,0 +1,50 @@
+# ARCHITEKTURA: Definiuje stos EFK (Elasticsearch, Fluentd, Kibana).
+# Uruchamiany niezależnie od głównego pliku aplikacji.
+
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: elasticsearch
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock: { soft: -1, hard: -1 }
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports: ["9200:9200"]
+    networks: [danxils-global-network]
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.10.2
+    container_name: kibana
+    ports: ["5601:5601"]
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    depends_on: [elasticsearch]
+    networks: [danxils-global-network]
+    restart: unless-stopped
+
+  fluentd:
+    build: ./fluentd
+    container_name: fluentd
+    volumes:
+      - ./fluentd/conf:/fluentd/etc
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    depends_on: [elasticsearch]
+    networks: [danxils-global-network]
+    restart: unless-stopped
+
+networks:
+  danxils-global-network:
+    external: true
+
+volumes:
+  esdata:
+    driver: local

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1-create-vt-customers-table-v2" author="architect">
+        <comment>ARCHITEKTURA: Tabela vt_customers. Typ klucza głównego ustandaryzowany na UUID.</comment>
+        <createTable tableName="vt_customers">
+            <column name="customer_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_name" type="VARCHAR(255)"/>
+            <column name="customer_type" type="VARCHAR(50)"/>
+            <column name="contact_email" type="VARCHAR(255)"/>
+            <column name="contact_phone" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2-create-vt-addresses-table-v2" author="architect">
+        <comment>ARCHITEKTURA: Tabela vt_addresses. Typ klucza głównego ustandaryzowany na UUID.</comment>
+        <createTable tableName="vt_addresses">
+            <column name="address_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="owner_customer_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_name" type="VARCHAR(255)"/>
+            <column name="attention" type="VARCHAR(255)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="street_number" type="VARCHAR(50)"/>
+            <column name="postal_code" type="VARCHAR(20)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(100)"/>
+            <column name="mail" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="note" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3-create-vt-packages-table-v2" author="architect">
+        <comment>ARCHITEKTURA: Tabela vt_packages. Typ klucza głównego ustandaryzowany na UUID.</comment>
+        <createTable tableName="vt_packages">
+            <column name="package_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="barcode1" type="VARCHAR(255)"/>
+            <column name="barcode2" type="VARCHAR(255)"/>
+            <column name="colli" type="INT"/>
+            <column name="weight" type="DOUBLE"/>
+            <column name="volume" type="DOUBLE"/>
+            <column name="length" type="DOUBLE"/>
+            <column name="width" type="DOUBLE"/>
+            <column name="height" type="DOUBLE"/>
+            <column name="adr" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4-create-vt-orders-table-v2" author="architect">
+        <comment>ARCHITEKTURA: Tabela vt_orders, centralny agregat domeny.</comment>
+        <createTable tableName="vt_orders">
+            <column name="order_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ordering_customer_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pickup_address_id" type="UUID">
+                <constraints foreignKeyName="fk_vt_ord_addr_pick" referencedTableName="vt_addresses" referencedColumnNames="address_id"/>
+            </column>
+            <column name="delivery_address_id" type="UUID">
+                <constraints foreignKeyName="fk_vt_ord_addr_del" referencedTableName="vt_addresses" referencedColumnNames="address_id"/>
+            </column>
+            <column name="package_id" type="UUID">
+                <constraints foreignKeyName="fk_vt_ord_pkg" referencedTableName="vt_packages" referencedColumnNames="package_id"/>
+            </column>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="priority" type="VARCHAR(50)"/>
+            <column name="assigned_driver" type="VARCHAR(255)"/>
+            <column name="created" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_status_change" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="forwarded_to_tms_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="sla" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5-create-vt-epod-table-v2" author="architect">
+        <comment>ARCHITEKTURA: Tabela vt_epod. Typy danych dla timestamp i koordynatów zostały poprawione.</comment>
+        <createTable tableName="vt_epod">
+            <column name="epod_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="user_id" type="VARCHAR(255)"/>
+            <column name="signature" type="TEXT"/>
+            <column name="photos" type="TEXT"/>
+            <column name="lat" type="DOUBLE"/>
+            <column name="lng" type="DOUBLE"/>
+            <column name="note" type="TEXT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="vt_epod"
+                                 baseColumnNames="order_id"
+                                 constraintName="fk_vt_epod_ord"
+                                 referencedTableName="vt_orders"
+                                 referencedColumnNames="order_id"/>
+    </changeSet>
+
+</databaseChangeLog>

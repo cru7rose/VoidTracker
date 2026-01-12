@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="300-seed-asset-definitions" author="enterprise-schema">
+        <insert tableName="vt_asset_definitions">
+            <column name="asset_def_id" valueComputed="gen_random_uuid()"/>
+            <column name="tenant_id" value="00000000-0000-0000-0000-000000000000"/>
+            <column name="name" value="Standard Package"/>
+            <column name="category" value="PACKAGE"/>
+            <column name="icon" value="package_icon"/>
+            <column name="description" value="Standard cardboard package for general cargo"/>
+            <column name="max_weight_kg" value="30.00"/>
+            <column name="max_volume_m3" value="0.125"/>
+            <column name="stackable" valueBoolean="true"/>
+            <column name="requires_climate_control" valueBoolean="false"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="vt_asset_definitions">
+            <column name="asset_def_id" valueComputed="gen_random_uuid()"/>
+            <column name="tenant_id" value="00000000-0000-0000-0000-000000000000"/>
+            <column name="name" value="Euro Pallet"/>
+            <column name="category" value="PALLET"/>
+            <column name="icon" value="pallet_icon"/>
+            <column name="description" value="Standard EUR/EPAL pallet (80x120cm)"/>
+            <column name="max_weight_kg" value="1500.00"/>
+            <column name="max_volume_m3" value="1.92"/>
+            <column name="stackable" valueBoolean="true"/>
+            <column name="requires_climate_control" valueBoolean="false"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="vt_asset_definitions">
+            <column name="asset_def_id" valueComputed="gen_random_uuid()"/>
+            <column name="tenant_id" value="00000000-0000-0000-0000-000000000000"/>
+            <column name="name" value="Envelope"/>
+            <column name="category" value="ENVELOPE"/>
+            <column name="icon" value="envelope_icon"/>
+            <column name="description" value="Document envelope"/>
+            <column name="max_weight_kg" value="1.00"/>
+            <column name="max_volume_m3" value="0.001"/>
+            <column name="stackable" valueBoolean="true"/>
+            <column name="requires_climate_control" valueBoolean="false"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="vt_asset_definitions">
+            <column name="asset_def_id" valueComputed="gen_random_uuid()"/>
+            <column name="tenant_id" value="00000000-0000-0000-0000-000000000000"/>
+            <column name="name" value="Hazmat Container"/>
+            <column name="category" value="CONTAINER"/>
+            <column name="icon" value="hazmat_icon"/>
+            <column name="description" value="UN-certified hazardous materials container"/>
+            <column name="max_weight_kg" value="500.00"/>
+            <column name="max_volume_m3" value="0.5"/>
+            <column name="stackable" valueBoolean="false"/>
+            <column name="requires_climate_control" valueBoolean="false"/>
+            <column name="requires_certification" value="ADR"/>
+            <column name="handling_instructions" value="Handle with care, keep upright, avoid heat sources"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+
+        <rollback>
+            DELETE FROM vt_asset_definitions WHERE tenant_id = '00000000-0000-0000-0000-000000000000';
+        </rollback>
+    </changeSet>
+
+    <changeSet id="310-seed-test-customer" author="enterprise-schema">
+        <insert tableName="vt_customers">
+            <column name="customer_id" value="00000000-0000-0000-0000-000000000001"/>
+            <column name="tenant_id" value="00000000-0000-0000-0000-000000000000"/>
+            <column name="customer_number" value="CUS-000001"/>
+            <column name="customer_name" value="Test Customer"/>
+            <column name="customer_type" value="B2B"/>
+            <column name="primary_email" value="test@example.com"/>
+            <column name="primary_phone" value="+48123456789"/>
+            <column name="payment_terms" value="30"/>
+            <column name="credit_limit" value="50000.00"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="sla_delivery_hours" value="24"/>
+            <column name="sla_compliance_target" value="0.95"/>
+        </insert>
+
+        <rollback>
+            DELETE FROM vt_customers WHERE customer_id = '00000000-0000-0000-0000-000000000001';
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
