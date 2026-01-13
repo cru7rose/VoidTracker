@@ -1,8 +1,8 @@
 import SockJS from 'sockjs-client/dist/sockjs';
 import Stomp from 'stompjs';
 
-// Configuration
-const WS_ENDPOINT = 'http://localhost:8093/ws-planning'; // Direct to service for now (or via proxy)
+// Configuration - use relative path to leverage Vite proxy
+const WS_ENDPOINT = '/ws-planning';
 
 class WebSocketService {
     constructor() {

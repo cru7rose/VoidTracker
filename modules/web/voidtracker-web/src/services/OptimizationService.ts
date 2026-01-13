@@ -32,9 +32,15 @@ class OptimizationService {
     private onUpdateCallback: ((update: OptimizationUpdateDto) => void) | null = null;
 
     constructor() {
+        // Use relative path to leverage Vite proxy
+        const wsUrl = window.location.protocol === 'https:' 
+            ? `wss://${window.location.host}/api/planning/ws-planning`
+            : `ws://${window.location.host}/api/planning/ws-planning`;
+        const sockJsUrl = `/api/planning/ws-planning`;
+
         this.client = new Client({
             // Endpoint matches PlanningWebSocketConfig: /ws-planning
-            brokerURL: 'ws://localhost:8093/api/planning/ws-planning', // Direct WS is better if possible, but SockJS fallback often used
+            brokerURL: wsUrl,
 
             // If using SockJS (which is common with Spring), we need a factory.
             // Spring 'registerStompEndpoints' usually maps to http.
@@ -42,8 +48,8 @@ class OptimizationService {
             webSocketFactory: () => {
                 // Note: 'ws' vs 'http' depends on if we use pure WS or SockJS.
                 // If the backend has .withSockJS(), we MUST use SockJS.
-                // Assuming standard setup:
-                return new SockJS('http://localhost:8093/api/planning/ws-planning');
+                // Use relative path to leverage Vite proxy
+                return new SockJS(sockJsUrl);
             },
 
             debug: (str) => {

@@ -1,6 +1,6 @@
 # 🌌 VoidTracker Project Management - Manifest
 
-**Ostatnia aktualizacja:** 2026-01-12 12:30  
+**Ostatnia aktualizacja:** 2026-01-13 11:30  
 **Status Projektu:** Hyper-Innovation Phase (Revolution 2026)  
 **Model Operacyjny:** The Liquid Enterprise (Event-Driven EAV Architecture)  
 **Język Projektu:** Hybrid (PL: Zarządzanie / EN: Implementacja)  
@@ -62,6 +62,23 @@
   - Logi buildu są zbierane nawet gdy build failed (upload-artifact zawsze)
   - Na serwerze tylko: uruchamianie infrastruktury Docker i frontend dev server
   - **Różnica:** Buildy (równoległe OK - różne maszyny) vs Restarty (sekwencyjne - ta sama maszyna)
+- **Server Performance Upgrade (2026-01-13):** 🚀
+  - **Specyfikacja:** 4 vCPU, 8GB RAM (zwiększona z poprzedniej konfiguracji)
+  - **Konsekwencje:** 
+    - Buildy na serwerze są teraz możliwe technicznie (więcej zasobów), ale **NIGDY nie powinny być wykonywane** - CI/CD jest zawsze lepszym rozwiązaniem
+    - Szybsze restarty usług (więcej RAM dla JVM)
+    - Lepsza stabilność podczas równoczesnej pracy wielu serwisów
+  - **Fast Build Testing:** ⚡ **DLA AGENTA - TESTOWANIE PROBLEMÓW Z BUILDEM**
+    - Jeśli potrzebujesz szybko przetestować czy build przechodzi po naprawie błędu, możesz użyć szybkiego builda na serwerze:
+      ```bash
+      # Szybki build (tylko kompilacja, bez testów) - DO TESTÓW
+      cd modules/nexus/iam-service && mvn clean compile -DskipTests
+      # Lub dla konkretnego modułu:
+      mvn clean package -DskipTests -pl :iam-service -am
+      ```
+    - **UWAGA:** To tylko do szybkiego testowania lokalnego - **pełne buildy zawsze przez CI/CD**
+    - **Pełne buildy produkcyjne:** Zawsze przez GitHub Actions CI/CD (z testami, artifactami, deployem)
+    - **Kiedy używać szybkiego builda:** Tylko gdy chcesz szybko sprawdzić czy kompilacja przechodzi po naprawie błędu, przed push do GitHub
 - **Service Restart Protocol (Sequential with Delays):** ⚠️ **KRYTYCZNE - ZAPAMIĘTAĆ**
   - **Problem:** Restartowanie wszystkich usług jednocześnie przeciąża serwer i zrywa połączenie SSH
   - **Rozwiązanie:** 
@@ -94,6 +111,11 @@
   - `start-frontend.sh` - Frontend dev server (`npm run dev`) - lekki, nie powoduje problemów
   - `start-iam.sh`, `start-order.sh`, `start-planning.sh` - **TYLKO** uruchamianie już zbudowanych JAR-ów (sprawdzają czy JAR istnieje, jeśli nie - błąd)
   - `stop-*.sh` - zatrzymywanie serwisów
+- **Redis Status:** 
+  - Redis jest **opcjonalny** - nie jest wymagany do działania systemu
+  - Cache w planning-service używa in-memory `ConcurrentMapCacheManager` (nie Redis)
+  - Timeout w `start-sup.sh` jest normalny - Redis nie jest uruchamiany, więc timeout jest oczekiwany
+  - Jeśli w przyszłości będzie potrzebny Redis, można dodać do `docker-compose.support.yml`
 
 **Reference:** `.github/workflows/build-and-deploy.yml`, `CICD_QUICK_START.md`
 

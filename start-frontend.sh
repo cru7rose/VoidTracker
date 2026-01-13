@@ -1,15 +1,11 @@
 #!/bin/bash
 
-# ===================================================================== 
-# VoidTracker 2.0 - Frontend Startup Script
-# Starts: Vue Frontend (Vite) only
-# =====================================================================
+# =====================================================
+# VoidTracker 2.0 - Frontend Dev Server Startup
+# Starts: Vue/Vite frontend development server
+# =====================================================
 
 set -e
-
-# Navigate to project root
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
 
 # Colors
 CYAN='\033[0;36m'
@@ -18,93 +14,76 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-PID_DIR="$SCRIPT_DIR/.pids"
-mkdir -p "$PID_DIR"
-LOGS_DIR="$SCRIPT_DIR/logs"
-mkdir -p "$LOGS_DIR"
-
 echo -e "${CYAN}"
 echo "╔════════════════════════════════════════╗"
-echo "║   FRONTEND STARTUP                     ║"
+echo "║   FRONTEND DEV SERVER STARTUP          ║"
 echo "╚════════════════════════════════════════╝"
 echo -e "${NC}"
 
-# Function: Check if process is running
-is_running() {
-    local pid_file=$1
-    if [ -f "$pid_file" ]; then
-        local pid=$(cat "$pid_file")
-        if ps -p $pid > /dev/null 2>&1; then
-            return 0  # Running
-        else
-            rm -f "$pid_file"  # Stale PID file
-            return 1
-        fi
-    fi
-    return 1
-}
+# Check if we're in the right directory
+if [ ! -f "modules/web/voidtracker-web/package.json" ]; then
+    echo -e "${RED}❌ Error: Frontend not found at modules/web/voidtracker-web/${NC}"
+    echo -e "${YELLOW}💡 Make sure you're in the VoidTracker root directory${NC}"
+    exit 1
+fi
 
-# Step 1: Build Frontend (if needed)
-echo -e "\n${CYAN}📦 Setting up Frontend...${NC}"
+# Check if node_modules exists
+if [ ! -d "modules/web/voidtracker-web/node_modules" ]; then
+    echo -e "${YELLOW}⚠️  node_modules not found. Installing dependencies...${NC}"
+    cd modules/web/voidtracker-web
+    npm install
+    cd ../../..
+fi
+
+# Check if frontend is already running
+if [ -f ".pids/frontend.pid" ]; then
+    PID=$(cat .pids/frontend.pid)
+    if ps -p $PID > /dev/null 2>&1; then
+        echo -e "${YELLOW}⚠️  Frontend already running (PID: $PID)${NC}"
+        echo -e "${CYAN}💡 To restart, run: ./stop-frontend.sh${NC}"
+        exit 0
+    else
+        # Stale PID file
+        rm -f .pids/frontend.pid
+    fi
+fi
+
+# Create .pids directory if it doesn't exist
+mkdir -p .pids
+
+# Start frontend dev server
+echo -e "${CYAN}🚀 Starting Frontend Dev Server...${NC}"
 cd modules/web/voidtracker-web
 
-if [ ! -d "node_modules" ]; then
-    echo -e "${YELLOW}📥 Installing npm dependencies...${NC}"
-    npm install
-    echo -e "${GREEN}✅ Dependencies installed${NC}"
+# Start in background and save PID
+nohup npm run dev > ../../logs/frontend-dev.log 2>&1 &
+FRONTEND_PID=$!
+
+# Save PID
+echo $FRONTEND_PID > ../../.pids/frontend.pid
+
+cd ../../..
+
+# Wait a moment for server to start
+sleep 3
+
+# Check if process is still running
+if ps -p $FRONTEND_PID > /dev/null 2>&1; then
+    echo -e "${GREEN}✅ Frontend Dev Server started (PID: $FRONTEND_PID)${NC}"
+    echo ""
+    echo "───────────────────────────────────────────"
+    echo -e "🌐 ${GREEN}Frontend:${NC}        http://0.0.0.0:5173"
+    echo -e "📝 ${CYAN}Logs:${NC}            tail -f logs/frontend-dev.log"
+    echo -e "🛑 ${CYAN}Stop:${NC}            ./stop-frontend.sh"
+    echo "───────────────────────────────────────────"
+    echo ""
+    echo -e "${CYAN}💡 Frontend is accessible from:${NC}"
+    echo -e "   - Local: http://localhost:5173"
+    echo -e "   - Network: http://$(hostname -I | awk '{print $1}'):5173"
+    echo ""
 else
-    echo -e "${GREEN}✅ Dependencies already installed${NC}"
+    echo -e "${RED}❌ Frontend failed to start${NC}"
+    echo -e "${YELLOW}💡 Check logs: tail -f logs/frontend-dev.log${NC}"
+    rm -f .pids/frontend.pid
+    exit 1
 fi
-
-# Step 2: Clear port 5173 if occupied
-if lsof -i :5173 > /dev/null 2>&1; then
-    echo -e "${YELLOW}⚠️  Port 5173 is occupied. Attempting to clear...${NC}"
-    lsof -ti :5173 | xargs kill -9 2>/dev/null || true
-    sleep 2
-    if lsof -i :5173 > /dev/null 2>&1; then
-        echo -e "${RED}❌ Cannot clear port 5173. Please check manually.${NC}"
-        exit 1
-    fi
-    echo -e "${GREEN}✅ Port 5173 cleared${NC}"
-fi
-
-# Step 3: Start Frontend
-echo -e "\n${CYAN}🚀 Starting Frontend...${NC}"
-
-if is_running "$PID_DIR/frontend.pid"; then
-    echo -e "${YELLOW}⚠️  Frontend already running (PID: $(cat $PID_DIR/frontend.pid))${NC}"
-else
-    echo -e "${CYAN}Starting Vite dev server...${NC}"
-    nohup npm run dev > "$LOGS_DIR/frontend.log" 2>&1 &
-    echo $! > "$PID_DIR/frontend.pid"
-    echo -e "${GREEN}✅ Frontend started (PID: $!)${NC}"
-    
-    # Wait a moment for Vite to start
-    sleep 3
-    
-    # Check if it's actually running
-    if ps -p $! > /dev/null 2>&1; then
-        echo -e "${GREEN}✅ Frontend process confirmed running${NC}"
-    else
-        echo -e "${RED}❌ Frontend process failed to start${NC}"
-        echo -e "${YELLOW}💡 Check logs: tail -f logs/frontend.log${NC}"
-        exit 1
-    fi
-fi
-
-cd "$SCRIPT_DIR"
-
-# Success
-echo -e "\n${GREEN}"
-echo "╔════════════════════════════════════════╗"
-echo "║   FRONTEND OPERATIONAL ✅              ║"
-echo "╚════════════════════════════════════════╝"
-echo -e "${NC}"
-echo "───────────────────────────────────────────"
-echo -e "🖥️  ${GREEN}Frontend:${NC}         http://localhost:5173"
-echo "───────────────────────────────────────────"
-echo -e "${CYAN}Logs: tail -f logs/frontend.log${NC}"
-echo -e "${CYAN}PID: $(cat $PID_DIR/frontend.pid)${NC}"
-echo ""
-echo -e "${YELLOW}🔮 Press Cmd+K in browser to activate Oracle${NC}"
-echo ""

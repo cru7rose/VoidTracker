@@ -38,6 +38,46 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false
+      },
+      // WebSocket proxy for Planning Service
+      '/api/planning/ws-planning': {
+        target: 'http://localhost:8093',
+        changeOrigin: true,
+        ws: true,
+        secure: false
+      },
+      '/ws-planning': {
+        target: 'http://localhost:8093',
+        changeOrigin: true,
+        ws: true,
+        secure: false
+      },
+      // Additional API endpoints
+      '/api/organizations': {
+        target: 'http://localhost:8091',
+        changeOrigin: true,
+        secure: false
+      },
+      '/api/configs': {
+        target: 'http://localhost:8091',
+        changeOrigin: true,
+        secure: false
+      },
+      '/solutions': {
+        target: 'http://localhost:8093',
+        changeOrigin: true,
+        secure: false
+      },
+      '/api/communications': {
+        target: 'http://localhost:8093',
+        changeOrigin: true,
+        secure: false
+      },
+      // Driver service proxy
+      '/api/driver': {
+        target: 'http://localhost:8092',
+        changeOrigin: true,
+        secure: false
       }
     }
   }

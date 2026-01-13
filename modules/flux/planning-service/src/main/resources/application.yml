@@ -1,123 +1,65 @@
-server:
-  port: 8093
-  servlet:
-    context-path: /api/planning
-  # Connection timeout settings to prevent SSH issues
-  connection-timeout: 60000  # 60 seconds connection timeout
-  # Tomcat thread pool optimization
-  tomcat:
-    threads:
-      max: 50  # Reduced from default to prevent SSH overload
-      min-spare: 5
-    accept-count: 50
-    max-connections: 200  # Limit concurrent connections
-    connection-timeout: 60000
-
 spring:
-  # Lazy initialization to prevent connection attempts during build
-  main:
-    lazy-initialization: true
-  cloud:
-    openfeign:
-      client:
-        config:
-          order-service:
-            url: http://localhost:8091
-          iam-service:
-            url: http://localhost:8081
   application:
     name: planning-service
-  threads:
-    virtual:
-      enabled: true
-  mail:
-    host: localhost
-    port: 1025
-    username: test
-    password: test
-    properties:
-      mail:
-        smtp:
-          auth: false
-          starttls:
-            enable: false
+  profiles:
+    active: default
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/voidtracker_planning}
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:password}
+    url: jdbc:postgresql://localhost:5434/vt_planning_service
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
-    # Connection pool optimization to prevent SSH connection issues
-    hikari:
-      connection-timeout: 30000  # 30 seconds to establish connection
-      maximum-pool-size: 5        # Further reduced to prevent SSH overload during build
-      minimum-idle: 1             # Minimal idle connections
-      idle-timeout: 600000        # 10 minutes before idle connection is removed
-      max-lifetime: 1800000       # 30 minutes max connection lifetime
-      leak-detection-threshold: 60000  # Detect connection leaks after 60s
-      connection-test-query: SELECT 1
-      validation-timeout: 5000     # 5 seconds validation timeout
-      initialization-fail-timeout: -1  # Don't fail on startup if DB is unavailable
-  neo4j:
-    uri: ${SPRING_NEO4J_URI:bolt://localhost:7687}
-    authentication:
-      username: ${SPRING_NEO4J_USERNAME:neo4j}
-      password: ${SPRING_NEO4J_PASSWORD:password}
-    # Connection pool settings for Neo4j
-    pool:
-      max-connection-lifetime: 1800000  # 30 minutes
-      max-connection-pool-size: 5       # Further reduced to prevent SSH overload
-      connection-acquisition-timeout: 30000  # 30 seconds
-  liquibase:
-    enabled: false
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    show-sql: true
   kafka:
-    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    bootstrap-servers: localhost:9094
     consumer:
-      group-id: ${spring.application.name}
+      group-id: planning-service-group
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*"
-      # Connection pool limits to prevent SSH overload
-      session-timeout-ms: 30000  # 30 seconds session timeout
-      heartbeat-interval-ms: 10000  # 10 seconds heartbeat
-      max-poll-interval-ms: 300000  # 5 minutes max poll interval
-      max-poll-records: 50  # Limit batch size
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      # Connection limits
-      request-timeout-ms: 30000  # 30 seconds request timeout
-      delivery-timeout-ms: 120000  # 2 minutes delivery timeout
-      max-in-flight-requests-per-connection: 5  # Limit concurrent requests
 
-management:
-  endpoint:
-    health:
-      show-details: always
+server:
+  port: 8093
 
-jwt:
-  secret:
-    key: ${JWT_SECRET_BASE64:dGVzdC1zZWNyZXQta2V5LWZvci1sb2NhbC1kZXZlbG9wbWVudC1vbmx5LXBsZWFzZS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==}
+# Gatekeeper Configuration
+gatekeeper:
+  enabled: true
+  score-threshold-percent: 20.0
+  n8n:
+    webhook:
+      url: http://localhost:5678/webhook/gatekeeper
 
-app:
-  kafka:
-    topics:
-      orders-created: "orders.created"
-      orders-assigned: "orders.assigned"
-      orders-status-changed: "orders.status.changed"
-      routes-planned: "routes.planned"
+# Auto-Plan Configuration
+auto-plan:
+  enabled: true
+  min-batch-size: 10
+  max-batch-size: 1000
+  batch-schedules:
+    - "0 0 22 * * *"  # 22:00 każdego dnia
+  batch-timeout-minutes: 10
+  urgent:
+    auto-reoptimize: true
+    timeout-seconds: 30
+    require-manual-approval: true
+  sla:
+    warning-hours-before-deadline: 2
+    critical-hours-before-deadline: 1
+    check-frequency-minutes: 15
+    customer-email-enabled: true
+    customer-sms-enabled: false
 
-      driver-location-updated: "fleet.location.update"
-
-n8n:
-  webhook:
-    url: ${N8N_WEBHOOK_URL:http://localhost:5678/webhook/optimization-review}
+# Logging
+logging:
+  level:
+    com.example.planning_service: INFO
+    org.springframework.web: INFO
+    ai.timefold.solver: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

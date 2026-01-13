@@ -14,6 +14,12 @@
   </head>
   <body>
     <div id="app"></div>
+    <!-- Polyfill for global (required by sockjs-client) -->
+    <script>
+      if (typeof global === 'undefined') {
+        var global = window;
+      }
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

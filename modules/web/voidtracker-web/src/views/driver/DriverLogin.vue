@@ -50,8 +50,8 @@ const login = async () => {
   error.value = '';
 
   try {
-    // Call backend to validate token
-    const response = await axios.get(`http://localhost:8092/api/driver/auth/validate?token=${token.value}`);
+    // Call backend to validate token (use proxy path)
+    const response = await axios.get(`/api/driver/auth/validate?token=${token.value}`);
     const session = response.data;
     
     // Update Auth Store

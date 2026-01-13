@@ -139,9 +139,8 @@ const fetchTasks = async () => {
             return;
         }
         
-        // Assuming planning-service is proxied or accessible via /api/planning
-        // Adjust URL as needed. If direct: http://localhost:8092/api/driver/tasks
-        const response = await axios.get('http://localhost:8092/api/driver/tasks', {
+        // Use proxy path instead of direct localhost URL
+        const response = await axios.get('/api/driver/tasks', {
             headers: {
                 Authorization: `Bearer ${authStore.token}`
             }
@@ -234,7 +233,7 @@ const completeStop = async () => {
 
     if (offlineStore.isOnline) {
         try {
-            await axios.post(`http://localhost:8092/api/driver/tasks/${currentStop.value.id}/complete`, payload, {
+            await axios.post(`/api/driver/tasks/${currentStop.value.id}/complete`, payload, {
                 headers: {
                     Authorization: `Bearer ${authStore.token}`
                 }

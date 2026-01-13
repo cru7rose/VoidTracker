@@ -200,7 +200,7 @@ const loading = ref(false);
 const fetchLogs = async () => {
     loading.value = true;
     try {
-        const response = await planningApi.get('/api/communications');
+        const response = await planningApi.get('/communications');
         logs.value = response.data;
     } catch (error) {
         console.error('Failed to fetch communication logs:', error);
