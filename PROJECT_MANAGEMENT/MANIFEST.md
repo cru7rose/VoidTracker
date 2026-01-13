@@ -58,8 +58,10 @@
 - **Rozwiązanie:** 
   - Wszystkie buildy Java/Maven → GitHub Actions CI/CD
   - Buildy są rozdzielone na moduły (danxils-commons, iam, order, planning) dla łatwego zbierania logów
+  - **Buildy mogą być równoległe** - każdy job ma własny GitHub Actions runner (osobna maszyna), więc nie przeciążają serwera
   - Logi buildu są zbierane nawet gdy build failed (upload-artifact zawsze)
   - Na serwerze tylko: uruchamianie infrastruktury Docker i frontend dev server
+  - **Różnica:** Buildy (równoległe OK - różne maszyny) vs Restarty (sekwencyjne - ta sama maszyna)
 - **Service Restart Protocol (Sequential with Delays):** ⚠️ **KRYTYCZNE - ZAPAMIĘTAĆ**
   - **Problem:** Restartowanie wszystkich usług jednocześnie przeciąża serwer i zrywa połączenie SSH
   - **Rozwiązanie:** 
