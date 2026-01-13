@@ -47,20 +47,10 @@ jobs:
             <localRepository>~/.m2/repository</localRepository>
           </settings>' > ~/.m2/settings.xml
 
-      - name: Install parent POM to local repository
-        run: |
-          mvn clean install -DskipTests -N
-          echo "✅ Parent POM installed to local Maven repository"
-
-      - name: Build danxils-commons (required by all services)
-        run: |
-          cd modules/nexus/danxils-commons
-          mvn clean install -DskipTests
-          echo "✅ danxils-commons built and installed"
-
-      - name: Build all services from root (respects module dependencies)
+      - name: Build all services from root
         run: |
           # Build all modules from root - Maven will handle dependencies automatically
+          # This installs parent POM first, then builds all modules in correct order
           mvn clean install -DskipTests
           echo "✅ All services built"
 
