@@ -5,10 +5,10 @@ on:
     branches:
       - main
       - develop
-    paths:
-      - 'modules/**'
-      - 'pom.xml'
-      - '.github/workflows/build-and-deploy.yml'
+    # paths:  # Temporarily disabled to allow all pushes to trigger
+    #   - 'modules/**'
+    #   - 'pom.xml'
+    #   - '.github/workflows/build-and-deploy.yml'
   workflow_dispatch:
     inputs:
       services:
