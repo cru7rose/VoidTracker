@@ -212,6 +212,18 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+        
+      - name: Verify SSH Key
+        run: |
+          echo "🔍 Verifying SSH key..."
+          if ssh-add -l > /dev/null 2>&1; then
+            echo "✅ SSH key loaded successfully"
+            ssh-add -l
+          else
+            echo "❌ Failed to load SSH key"
+            echo "💡 Check if DEPLOY_SSH_KEY is correctly formatted in GitHub Secrets"
+            exit 1
+          fi
 
       - name: Test SSH connection
         run: |
