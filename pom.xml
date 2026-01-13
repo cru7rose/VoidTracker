@@ -19,11 +19,9 @@
 
     <modules>
         <module>modules/nexus/danxils-commons</module>
-        <module>modules/nexus/iam-service</module>
         <module>modules/titan/tracking-service</module>
         <module>modules/nexus/order-service</module>
         <module>modules/titan/event-emitter-service</module>
-        <module>modules/flux/planning-service</module>
         <module>modules/nexus/analytics-service</module>
         <module>modules/nexus/dashboard-service</module>
         <module>modules/nexus/admin-panel-service</module>
