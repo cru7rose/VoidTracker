@@ -69,6 +69,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { planningApi } from '../../../api/axios';
+import orderApi from '../../../api/orderApi';
 
 const columns = ref([]);
 const orders = ref([]);
@@ -101,12 +102,33 @@ const fetchConfig = async () => {
 };
 
 const fetchOrders = async () => {
-    orders.value = [
-      { id: '101', status: 'NEW', customer: 'Acme Corp', address: 'Warsaw, Center', priority: 'HIGH', tags: ['Frozen'] },
-      { id: '102', status: 'NEW', customer: 'Beta Ltd', address: 'Warsaw, South', priority: 'NORMAL', tags: [] },
-      { id: '103', status: 'ROUTING', customer: 'Gamma Inc', address: 'Krakow', priority: 'LOW', tags: ['Fragile'] },
-      { id: '104', status: 'ASSIGNED', customer: 'Delta Co', address: 'Gdansk', priority: 'HIGH', tags: ['Express'] }
-    ];
+  try {
+    // Fetch orders from order-service API
+    const response = await orderApi.getOrders();
+    const ordersData = response.content || response || [];
+    
+    // Map API response to component format
+    orders.value = ordersData.map(order => ({
+      id: order.orderId || order.id,
+      status: order.status || 'NEW',
+      customer: order.delivery?.customerName || order.client?.name || 'Unknown',
+      address: formatAddress(order.delivery) || formatAddress(order.pickup) || 'No address',
+      priority: order.priority || 'NORMAL',
+      tags: order.requiredServices?.map(s => s.serviceCode || s.name) || []
+    }));
+  } catch (error) {
+    console.error('Failed to fetch orders:', error);
+    orders.value = [];
+  }
+};
+
+const formatAddress = (address) => {
+  if (!address) return '';
+  const parts = [];
+  if (address.street) parts.push(address.street);
+  if (address.streetNumber) parts.push(address.streetNumber);
+  if (address.city) parts.push(address.city);
+  return parts.join(', ') || '';
 };
 
 const getOrdersByStatus = (status) => orders.value.filter(o => o.status === status);
