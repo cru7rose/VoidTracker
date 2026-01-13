@@ -74,7 +74,7 @@ const loadOrganizations = async () => {
     console.error('Failed to load organizations:', error);
     // Mock data for now if endpoint fails or doesn't exist yet
     organizations.value = [
-        { orgId: '123', legalName: 'Danxils Default Org', type: 'Internal', active: true },
+        { orgId: '123', legalName: 'VoidTracker Default Org', type: 'Internal', active: true },
         { orgId: '456', legalName: 'Acme Corp', type: 'Customer', active: true }
     ];
   }

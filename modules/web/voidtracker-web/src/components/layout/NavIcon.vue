@@ -6,19 +6,34 @@
     <!-- Icon Button -->
     <div 
       :class="[
-        'w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200',
+        'w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 relative overflow-hidden',
         active 
-          ? 'bg-void-cyan-500/20 border border-void-cyan-500 shadow-lg shadow-void-cyan-500/30' 
-          : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-void-cyan-500/50'
+          ? 'bg-void-cyan-900/50 border-2 border-void-cyan-400 shadow-lg shadow-void-cyan-500/50 neon-border' 
+          : 'bg-void-cyan-950/30 border border-void-cyan-800 hover:bg-void-cyan-900/50 hover:border-void-cyan-600 hover:shadow-lg hover:shadow-void-cyan-500/30'
       ]"
     >
-      <span :class="['text-xl', active ? 'animate-glow-pulse' : '']">{{ icon }}</span>
+      <!-- Hologram Scan Effect -->
+      <div 
+        v-if="active"
+        class="absolute inset-0 bg-gradient-to-b from-transparent via-void-cyan-400/20 to-transparent animate-scan-line"
+        style="animation-duration: 3s;"
+      ></div>
+      
+      <span :class="[
+        'text-2xl relative z-10 transition-transform duration-300',
+        active ? 'animate-neon-flicker scale-110' : 'group-hover:scale-110'
+      ]">
+        {{ icon }}
+      </span>
     </div>
 
     <!-- Tooltip -->
-    <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-      <div class="glass-panel px-3 py-1.5">
-        <span :class="['text-sm font-medium', active ? 'neon-text' : 'text-white/80']">
+    <div class="absolute left-full ml-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+      <div class="glass-panel px-4 py-2 rounded-lg border border-void-cyan-600/50">
+        <span :class="[
+          'text-sm font-bold font-mono tracking-wider',
+          active ? 'neon-text' : 'text-void-cyan-300'
+        ]">
           {{ label }}
         </span>
       </div>
@@ -27,7 +42,7 @@
     <!-- Active Indicator -->
     <div 
       v-if="active"
-      class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-void-cyan-400 rounded-r shadow-lg shadow-void-cyan-500/50"
+      class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-void-cyan-400 rounded-r shadow-lg shadow-void-cyan-500/70 animate-glow-pulse"
     ></div>
   </router-link>
 </template>

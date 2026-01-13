@@ -32,7 +32,8 @@ export default defineConfig({
       '/api/planning': {
         target: 'http://localhost:8093',
         changeOrigin: true,
-        secure: false
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api\/planning/, '')
       },
       '/api/dashboard': {
         target: 'http://localhost:8080',
@@ -64,6 +65,16 @@ export default defineConfig({
         secure: false
       },
       '/solutions': {
+        target: 'http://localhost:8093',
+        changeOrigin: true,
+        secure: false
+      },
+      '/manifests': {
+        target: 'http://localhost:8093',
+        changeOrigin: true,
+        secure: false
+      },
+      '/api/config': {
         target: 'http://localhost:8093',
         changeOrigin: true,
         secure: false

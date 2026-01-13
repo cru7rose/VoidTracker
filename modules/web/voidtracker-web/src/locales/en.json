@@ -23,6 +23,15 @@
         "download": "Download PDF",
         "view_notifications": "View Notifications"
     },
+    "dispatch": {
+        "title": "Control Tower",
+        "tabs": {
+            "orders": "Orders",
+            "routes": "Routes",
+            "monitoring": "Monitoring",
+            "automation": "Automation"
+        }
+    },
     "sidebar": {
         "dashboard": "Dashboard",
         "my_orders": "My Orders",

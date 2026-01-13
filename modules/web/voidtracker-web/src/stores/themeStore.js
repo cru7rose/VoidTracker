@@ -4,14 +4,15 @@ import { ref, computed } from 'vue';
 export const useThemeStore = defineStore('theme', () => {
     // Default Branding
     const branding = ref({
-        systemName: 'DANXILS Logistics',
+        systemName: 'VoidTracker',
         logoUrl: '', // Empty means use default text/icon
-        primaryColor: '#2563eb', // Default Blue-600
-        secondaryColor: '#1e40af' // Default Blue-800
+        primaryColor: '#1db954', // Spotify green
+        secondaryColor: '#1ed760' // Spotify green hover
     });
 
     // Dark Mode State with Persistence
-    const isDark = ref(localStorage.getItem('theme') === 'dark');
+    // Default to dark mode if not set
+    const isDark = ref(localStorage.getItem('theme') !== 'light');
 
     const updateBranding = (newBranding) => {
         branding.value = { ...branding.value, ...newBranding };
@@ -26,17 +27,19 @@ export const useThemeStore = defineStore('theme', () => {
 
     const applyTheme = () => {
         const root = document.documentElement;
+        const html = document.documentElement;
 
-        // Apply Dark Mode Class
+        // Apply Dark Mode Class to both html and body
         if (isDark.value) {
-            root.classList.add('dark');
+            html.classList.add('dark');
+            document.body.classList.add('dark');
         } else {
-            root.classList.remove('dark');
+            html.classList.remove('dark');
+            document.body.classList.remove('dark');
         }
 
         // Apply Branding Colors
         root.style.setProperty('--primary-color', branding.value.primaryColor);
-        // Calculate a darker shade for hover states if not provided
         root.style.setProperty('--primary-color-hover', branding.value.secondaryColor);
 
         // Update document title

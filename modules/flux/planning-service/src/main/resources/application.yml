@@ -16,6 +16,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        # Batch insert optimization for high-volume scenarios (thousands of orders per day)
+        jdbc:
+          batch_size: 50
+          order_inserts: true
+          order_updates: true
   kafka:
     bootstrap-servers: localhost:9094
     consumer:
@@ -24,6 +29,20 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  # Mail Configuration (for Magic Link emails)
+  # Uses MailHog in development (localhost:8025)
+  # Configure with SendGrid/AWS SES for production
+  mail:
+    host: localhost
+    port: 1025  # MailHog SMTP port
+    username: noreply@voidtracker.app
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
 
 server:
   port: 8093
@@ -54,6 +73,17 @@ auto-plan:
     check-frequency-minutes: 15
     customer-email-enabled: true
     customer-sms-enabled: false
+
+# Media Upload Configuration
+media:
+  upload:
+    directory: ./uploads  # Local filesystem storage (change to S3 bucket for production)
+    max-size: 10485760    # 10MB max file size
+
+# IAM Service Configuration
+application:
+  config:
+    iam-service-url: http://localhost:8090
 
 # Logging
 logging:

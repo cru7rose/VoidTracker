@@ -151,8 +151,8 @@
 import { ref } from 'vue';
 
 const vehicles = ref([
-    { id: 'V-001', plate: 'WA 12345', type: 'Van (3.5t)', capacity: 1200, volume: 14, driver: 'Jan Kowalski', carrier: 'Danxils Own', status: 'ACTIVE' },
+    { id: 'V-001', plate: 'WA 12345', type: 'Van (3.5t)', capacity: 1200, volume: 14, driver: 'Jan Kowalski', carrier: 'VoidTracker Own', status: 'ACTIVE' },
     { id: 'V-002', plate: 'KR 55992', type: 'Truck (12t)', capacity: 8000, volume: 40, driver: 'Marek Nowak', carrier: 'Ext Logistics', status: 'ACTIVE' },
-    { id: 'V-003', plate: 'PO 99221', type: 'Van (3.5t)', capacity: 1100, volume: 12, driver: null, carrier: 'Danxils Own', status: 'INACTIVE' }
+    { id: 'V-003', plate: 'PO 99221', type: 'Van (3.5t)', capacity: 1100, volume: 12, driver: null, carrier: 'VoidTracker Own', status: 'INACTIVE' }
 ]);
 </script>

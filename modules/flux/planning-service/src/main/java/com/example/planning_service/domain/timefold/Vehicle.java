@@ -15,6 +15,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@lombok.EqualsAndHashCode(callSuper = false)
 public class Vehicle extends Standstill {
 
     private String id;
@@ -56,6 +57,15 @@ public class Vehicle extends Standstill {
     // listeners
     private BigDecimal remainingCapacityWeight;
     private BigDecimal remainingCapacityVolume;
+
+    /**
+     * Shadow Variable: Available time window for ad-hoc stops
+     * Calculated based on fixed stops and assigned stops
+     * Updated by AvailableTimeWindowUpdatingVariableListener
+     */
+    @ai.timefold.solver.core.api.domain.variable.ShadowVariable(variableListenerClass = AvailableTimeWindowUpdatingVariableListener.class, sourceVariableName = "nextStop")
+    private java.time.LocalDateTime availableTimeWindowStart;
+    private java.time.LocalDateTime availableTimeWindowEnd;
 
     // nextStop is inherited from Standstill
 

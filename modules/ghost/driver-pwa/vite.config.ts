@@ -31,6 +31,10 @@ export default defineConfig({
   ],
   server: {
     proxy: {
+      '/api/planning': {
+        target: 'http://localhost:8093', // Planning Service port
+        changeOrigin: true
+      },
       '/api/auth': {
         target: 'http://localhost:8090',
         changeOrigin: true

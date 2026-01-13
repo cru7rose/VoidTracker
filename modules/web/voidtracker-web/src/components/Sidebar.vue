@@ -5,10 +5,12 @@ import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { useAuthStore } from '../stores/authStore';
 import { useI18n } from 'vue-i18n';
+import { useThemeStore } from '../stores/themeStore';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 
 const route = useRoute();
 const authStore = useAuthStore();
+const themeStore = useThemeStore();
 
 const { t } = useI18n();
 
@@ -21,18 +23,18 @@ const navigation = computed(() => {
       { name: t('common.dashboard'), href: '/internal/dashboard', icon: LayoutDashboard },
       { name: t('common.orders'), href: '/internal/orders', icon: Package },
       { name: t('common.dispatch'), href: '/internal/dispatch', icon: Map },
-      { name: 'Assignments', href: '/internal/dispatch/history', icon: FileText }, // History
-      { name: 'Manifests', href: '/internal/manifests', icon: FileText }, // TODO: Add translation
-      { name: 'Zone Management', href: '/internal/dispatch/zones', icon: Map }, // TODO: Add translation
-      { name: 'Vehicle Profiles', href: '/internal/fleet/profiles', icon: Truck }, // TODO: Add translation
-      { name: 'Carrier Compliance', href: '/internal/fleet/compliance', icon: FileText }, // TODO: Add translation
-      { name: 'Report Builder', href: '/internal/analytics/reports', icon: FileText }, // TODO: Add translation
-      { name: 'Communications', href: '/internal/admin/communications', icon: MessageSquare }, // TODO: Add translation
-      { name: 'Audit Logs', href: '/internal/admin/audit-logs', icon: FileText }, // TODO: Add translation
-      { name: 'Configuration', href: '/internal/config', icon: Sliders }, // TODO: Add translation
+      { name: 'Assignments', href: '/internal/dispatch/history', icon: FileText },
+      { name: 'Manifests', href: '/internal/manifests', icon: FileText },
+      { name: 'Zone Management', href: '/internal/dispatch/zones', icon: Map },
+      { name: 'Vehicle Profiles', href: '/internal/fleet/profiles', icon: Truck },
+      { name: 'Carrier Compliance', href: '/internal/fleet/compliance', icon: FileText },
+      { name: 'Report Builder', href: '/internal/analytics/reports', icon: FileText },
+      { name: 'Communications', href: '/internal/admin/communications', icon: MessageSquare },
+      { name: 'Audit Logs', href: '/internal/admin/audit-logs', icon: FileText },
+      { name: 'Configuration', href: '/internal/config', icon: Sliders },
       { name: t('common.users'), href: '/internal/users', icon: Users },
-      { name: 'Organizations', href: '/internal/organizations', icon: Building }, // TODO: Add translation
-      { name: 'Leaderboard', href: '/internal/leaderboard', icon: Sliders }, // Using Sliders as placeholder icon, maybe Award would be better if available
+      { name: 'Organizations', href: '/internal/organizations', icon: Building },
+      { name: 'Leaderboard', href: '/internal/leaderboard', icon: Sliders },
     ];
   } else {
     return [
@@ -53,39 +55,62 @@ const isActive = (path) => {
 
 <template>
   <div class="hidden md:flex md:flex-shrink-0">
-    <div class="flex flex-col w-64 bg-gray-900 text-white">
-      <div class="flex items-center justify-center h-16 bg-gray-900 border-b border-gray-800 px-4">
-        <span class="text-xl font-bold tracking-wider">DANXILS OMS</span>
+    <div class="flex flex-col w-64 bg-white dark:bg-spotify-black text-gray-900 dark:text-white border-r border-gray-200 dark:border-spotify-gray-800 transition-colors">
+      <!-- Logo / Brand Header -->
+      <div class="flex items-center justify-center h-16 bg-white dark:bg-spotify-darker border-b border-gray-200 dark:border-spotify-gray-800 px-4 transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-spotify-green-400 to-spotify-green-500 flex items-center justify-center shadow-lg shadow-spotify-green-400/30">
+            <span class="text-white font-bold text-xl">V</span>
+          </div>
+          <span class="text-xl font-bold tracking-tight">VoidTracker</span>
+        </div>
       </div>
-      <div class="p-4 border-b border-gray-800">
+      
+      <!-- App Switcher -->
+      <div class="p-4 border-b border-gray-200 dark:border-spotify-gray-800">
         <AppSwitcher />
       </div>
+      
+      <!-- Navigation -->
       <div class="flex-1 flex flex-col overflow-y-auto">
-        <nav class="flex-1 px-2 py-4 space-y-1">
+        <nav class="flex-1 px-3 py-4 space-y-1">
           <router-link
             v-for="item in navigation"
             :key="item.name"
             :to="item.href"
-            class="group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150"
+            class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200"
             :class="[
               isActive(item.href)
-                ? 'bg-gray-800 text-white'
-                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                ? 'bg-spotify-green-400/10 dark:bg-spotify-green-400/20 text-spotify-green-600 dark:text-spotify-green-400'
+                : 'text-gray-700 dark:text-spotify-gray-300 hover:bg-gray-100 dark:hover:bg-spotify-darker hover:text-gray-900 dark:hover:text-white'
             ]"
           >
             <component
               :is="item.icon"
-              class="mr-3 flex-shrink-0 h-6 w-6"
+              class="mr-3 flex-shrink-0 h-5 w-5 transition-colors"
               :class="[
-                isActive(item.href) ? 'text-white' : 'text-gray-400 group-hover:text-gray-300'
+                isActive(item.href) 
+                  ? 'text-spotify-green-600 dark:text-spotify-green-400' 
+                  : 'text-gray-500 dark:text-spotify-gray-400 group-hover:text-gray-700 dark:group-hover:text-white'
               ]"
               aria-hidden="true"
             />
-            {{ item.name }}
+            <span>{{ item.name }}</span>
           </router-link>
         </nav>
       </div>
-      <div class="p-4 border-t border-gray-800">
+      
+      <!-- Footer -->
+      <div class="p-4 border-t border-gray-200 dark:border-spotify-gray-800">
+        <div class="flex items-center justify-between mb-3">
+          <button
+            @click="themeStore.toggleTheme()"
+            class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 dark:text-spotify-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-spotify-darker rounded-lg transition-colors"
+          >
+            <span class="text-lg">{{ themeStore.isDark ? '☀️' : '🌙' }}</span>
+            <span>{{ themeStore.isDark ? 'Light Mode' : 'Dark Mode' }}</span>
+          </button>
+        </div>
         <LanguageSwitcher />
       </div>
     </div>

@@ -17,24 +17,33 @@ public class EmailService {
     @Value("${spring.mail.username:noreply@danxils.com}")
     private String fromEmail;
 
-    public void sendMagicLink(String toEmail, String token) {
+    /**
+     * Send magic link email to driver
+     * 
+     * @param toEmail Driver's email address
+     * @param magicLinkUrl Full magic link URL (e.g., https://driver.voidtracker.app/auth?token=xxx)
+     * @param driverName Optional driver name for personalization
+     */
+    public void sendMagicLink(String toEmail, String magicLinkUrl, String driverName) {
         try {
-            String link = "https://dashboard.danxils.com/driver/login?token=" + token;
-            String subject = "Your Danxils Driver Access Link";
+            String subject = "Twoja trasa na dzisiaj - VoidTracker";
+            String greeting = driverName != null && !driverName.isBlank() 
+                    ? "Witaj " + driverName + "!" 
+                    : "Witaj!";
+            
             String body = String.format("""
-                    Hello Driver,
-
-                    Here is your access link for today's route:
-
                     %s
-
-                    Or enter this token manually: %s
-
-                    This link expires in 24 hours.
-
-                    Safe driving!
-                    Danxils Logistics
-                    """, link, token);
+                    
+                    Twoja trasa została przypisana i jest gotowa do wyświetlenia.
+                    
+                    Kliknij poniższy link aby zobaczyć trasę:
+                    %s
+                    
+                    Link wygasa za 24 godziny.
+                    
+                    Bezpiecznej jazdy!
+                    Zespół VoidTracker
+                    """, greeting, magicLinkUrl);
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromEmail);
@@ -47,6 +56,15 @@ public class EmailService {
         } catch (Exception e) {
             log.error("Failed to send email to {}", toEmail, e);
             // In a real system, we might fallback to n8n or SMS here
+            throw new RuntimeException("Failed to send magic link email", e);
         }
+    }
+
+    /**
+     * Legacy method for backward compatibility
+     */
+    public void sendMagicLink(String toEmail, String token) {
+        String magicLinkUrl = "https://driver.voidtracker.app/auth?token=" + token;
+        sendMagicLink(toEmail, magicLinkUrl, null);
     }
 }

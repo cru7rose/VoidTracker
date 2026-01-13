@@ -23,6 +23,15 @@
         "download": "Pobierz PDF",
         "view_notifications": "Zobacz Powiadomienia"
     },
+    "dispatch": {
+        "title": "Czarna Dyspozytornia",
+        "tabs": {
+            "orders": "Zamówienia",
+            "routes": "Trasy",
+            "monitoring": "Monitoring",
+            "automation": "Automatyzacja"
+        }
+    },
     "sidebar": {
         "dashboard": "Panel Główny",
         "my_orders": "Moje Zamówienia",

@@ -48,21 +48,24 @@ if [ -f ".pids/frontend.pid" ]; then
     fi
 fi
 
-# Create .pids directory if it doesn't exist
-mkdir -p .pids
+# Create .pids and logs directories if they don't exist
+mkdir -p .pids logs
+
+# Store root directory path (before cd)
+ROOT_DIR=$(pwd)
 
 # Start frontend dev server
 echo -e "${CYAN}🚀 Starting Frontend Dev Server...${NC}"
 cd modules/web/voidtracker-web
 
-# Start in background and save PID
-nohup npm run dev > ../../logs/frontend-dev.log 2>&1 &
+# Start in background and save PID (use absolute paths)
+nohup npm run dev > "$ROOT_DIR/logs/frontend-dev.log" 2>&1 &
 FRONTEND_PID=$!
 
-# Save PID
-echo $FRONTEND_PID > ../../.pids/frontend.pid
+# Save PID (use absolute path)
+echo $FRONTEND_PID > "$ROOT_DIR/.pids/frontend.pid"
 
-cd ../../..
+cd "$ROOT_DIR"
 
 # Wait a moment for server to start
 sleep 3

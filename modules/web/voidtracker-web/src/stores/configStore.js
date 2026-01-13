@@ -5,7 +5,7 @@ export const useConfigStore = defineStore('config', () => {
     // Default Configuration
     const config = ref({
         general: {
-            systemName: 'DANXILS Logistics',
+            systemName: 'VoidTracker',
             slaThresholdHours: 24,
             enableMaintenanceMode: false
         },
@@ -44,7 +44,7 @@ export const useConfigStore = defineStore('config', () => {
             smtpPort: 587,
             smtpUsername: 'user@example.com',
             smtpPassword: '', // In real app, handle securely
-            smtpFromEmail: 'noreply@danxils.com',
+            smtpFromEmail: 'noreply@voidtracker.com',
 
             // SMS
             smsProvider: 'TWILIO', // TWILIO, MESSAGEBIRD, MOCK

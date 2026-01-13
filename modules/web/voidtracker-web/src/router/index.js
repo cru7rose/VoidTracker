@@ -209,12 +209,12 @@ const router = createRouter({
                 {
                     path: 'dispatch',
                     name: 'DispatchBoard',
-                    component: () => import('../views/internal/DispatchView.vue')
+                    component: () => import('../views/internal/dispatch/DispatchBoard.vue')
                 },
                 {
                     path: 'dispatch/void-map',
                     name: 'VoidMap',
-                    component: () => import('../views/internal/DispatchView.vue')
+                    component: () => import('../views/internal/LiveMap.vue')
                 },
                 {
                     path: 'dispatch/zones',

@@ -27,6 +27,7 @@ public class VoidConstraintProvider implements ConstraintProvider {
                                 vehicleCapacityWeight(constraintFactory),
                                 slaTimeWindow(constraintFactory),
                                 vehicleMaxDistance(constraintFactory),
+                                fixedRouteTimeWindow(constraintFactory), // Elastic Shell: Time window for FixedRoute
 
                                 // SOFT CONSTRAINTS (optimization goals)
                                 maximizeProfit(constraintFactory),
@@ -94,6 +95,34 @@ public class VoidConstraintProvider implements ConstraintProvider {
                                                 (vehicle, totalMeters) -> BigDecimal.valueOf(
                                                                 totalMeters - (vehicle.getMaxDetourKm() * 1000)))
                                 .asConstraint("Max detour distance exceeded");
+        }
+
+        /**
+         * HARD: FixedRoute available time window (Elastic Shell Time Window)
+         * Ad-hoc stops must fit within availableTimeWindow of FixedRoute vehicles
+         */
+        protected Constraint fixedRouteTimeWindow(ConstraintFactory constraintFactory) {
+                return constraintFactory
+                                .forEach(RouteStop.class)
+                                .filter(stop -> stop.getVehicle() != null 
+                                                && stop.getVehicle().isFixedRoute()
+                                                && stop.getArrivalTime() != null
+                                                && stop.getVehicle().getAvailableTimeWindowStart() != null
+                                                && stop.getVehicle().getAvailableTimeWindowEnd() != null)
+                                .filter(stop -> {
+                                        java.time.LocalDateTime arrival = stop.getArrivalTime();
+                                        java.time.LocalDateTime windowStart = stop.getVehicle().getAvailableTimeWindowStart();
+                                        java.time.LocalDateTime windowEnd = stop.getVehicle().getAvailableTimeWindowEnd();
+                                        return arrival.isBefore(windowStart) || arrival.isAfter(windowEnd);
+                                })
+                                .penalizeBigDecimal(HardSoftBigDecimalScore.ONE_HARD,
+                                                stop -> {
+                                        java.time.Duration delay = java.time.Duration.between(
+                                                stop.getVehicle().getAvailableTimeWindowEnd(),
+                                                stop.getArrivalTime());
+                                        return BigDecimal.valueOf(Math.max(0, delay.toMinutes()));
+                                })
+                                .asConstraint("FixedRoute time window violated");
         }
 
         /**

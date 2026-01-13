@@ -8,26 +8,55 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Void Theme - Deep Space Aesthetic
+        // Spotify-inspired color palette
+        spotify: {
+          black: '#121212',      // Main background (Spotify dark)
+          darker: '#181818',      // Card backgrounds
+          dark: '#1a1a1a',        // Elevated elements
+          gray: {
+            50: '#fafafa',
+            100: '#f5f5f5',
+            200: '#e5e5e5',
+            300: '#d4d4d4',
+            400: '#a3a3a3',
+            500: '#737373',
+            600: '#525252',
+            700: '#404040',
+            800: '#262626',
+            900: '#171717',
+          },
+          green: {
+            400: '#1db954',       // Spotify green (primary accent)
+            500: '#1ed760',       // Hover green
+            600: '#1aa34a',       // Darker green
+          },
+          white: '#ffffff',
+        },
+        // Void Theme - Keep for backward compatibility but make it Spotify-like
         void: {
-          black: '#050505',      // Deep space background
-          darker: '#0A0A0F',     // Panel backgrounds
-          dark: '#1A1A2E',       // Elevated elements
-          gray: '#2E2E3E',       // Borders and dividers
+          black: '#121212',      // Spotify black instead of pure black
+          darker: '#181818',     // Spotify darker
+          dark: '#1a1a1a',       // Spotify dark
+          gray: '#2a2a2a',       // Lighter gray
           cyan: {
-            400: '#00FFCC',      // Primary accent
-            500: '#00E5CC',
-            600: '#00B3A6',
+            300: '#1db954',      // Use Spotify green instead
+            400: '#1ed760',     // Spotify green hover
+            500: '#1aa34a',
+            600: '#158a3d',
+            700: '#0f6b2e',
+            800: '#0a4d21',
+            900: '#052e14',
+            950: '#021a0c',
           },
           pink: {
-            400: '#FF006E',      // Alert/danger accent
-            500: '#E6005C',
-            600: '#CC0052',
+            400: '#ff6b9d',      // Softer pink
+            500: '#ff4d7a',
+            600: '#e6395c',
           },
           amber: {
-            400: '#FFAA00',      // Warning accent
-            500: '#E69900',
-            600: '#CC8800',
+            400: '#ffb84d',     // Softer amber
+            500: '#ffa726',
+            600: '#ff9800',
           },
         },
         // Legacy colors (keep for backward compatibility)
@@ -67,85 +96,49 @@ export default {
           800: '#92400e',
           900: '#78350f',
         },
-        danger: {
-          50: '#fef2f2',
-          100: '#fee2e2',
-          200: '#fecaca',
-          300: '#fca5a5',
-          400: '#f87171',
-          500: '#ef4444',
-          600: '#dc2626',
-          700: '#b91c1c',
-          800: '#991b1b',
-          900: '#7f1d1d',
-        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
-      },
-      backdropBlur: {
-        xs: '2px',
-        '3xl': '64px',
+        mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {
-        'fade-in': 'fadeIn 0.3s ease-in-out',
-        'slide-in': 'slideIn 0.3s ease-out',
-        'slide-left': 'slideLeft 0.3s ease-out',
-        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.3s ease-in',
+        'slide-up': 'slideUp 0.3s ease-out',
+        'slide-down': 'slideDown 0.3s ease-out',
+        'scale-in': 'scaleIn 0.2s ease-out',
+        'spotify-hover': 'spotifyHover 0.2s ease-out',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        slideIn: {
+        slideUp: {
+          '0%': { transform: 'translateY(10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideDown: {
           '0%': { transform: 'translateY(-10px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-        slideLeft: {
-          '0%': { transform: 'translateX(100%)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
+        scaleIn: {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
         },
-        glowPulse: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.6' },
+        spotifyHover: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.02)' },
         },
+      },
+      backdropBlur: {
+        xs: '2px',
+      },
+      boxShadow: {
+        'spotify': '0 8px 16px rgba(0, 0, 0, 0.3)',
+        'spotify-lg': '0 16px 32px rgba(0, 0, 0, 0.4)',
+        'spotify-hover': '0 12px 24px rgba(0, 0, 0, 0.5)',
       },
     },
   },
-  plugins: [
-    // Glassmorphism & Void utilities
-    function ({ addComponents, addUtilities }) {
-      addComponents({
-        '.glass-panel': {
-          '@apply bg-void-darker/60 backdrop-blur-xl border border-white/10 shadow-2xl': {},
-        },
-        '.glass-panel-hover': {
-          '@apply hover:bg-void-darker/80 hover:border-void-cyan-500/30 transition-all duration-300': {},
-        },
-        '.neon-text': {
-          '@apply text-void-cyan-400': {},
-          'text-shadow': '0 0 10px rgba(0, 255, 204, 0.5)',
-        },
-        '.neon-text-pink': {
-          '@apply text-void-pink-400': {},
-          'text-shadow': '0 0 10px rgba(255, 0, 110, 0.5)',
-        },
-        '.neon-border': {
-          '@apply border border-void-cyan-400': {},
-          'box-shadow': '0 0 10px rgba(0, 255, 204, 0.3), inset 0 0 10px rgba(0, 255, 204, 0.1)',
-        },
-      });
-
-      addUtilities({
-        '.text-glow': {
-          'text-shadow': '0 0 10px currentColor',
-        },
-        '.text-glow-strong': {
-          'text-shadow': '0 0 20px currentColor, 0 0 40px currentColor',
-        },
-      });
-    },
-  ],
+  plugins: [],
 }

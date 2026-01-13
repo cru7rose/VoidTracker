@@ -72,6 +72,7 @@ public class RouteAssignmentEntity {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
+    @Builder.Default
     private RouteStatus status = RouteStatus.DRAFT;
 
     /**

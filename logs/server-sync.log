@@ -1,0 +1,1143 @@
+╔════════════════════════════════════════╗
+║   GIT SYNC & BUILD                     ║
+╚════════════════════════════════════════╝
+
+📦 Services: iam,order,planning
+🌿 Branch: main
+
+📍 Current commit: c28fc200
+
+📥 Fetching from GitHub...
+From github.com:cru7rose/VoidTracker
+ * branch            main       -> FETCH_HEAD
+✅ Already up to date (c28fc200)
+
+📋 Recent changes:
+
+🔨 Building services...
+
+📦 Building danxils-commons...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:danxils-commons[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding danxils-commons 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/danxils-commons/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 0 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 31 source files with javac [debug release 21] to target/classes
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/nexus/danxils-commons/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:3.1.1:install[m [1m(default-install)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/pom.xml to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  7.068 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T09:48:29Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ danxils-commons built
+
+🔨 Building IAM Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------< [0;36mcom.danxils:iam-app[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding iam-app 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/iam-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 4 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 74 source files with javac [debug release 21] to target/classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :dependency
+[[1;34mINFO[m] Compiling 2 source files with javac [debug release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  11.494 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T09:48:42Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ IAM Service built
+
+🔨 Building Order Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------< [0;36mcom.danxils:order-service[0;1m >----------------------[m
+[[1;34mINFO[m] [1mBuilding order-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/order-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 27 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 143 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/impl/LogNotificationService.java:[9,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/IngestionService.java:[18,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/SchemaValidationService.java:[20,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/nlp/CommandController.java:[17,1] Field 'log' already exists.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 5 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  15.139 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T09:48:59Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ Order Service built
+
+🔨 Building Planning Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:planning-service[0;1m >--------------------[m
+[[1;34mINFO[m] [1mBuilding planning-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/flux/planning-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 2 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 202 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/RouteAssignmentEntity.java:[75,25] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/domain/timefold/Vehicle.java:[14,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/domain/timefold/RouteStop.java:[21,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/service/AutoSchedulerService.java:[43,22] solveAndListen(ProblemId_,java.util.function.Function<? super ProblemId_,? extends Solution_>,java.util.function.Consumer<? super Solution_>,java.util.function.BiConsumer<? super ProblemId_,? super java.lang.Throwable>) in ai.timefold.solver.core.api.solver.SolverManager has been deprecated and marked for removal
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/OptimizationProfileEntity.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/OptimizationProfileEntity.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java: /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/flux/planning-service/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 3 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java: /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  19.664 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T09:49:20Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ Planning Service built
+
+✅ All services built successfully
+
+╔════════════════════════════════════════╗
+║   SYNC & BUILD COMPLETE ✅              ║
+╚════════════════════════════════════════╝
+
+📍 Current commit: c28fc200
+📦 Services ready: iam,order,planning
+
+💡 To restart services:
+   SKIP_BUILD=1 ./stop-iam.sh && SKIP_BUILD=1 ./start-iam.sh
+   SKIP_BUILD=1 ./stop-order.sh && SKIP_BUILD=1 ./start-order.sh
+   SKIP_BUILD=1 ./stop-planning.sh && SKIP_BUILD=1 ./start-planning.sh
+╔════════════════════════════════════════╗
+║   GIT SYNC & BUILD                     ║
+╚════════════════════════════════════════╝
+
+📦 Services: iam,order,planning
+🌿 Branch: main
+
+📍 Current commit: f656f89e
+
+📥 Fetching from GitHub...
+From github.com:cru7rose/VoidTracker
+ * branch            main       -> FETCH_HEAD
+✅ Already up to date (f656f89e)
+
+📋 Recent changes:
+
+🔨 Building services...
+
+📦 Building danxils-commons...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:danxils-commons[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding danxils-commons 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/danxils-commons/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 0 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 31 source files with javac [debug release 21] to target/classes
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/nexus/danxils-commons/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:3.1.1:install[m [1m(default-install)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/pom.xml to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  7.157 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:14:43Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ danxils-commons built
+
+🔨 Building IAM Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------< [0;36mcom.danxils:iam-app[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding iam-app 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/iam-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 4 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 74 source files with javac [debug release 21] to target/classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :dependency
+[[1;34mINFO[m] Compiling 2 source files with javac [debug release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  10.622 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:14:55Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ IAM Service built
+
+🔨 Building Order Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------< [0;36mcom.danxils:order-service[0;1m >----------------------[m
+[[1;34mINFO[m] [1mBuilding order-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/order-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 27 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 143 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/SchemaValidationService.java:[20,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/impl/LogNotificationService.java:[9,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/nlp/CommandController.java:[17,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/IngestionService.java:[18,1] Field 'log' already exists.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 5 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  14.018 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:15:10Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ Order Service built
+
+🔨 Building Planning Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:planning-service[0;1m >--------------------[m
+[[1;34mINFO[m] [1mBuilding planning-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/flux/planning-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 2 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 202 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/RouteAssignmentEntity.java:[75,25] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/domain/timefold/Vehicle.java:[14,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/domain/timefold/RouteStop.java:[21,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/service/AutoSchedulerService.java:[43,22] solveAndListen(ProblemId_,java.util.function.Function<? super ProblemId_,? extends Solution_>,java.util.function.Consumer<? super Solution_>,java.util.function.BiConsumer<? super ProblemId_,? super java.lang.Throwable>) in ai.timefold.solver.core.api.solver.SolverManager has been deprecated and marked for removal
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/OptimizationProfileEntity.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/OptimizationProfileEntity.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java: /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/flux/planning-service/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 3 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java: /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  19.403 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:15:31Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ Planning Service built
+
+✅ All services built successfully
+
+╔════════════════════════════════════════╗
+║   SYNC & BUILD COMPLETE ✅              ║
+╚════════════════════════════════════════╝
+
+📍 Current commit: f656f89e
+📦 Services ready: iam,order,planning
+
+💡 To restart services:
+   SKIP_BUILD=1 ./stop-iam.sh && SKIP_BUILD=1 ./start-iam.sh
+   SKIP_BUILD=1 ./stop-order.sh && SKIP_BUILD=1 ./start-order.sh
+   SKIP_BUILD=1 ./stop-planning.sh && SKIP_BUILD=1 ./start-planning.sh
+╔════════════════════════════════════════╗
+║   GIT SYNC & BUILD                     ║
+╚════════════════════════════════════════╝
+
+📦 Services: iam,order,planning
+🌿 Branch: main
+
+📍 Current commit: 5ac931a2
+
+📥 Fetching from GitHub...
+From github.com:cru7rose/VoidTracker
+ * branch            main       -> FETCH_HEAD
+✅ Already up to date (5ac931a2)
+
+📋 Recent changes:
+
+🔨 Building services...
+
+📦 Building danxils-commons...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:danxils-commons[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding danxils-commons 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/danxils-commons/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 0 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 31 source files with javac [debug release 21] to target/classes
+╔════════════════════════════════════════╗
+║   GIT SYNC & BUILD                     ║
+╚════════════════════════════════════════╝
+
+📦 Services: iam,order,planning
+🌿 Branch: main
+
+📍 Current commit: 5ac931a2
+
+📥 Fetching from GitHub...
+From github.com:cru7rose/VoidTracker
+ * branch            main       -> FETCH_HEAD
+✅ Already up to date (5ac931a2)
+
+📋 Recent changes:
+
+🔨 Building services...
+
+📦 Building danxils-commons...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:danxils-commons[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding danxils-commons 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/nexus/danxils-commons/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/danxils-commons/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 0 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 31 source files with javac [debug release 21] to target/classes
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:3.1.1:install[m [1m(default-install)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/pom.xml to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  16.662 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:48:26Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ danxils-commons built
+
+🔨 Building IAM Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------< [0;36mcom.danxils:iam-app[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding iam-app 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/iam-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 4 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 74 source files with javac [debug release 21] to target/classes
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/nexus/danxils-commons/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:3.1.1:install[m [1m(default-install)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/pom.xml to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  26.216 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:48:45Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ danxils-commons built
+
+🔨 Building IAM Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------< [0;36mcom.danxils:iam-app[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding iam-app 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;33mWARNING[m] COMPILATION WARNING : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 1 warning
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] COMPILATION ERROR : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[3,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[4,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[5,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/mapper/UserMapper.java:[3,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[378,75] package UserUpdatedEvent does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[379,29] package UserUpdatedEvent does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/mapper/UserMapper.java:[68,28] package UserUpdatedEvent does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/controller/InternalController.java:[3,44] package com.example.danxils_commons.security does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/controller/InternalController.java:[37,19] cannot find symbol
+  symbol:   class JwtUtil
+  location: class com.example.iam.controller.InternalController
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/controller/InternalController.java:[33,1] cannot find symbol
+  symbol:   class JwtUtil
+  location: class com.example.iam.controller.InternalController
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/config/SecurityConfig.java:[4,44] package com.example.danxils_commons.security does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/config/SecurityConfig.java:[37,19] cannot find symbol
+  symbol:   class JwtAuthFilter
+  location: class com.example.iam.config.SecurityConfig
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/config/SecurityConfig.java:[34,1] cannot find symbol
+  symbol:   class JwtAuthFilter
+  location: class com.example.iam.config.SecurityConfig
+[[1;34mINFO[m] 13 errors 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  20.721 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:48:53Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m on project [36miam-app[m: [1;31mCompilation failure[m: Compilation failure: 
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[3,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[4,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[5,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/mapper/UserMapper.java:[3,41] package com.example.danxils_commons.event does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[378,75] package UserUpdatedEvent does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/service/UserService.java:[379,29] package UserUpdatedEvent does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/mapper/UserMapper.java:[68,28] package UserUpdatedEvent does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/controller/InternalController.java:[3,44] package com.example.danxils_commons.security does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/controller/InternalController.java:[37,19] cannot find symbol
+[[1;31mERROR[m]   symbol:   class JwtUtil
+[[1;31mERROR[m]   location: class com.example.iam.controller.InternalController
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/controller/InternalController.java:[33,1] cannot find symbol
+[[1;31mERROR[m]   symbol:   class JwtUtil
+[[1;31mERROR[m]   location: class com.example.iam.controller.InternalController
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/config/SecurityConfig.java:[4,44] package com.example.danxils_commons.security does not exist
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/config/SecurityConfig.java:[37,19] cannot find symbol
+[[1;31mERROR[m]   symbol:   class JwtAuthFilter
+[[1;31mERROR[m]   location: class com.example.iam.config.SecurityConfig
+[[1;31mERROR[m] /root/VoidTracker/modules/nexus/iam-service/src/main/java/com/example/iam/config/SecurityConfig.java:[34,1] cannot find symbol
+[[1;31mERROR[m]   symbol:   class JwtAuthFilter
+[[1;31mERROR[m]   location: class com.example.iam.config.SecurityConfig
+[[1;31mERROR[m] -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+❌ Failed to build IAM Service
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/iam-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 4 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 74 source files with javac [debug release 21] to target/classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :dependency
+[[1;34mINFO[m] Compiling 2 source files with javac [debug release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  14.547 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:49:04Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ IAM Service built
+
+🔨 Building Order Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------< [0;36mcom.danxils:order-service[0;1m >----------------------[m
+[[1;34mINFO[m] [1mBuilding order-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/order-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 27 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 143 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/impl/LogNotificationService.java:[9,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/IngestionService.java:[18,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/SchemaValidationService.java:[20,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/nlp/CommandController.java:[17,1] Field 'log' already exists.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 5 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  16.634 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:49:22Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.springframework.boot:spring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m on project [36morder-service[m: [1;31mExecution repackage of goal org.springframework.boot:spring-boot-maven-plugin:3.2.5:repackage failed: Unable to find main class[m -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/PluginExecutionException
+❌ Failed to build Order Service
+╔════════════════════════════════════════╗
+║   GIT SYNC & BUILD                     ║
+╚════════════════════════════════════════╝
+
+📦 Services: iam,order,planning
+🌿 Branch: main
+
+📍 Current commit: 5ac931a2
+
+📥 Fetching from GitHub...
+From github.com:cru7rose/VoidTracker
+ * branch            main       -> FETCH_HEAD
+✅ Already up to date (5ac931a2)
+
+📋 Recent changes:
+
+🔨 Building services...
+
+📦 Building danxils-commons...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:danxils-commons[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding danxils-commons 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/danxils-commons/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 0 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 31 source files with javac [debug release 21] to target/classes
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/nexus/danxils-commons/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:3.1.1:install[m [1m(default-install)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/pom.xml to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  7.901 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:54:30Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ danxils-commons built
+
+🔨 Building IAM Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------< [0;36mcom.danxils:iam-app[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding iam-app 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/iam-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 4 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 74 source files with javac [debug release 21] to target/classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :dependency
+[[1;34mINFO[m] Compiling 2 source files with javac [debug release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  12.776 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:54:45Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ IAM Service built
+
+🔨 Building Order Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------< [0;36mcom.danxils:order-service[0;1m >----------------------[m
+[[1;34mINFO[m] [1mBuilding order-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/order-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 27 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 143 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/impl/LogNotificationService.java:[9,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/SchemaValidationService.java:[20,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/IngestionService.java:[18,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/nlp/CommandController.java:[17,1] Field 'log' already exists.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 5 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/order-service/target/order-service-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  21.297 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:55:08Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ Order Service built
+
+🔨 Building Planning Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:planning-service[0;1m >--------------------[m
+[[1;34mINFO[m] [1mBuilding planning-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/flux/planning-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 2 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 202 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/RouteAssignmentEntity.java:[75,25] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/domain/timefold/Vehicle.java:[14,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/domain/timefold/RouteStop.java:[21,1] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add '@EqualsAndHashCode(callSuper=false)' to your type.
+[[1;33mWARNING[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/service/AutoSchedulerService.java:[43,22] solveAndListen(ProblemId_,java.util.function.Function<? super ProblemId_,? extends Solution_>,java.util.function.Consumer<? super Solution_>,java.util.function.BiConsumer<? super ProblemId_,? super java.lang.Throwable>) in ai.timefold.solver.core.api.solver.SolverManager has been deprecated and marked for removal
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/OptimizationProfileEntity.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/entity/OptimizationProfileEntity.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java: /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/main/java/com/example/planning_service/security/PlanningJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/flux/planning-service/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 3 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java: /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/flux/planning-service/src/test/java/com/example/planning_service/controller/OptimizationControllerComplianceTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36mplanning-service[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  04:19 min (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T10:59:31Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ Planning Service built
+
+✅ All services built successfully
+
+╔════════════════════════════════════════╗
+║   SYNC & BUILD COMPLETE ✅              ║
+╚════════════════════════════════════════╝
+
+📍 Current commit: 5ac931a2
+📦 Services ready: iam,order,planning
+
+💡 To restart services:
+   SKIP_BUILD=1 ./stop-iam.sh && SKIP_BUILD=1 ./start-iam.sh
+   SKIP_BUILD=1 ./stop-order.sh && SKIP_BUILD=1 ./start-order.sh
+   SKIP_BUILD=1 ./stop-planning.sh && SKIP_BUILD=1 ./start-planning.sh
+╔════════════════════════════════════════╗
+║   GIT SYNC & BUILD                     ║
+╚════════════════════════════════════════╝
+
+📦 Services: iam,order,planning
+🌿 Branch: main
+
+📍 Current commit: 5ac931a2
+
+📥 Fetching from GitHub...
+From github.com:cru7rose/VoidTracker
+ * branch            main       -> FETCH_HEAD
+✅ Already up to date (5ac931a2)
+
+📋 Recent changes:
+
+🔨 Building services...
+
+📦 Building danxils-commons...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.danxils:danxils-commons[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding danxils-commons 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/danxils-commons/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 0 resource from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 31 source files with javac [debug release 21] to target/classes
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/danxils-commons/src/main/java/com/example/danxils_commons/security/JwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /root/VoidTracker/modules/nexus/danxils-commons/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:3.1.1:install[m [1m(default-install)[m @ [36mdanxils-commons[0;1m ---[m
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/pom.xml to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /root/VoidTracker/modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar to /root/.m2/repository/com/danxils/danxils-commons/1.0.0-SNAPSHOT/danxils-commons-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  10.008 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T11:00:56Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ danxils-commons built
+
+🔨 Building IAM Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------< [0;36mcom.danxils:iam-app[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding iam-app 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/iam-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 4 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :source
+[[1;34mINFO[m] Compiling 74 source files with javac [debug release 21] to target/classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module! :dependency
+[[1;34mINFO[m] Compiling 2 source files with javac [debug release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.3.0:jar[m [1m(default-jar)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Building jar: /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:3.2.5:repackage[m [1m(repackage)[m @ [36miam-app[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[[1;34mINFO[m] The original artifact has been renamed to /root/VoidTracker/modules/nexus/iam-service/target/iam-app-1.0.0-SNAPSHOT.jar.original
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  15.328 s (Wall Clock)
+[[1;34mINFO[m] Finished at: 2026-01-13T11:01:14Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+✅ IAM Service built
+
+🔨 Building Order Service...
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Using the MultiThreadedBuilder implementation with a thread count of 2
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------< [0;36mcom.danxils:order-service[0;1m >----------------------[m
+[[1;34mINFO[m] [1mBuilding order-service 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.3.2:clean[m [1m(default-clean)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Deleting /root/VoidTracker/modules/nexus/order-service/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:resources[m [1m(default-resources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 27 resources from src/main/resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:compile[m [1m(default-compile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 143 source files with javac [debug parameters release 21] to target/classes
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/impl/LogNotificationService.java:[9,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/SchemaValidationService.java:[20,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/nlp/CommandController.java:[17,1] Field 'log' already exists.
+[[1;33mWARNING[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/service/IngestionService.java:[18,1] Field 'log' already exists.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /root/VoidTracker/modules/nexus/order-service/src/main/java/com/example/order_service/security/OrderJwtAuthFilter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.1:testResources[m [1m(default-testResources)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.13.0:testCompile[m [1m(default-testCompile)[m @ [36morder-service[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 5 source files with javac [debug parameters release 21] to target/test-classes
+[[1;33mWARNING[m] The following options were not recognized by any processor: '[mapstruct.defaultComponentModel, mapstruct.suppressGeneratorTimestamp]'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.2:test[m [1m(default-test)[m @ [36morder-service[0;1m ---[m
+bash: line 1: ./scripts/git-sync-and-build.sh: No such file or directory

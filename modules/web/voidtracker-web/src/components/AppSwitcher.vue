@@ -55,10 +55,10 @@ const isOpen = ref(false);
 const apps = [
   { 
     id: 'admin', 
-    name: 'Admin Console', 
+    name: 'VoidTracker Admin', 
     description: 'System Administration',
     icon: Shield,
-    colorClass: 'bg-indigo-500',
+    colorClass: 'bg-spotify-green-400',
     pathPrefix: '/internal'
   },
   { 

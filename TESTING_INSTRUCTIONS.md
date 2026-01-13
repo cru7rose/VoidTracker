@@ -15,6 +15,7 @@
 2. [Konfiguracja n8n Webhook URL](#2-konfiguracja-n8n-webhook-url)
 3. [Testowanie Gatekeeper Approval Flow](#3-testowanie-gatekeeper-approval-flow)
 4. [Testowanie WebSocket Live Updates](#4-testowanie-websocket-live-updates)
+5. [Testowanie Ghost PWA i Planning Service](#5-testowanie-ghost-pwa-i-planning-service)
 
 ---
 
@@ -478,6 +479,249 @@ Powinieneś zobaczyć:
 
 ---
 
+## 5. Testowanie Ghost PWA i Planning Service
+
+### Krok 5.1: Przygotowanie środowiska
+
+```bash
+# 1. Upewnij się, że wszystkie serwisy działają
+./start-sup.sh
+
+# 2. Sprawdź czy planning-service działa
+curl http://localhost:8093/actuator/health
+
+# 3. Sprawdź czy IAM service działa (port 8090)
+curl http://localhost:8090/actuator/health || echo "IAM service nie działa"
+
+# 4. Sprawdź czy MailHog działa
+curl http://localhost:8025/api/v2/messages | jq '.total'
+```
+
+### Krok 5.2: Utwórz testowego kierowcę w IAM
+
+```bash
+# Utwórz użytkownika z rolą ROLE_DRIVER
+curl -X POST http://localhost:8090/api/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "driver-test",
+    "email": "driver-test@voidtracker.app",
+    "password": "Test123!",
+    "fullName": "Jan Kowalski",
+    "roles": ["ROLE_DRIVER"]
+  }'
+
+# Zapisz userId z odpowiedzi (będzie potrzebny później)
+```
+
+### Krok 5.3: Utwórz testową trasę i przypisz kierowcę
+
+```bash
+# 1. Utwórz optymalizację (przykład - wymaga zamówień w systemie)
+curl -X POST http://localhost:8093/api/planning/optimization/calculate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderIds": ["<order-id-1>", "<order-id-2>"],
+    "vehicleIds": ["<vehicle-id>"]
+  }'
+
+# 2. Opublikuj rozwiązanie (zapisz solutionId)
+curl -X POST http://localhost:8093/api/planning/optimization/publish \
+  -H "Content-Type: application/json" \
+  -d '{
+    "solutionId": "<solution-id>",
+    "driverId": "<driver-user-id>",
+    "vehicleId": "<vehicle-id>"
+  }'
+
+# 3. Pobierz route assignment ID
+curl http://localhost:8093/api/planning/assignments?driverId=<driver-user-id>
+```
+
+### Krok 5.4: Testuj publikację trasy (Magic Link)
+
+```bash
+# 1. Opublikuj trasę do kierowcy (generuje magic link)
+curl -X POST http://localhost:8093/api/planning/assignments/<assignment-id>/publish
+
+# Odpowiedź zawiera magicLink URL, np:
+# {"magicLink": "http://localhost:5173/auth?token=abc123..."}
+
+# 2. Sprawdź MailHog - powinien być email z magic link
+curl http://localhost:8025/api/v2/messages | jq '.items[0].Content.Body'
+
+# 3. Skopiuj token z magic link
+# Format: http://localhost:5173/auth?token=<TOKEN>
+```
+
+### Krok 5.5: Testuj Ghost PWA Authentication
+
+```bash
+# 1. Uruchom Ghost PWA (jeśli nie działa)
+cd modules/ghost/driver-pwa
+npm run dev
+
+# 2. Otwórz w przeglądarce: http://localhost:5173
+
+# 3. Testuj magic link:
+# - Otwórz: http://localhost:5173/auth?token=<TOKEN>
+# - Powinno przekierować do /route
+# - Sprawdź IndexedDB: DevTools > Application > IndexedDB > driverSession
+```
+
+### Krok 5.6: Testuj Route View w Ghost PWA
+
+```bash
+# 1. Sprawdź endpoint route dla kierowcy
+curl http://localhost:8093/api/planning/driver/<driver-user-id>/route \
+  -H "Authorization: Bearer <token>"
+
+# 2. W PWA:
+# - Powinna wyświetlić się lista stops
+# - Każdy stop ma przycisk "Navigate" (otwiera Google Maps)
+# - Każdy stop ma przycisk "Akcje" (otwiera StopActionSheet)
+```
+
+### Krok 5.7: Testuj Workflow Steps (Scan, Camera, Signature)
+
+**W Ghost PWA:**
+
+1. **Barcode Scanner:**
+   - Kliknij "Akcje" na stopie
+   - Powinien pojawić się scanner
+   - Zeskanuj kod kreskowy (lub wpisz ręcznie)
+   - Sprawdź czy kod jest zapisany
+
+2. **Camera Module:**
+   - W StopActionSheet kliknij "Otwórz kamerę"
+   - Zrób zdjęcie DMG (uszkodzenie) - opcjonalne
+   - Zrób zdjęcie POD (dostawa) - wymagane
+   - Sprawdź czy zdjęcia są zapisane lokalnie (IndexedDB)
+
+3. **Signature Pad:**
+   - W StopActionSheet narysuj podpis
+   - Wpisz imię i nazwisko odbiorcy
+   - Kliknij "Zatwierdź podpis"
+   - Sprawdź czy podpis jest zapisany
+
+4. **Status Update:**
+   - Zmień status na "Przybył" lub "Dostarczono"
+   - Sprawdź czy status jest zaktualizowany w backendzie:
+   ```bash
+   curl http://localhost:8093/api/planning/driver/<driver-id>/route
+   ```
+
+### Krok 5.8: Testuj Media Upload API
+
+```bash
+# 1. Upload zdjęcia POD
+curl -X POST http://localhost:8093/api/planning/media/upload/POD \
+  -H "Authorization: Bearer <token>" \
+  -F "file=@/path/to/photo.jpg" \
+  -F "stopId=<stop-id>" \
+  -F "orderId=<order-id>"
+
+# 2. Pobierz metadata
+curl http://localhost:8093/api/planning/media/<media-id>
+
+# 3. Download pliku
+curl http://localhost:8093/api/planning/media/<media-id>/download \
+  -o downloaded-photo.jpg
+```
+
+### Krok 5.9: Testuj Carrier Compliance Validation
+
+```bash
+# 1. Utwórz carrier compliance record
+curl -X POST http://localhost:8093/api/planning/carrier-compliance \
+  -H "Content-Type: application/json" \
+  -d '{
+    "carrierId": "<carrier-id>",
+    "isInsured": true,
+    "insuranceExpiryDate": "2026-12-31",
+    "complianceStatus": "COMPLIANT"
+  }'
+
+# 2. Spróbuj opublikować trasę z non-compliant carrier
+curl -X POST http://localhost:8093/api/planning/assignments/<assignment-id>/publish
+
+# Powinien zwrócić błąd 400 jeśli carrier nie jest COMPLIANT
+
+# 3. Ustaw carrier na COMPLIANT i spróbuj ponownie
+curl -X PUT http://localhost:8093/api/planning/carrier-compliance/<carrier-id> \
+  -H "Content-Type: application/json" \
+  -d '{"complianceStatus": "COMPLIANT", "isInsured": true}'
+```
+
+### Krok 5.10: Testuj Driver Enrichment (Real Data z IAM)
+
+```bash
+# 1. Pobierz route assignment - powinien zawierać driverName z IAM
+curl http://localhost:8093/api/planning/assignments/<assignment-id>
+
+# Sprawdź odpowiedź:
+# {
+#   "driverId": "...",
+#   "driverName": "Jan Kowalski",  // <-- z IAM service
+#   ...
+# }
+
+# 2. Sprawdź cache - drugie wywołanie powinno być szybsze (cache hit)
+time curl http://localhost:8093/api/planning/assignments/<assignment-id>
+
+# 3. Sprawdź logi - powinny pokazywać cache hits/misses
+tail -f logs/planning-service.log | grep -i "driver name"
+```
+
+### Krok 5.11: Testuj Delivery Code Conditional Logic
+
+**W Ghost PWA:**
+
+1. **Test z ALWAYS policy:**
+   - Stop powinien wymagać delivery code scan
+   - Scanner powinien być widoczny
+
+2. **Test z NEVER policy:**
+   - Stop nie powinien wymagać delivery code
+   - Scanner nie powinien być widoczny
+
+3. **Test z IF_RAMP policy:**
+   - Jeśli `address.requiresDeliveryCode === true` → scanner widoczny
+   - Jeśli `address.requiresDeliveryCode === false` → scanner ukryty
+
+### Krok 5.12: Testuj Paginację i Filtrowanie
+
+```bash
+# 1. Test paginacji
+curl "http://localhost:8093/api/planning/assignments?page=0&size=10"
+
+# 2. Test filtrowania po statusie
+curl "http://localhost:8093/api/planning/assignments?status=PUBLISHED"
+
+# 3. Test filtrowania po kierowcy
+curl "http://localhost:8093/api/planning/assignments?driverId=<driver-id>"
+
+# 4. Test filtrowania po dacie
+curl "http://localhost:8093/api/planning/assignments?createdAfter=2026-01-01T00:00:00Z"
+
+# 5. Test sortowania
+curl "http://localhost:8093/api/planning/assignments?sort=createdAt,desc&size=20"
+```
+
+### Krok 5.13: Testuj Offline Mode w Ghost PWA
+
+1. **W Chrome DevTools:**
+   - Otwórz Network tab
+   - Ustaw throttling na "Offline"
+   - Spróbuj zeskanować kod kreskowy
+   - Sprawdź IndexedDB - powinien być zapisany w `offline-queue`
+
+2. **Włącz ponownie sieć:**
+   - Sprawdź czy queue jest automatycznie synchronizowana
+   - Sprawdź logi backendu - powinny pojawić się requesty
+
+---
+
 ## ✅ Checklist Testowania
 
 - [ ] Planning-service zbudowany przez CI/CD
@@ -490,6 +734,18 @@ Powinieneś zobaczyć:
 - [ ] WebSocket łączy się z frontendem
 - [ ] Live updates są widoczne podczas optymalizacji
 - [ ] Logi pokazują wszystkie kroki
+- [ ] **Ghost PWA: Magic link authentication działa**
+- [ ] **Ghost PWA: Route view wyświetla stops**
+- [ ] **Ghost PWA: Barcode scanner działa**
+- [ ] **Ghost PWA: Camera module działa (DMG/POD)**
+- [ ] **Ghost PWA: Signature pad działa**
+- [ ] **Ghost PWA: Status updates działają**
+- [ ] **Media Upload API: Upload/download działa**
+- [ ] **Carrier Compliance: Walidacja działa**
+- [ ] **Driver Enrichment: Pobiera dane z IAM**
+- [ ] **Delivery Code: Conditional logic działa**
+- [ ] **Paginacja i filtrowanie: Działa dla tysięcy rekordów**
+- [ ] **Offline Mode: Queue i sync działają**
 
 ---
 

@@ -1,0 +1,179 @@
+name: Build Backend Services
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'modules/**/*.java'
+      - 'modules/**/pom.xml'
+      - 'pom.xml'
+      - '.github/workflows/build-backend.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'modules/**/*.java'
+      - 'modules/**/pom.xml'
+      - 'pom.xml'
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '21'
+  MAVEN_OPTS: '-Xmx2048m'
+
+jobs:
+  build-all-services:
+    name: Build All Backend Services
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Configure Maven settings
+        run: |
+          mkdir -p ~/.m2
+          echo '<?xml version="1.0" encoding="UTF-8"?>
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                    http://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <localRepository>~/.m2/repository</localRepository>
+          </settings>' > ~/.m2/settings.xml
+
+      - name: Build parent POM and install dependencies
+        run: |
+          mvn clean install -DskipTests -N
+          echo "✅ Parent POM installed"
+
+      - name: Build danxils-commons (required by all services)
+        run: |
+          cd modules/nexus/danxils-commons
+          mvn clean install -DskipTests
+          echo "✅ danxils-commons built"
+
+      - name: Build IAM Service
+        run: |
+          cd modules/nexus/iam-service
+          mvn clean package -DskipTests
+          echo "✅ IAM Service built"
+
+      - name: Build Order Service
+        run: |
+          cd modules/nexus/order-service
+          mvn clean package -DskipTests
+          echo "✅ Order Service built"
+
+      - name: Build Planning Service
+        run: |
+          cd modules/flux/planning-service
+          mvn clean package -DskipTests
+          echo "✅ Planning Service built"
+
+      - name: Build Tracking Service
+        run: |
+          cd modules/titan/tracking-service
+          mvn clean package -DskipTests
+          echo "✅ Tracking Service built"
+
+      - name: Build Event Emitter Service
+        run: |
+          cd modules/titan/event-emitter-service
+          mvn clean package -DskipTests
+          echo "✅ Event Emitter Service built"
+
+      - name: Build Analytics Service
+        run: |
+          cd modules/nexus/analytics-service
+          mvn clean package -DskipTests
+          echo "✅ Analytics Service built"
+
+      - name: Build Dashboard Service
+        run: |
+          cd modules/nexus/dashboard-service
+          mvn clean package -DskipTests
+          echo "✅ Dashboard Service built"
+
+      - name: Build Admin Panel Service
+        run: |
+          cd modules/nexus/admin-panel-service
+          mvn clean package -DskipTests
+          echo "✅ Admin Panel Service built"
+
+      - name: Build Address Verification Service
+        run: |
+          cd modules/nexus/address-verification-service
+          mvn clean package -DskipTests
+          echo "✅ Address Verification Service built"
+
+      - name: Build Driver App Service
+        run: |
+          cd modules/titan/driver-app-service
+          mvn clean package -DskipTests
+          echo "✅ Driver App Service built"
+
+      - name: Build Audit Service
+        run: |
+          cd modules/titan/audit-service
+          mvn clean package -DskipTests
+          echo "✅ Audit Service built"
+
+      - name: Build CRM Service
+        run: |
+          cd modules/nexus/crm-service
+          mvn clean package -DskipTests
+          echo "✅ CRM Service built"
+
+      - name: List built JARs
+        run: |
+          echo "📦 Built JAR files:"
+          find modules -name "*.jar" -not -name "*-original.jar" -type f | head -20
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-jars
+          path: |
+            modules/**/target/*.jar
+            !modules/**/target/*-original.jar
+          retention-days: 7
+
+      - name: Build Summary
+        if: always()
+        run: |
+          echo "## 🏗️ Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Service | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
+          
+          SERVICES=(
+            "danxils-commons:modules/nexus/danxils-commons"
+            "IAM Service:modules/nexus/iam-service"
+            "Order Service:modules/nexus/order-service"
+            "Planning Service:modules/flux/planning-service"
+            "Tracking Service:modules/titan/tracking-service"
+            "Event Emitter:modules/titan/event-emitter-service"
+            "Analytics Service:modules/nexus/analytics-service"
+            "Dashboard Service:modules/nexus/dashboard-service"
+            "Admin Panel:modules/nexus/admin-panel-service"
+            "Address Verification:modules/nexus/address-verification-service"
+            "Driver App:modules/titan/driver-app-service"
+            "Audit Service:modules/titan/audit-service"
+            "CRM Service:modules/nexus/crm-service"
+          )
+          
+          for service_info in "${SERVICES[@]}"; do
+            IFS=':' read -r name path <<< "$service_info"
+            if [ -f "$path/target"/*.jar ] && [ ! -f "$path/target"/*-original.jar ]; then
+              echo "| $name | ✅ Built |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "| $name | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done

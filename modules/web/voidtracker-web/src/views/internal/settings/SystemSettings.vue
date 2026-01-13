@@ -210,7 +210,7 @@ const schemas = {
             ]
         },
         smsApiKey: { label: 'API Key / Auth Token', type: 'password' },
-        smsSenderId: { label: 'Sender ID', type: 'text', placeholder: 'DANXILS' }
+        smsSenderId: { label: 'Sender ID', type: 'text', placeholder: 'VoidTracker' }
     },
     onboarding: {
         section1: { type: 'header', label: 'Driver Onboarding Workflow' },
@@ -285,7 +285,7 @@ const saveSettings = () => {
     
     // Log to Audit Service
     auditService.logAction(
-        'admin@danxils.com', 
+        'admin@voidtracker.com', 
         'UPDATE_CONFIG', 
         `Updated system settings for ${activeTab.value} tab`
     );

@@ -2,41 +2,249 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-body {
-  @apply bg-void-black text-slate-200 antialiased overflow-hidden;
-}
-
-/* Scrollbar Styling for Webkit */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-void-darker;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-void-gray rounded-full hover:bg-void-cyan-600/50 transition-colors;
-}
-
-/* Global Animations */
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 5px rgba(0, 255, 204, 0.2);
+@layer base {
+  body {
+    background-color: #ffffff;
+    color: #171717;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body.dark {
+    background-color: #121212;
+    color: #ffffff;
   }
 
-  50% {
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar - Spotify style */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+  
+  body.dark ::-webkit-scrollbar-track {
+    background-color: #181818;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  
+  body.dark ::-webkit-scrollbar-thumb {
+    background-color: #404040;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a3a3a3;
+  }
+  
+  body.dark ::-webkit-scrollbar-thumb:hover {
+    background-color: #525252;
   }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 3s infinite;
+@layer components {
+  /* Spotify-style Card */
+  .spotify-card {
+    background-color: #181818;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    transition: all 0.2s;
+  }
+  .spotify-card:hover {
+    background-color: #1a1a1a;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Light mode card */
+  .light .spotify-card,
+  :not(.dark) .spotify-card {
+    background-color: #fafafa;
+    border: 1px solid #e5e5e5;
+  }
+  .light .spotify-card:hover,
+  :not(.dark) .spotify-card:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Spotify-style Button */
+  .spotify-button {
+    background-color: #1db954;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  }
+  .spotify-button:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+  }
+  .spotify-button:active {
+    transform: scale(0.95);
+  }
+
+  .spotify-button-secondary {
+    background-color: #262626;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    transition: all 0.2s;
+  }
+  .spotify-button-secondary:hover {
+    background-color: #404040;
+    transform: scale(1.05);
+  }
+  .spotify-button-secondary:active {
+    transform: scale(0.95);
+  }
+
+  /* Spotify-style Input */
+  .spotify-input {
+    background-color: #181818;
+    border: 1px solid #404040;
+    border-radius: 0.375rem;
+    padding: 0.625rem 1rem;
+    color: #ffffff;
+    transition: all 0.2s;
+  }
+  .spotify-input::placeholder {
+    color: #737373;
+  }
+  .spotify-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #1db954;
+    border-color: transparent;
+  }
+  
+  /* Light mode input */
+  .light .spotify-input,
+  :not(.dark) .spotify-input {
+    background-color: #ffffff;
+    border: 1px solid #d4d4d4;
+    color: #171717;
+  }
+  .light .spotify-input::placeholder,
+  :not(.dark) .spotify-input::placeholder {
+    color: #a3a3a3;
+  }
+  .light .spotify-input:focus,
+  :not(.dark) .spotify-input:focus {
+    border-color: #1db954;
+  }
+
+  /* Playlist-style List Item */
+  .playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.15s;
+    cursor: pointer;
+  }
+  .playlist-item:hover {
+    background-color: #1a1a1a;
+  }
+  
+  /* Light mode playlist item */
+  .light .playlist-item:hover,
+  :not(.dark) .playlist-item:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* Glass panel - Spotify style */
+  .glass-panel {
+    background-color: rgba(24, 24, 24, 0.8);
+    backdrop-filter: blur(24px);
+    border-radius: 0.5rem;
+    border: 1px solid #262626;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Hologram panel - updated to Spotify style */
+  .hologram-panel {
+    background-color: #181818;
+    border-radius: 0.5rem;
+    border: 1px solid #262626;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+  .hologram-panel:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    border-color: #404040;
+  }
+
+  /* Neon button - updated to Spotify style */
+  .neon-button {
+    background-color: #1db954;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(29, 185, 84, 0.2);
+  }
+  .neon-button:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+  }
+  .neon-button:active {
+    transform: scale(0.95);
+  }
+
+  /* Neon text - updated to Spotify style */
+  .neon-text {
+    color: #1db954;
+    text-shadow: 0 0 10px rgba(29, 185, 84, 0.3);
+  }
+
+  .neon-text-strong {
+    color: #1ed760;
+    text-shadow: 0 0 15px rgba(30, 215, 96, 0.5);
+  }
+
+  /* Cyber grid - updated to subtle pattern */
+  .cyber-grid {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
+
+@layer utilities {
+  /* Text gradients */
+  .text-gradient {
+    background: linear-gradient(to right, #1db954, #1ed760);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow effects */
+  .glow-green {
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.3);
+  }
+
+  .glow-green-lg {
+    box-shadow: 0 0 40px rgba(29, 185, 84, 0.4);
+  }
 }

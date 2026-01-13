@@ -16,6 +16,7 @@ export const useDispatchStore = defineStore('dispatch', () => {
     const loading = ref(false);
     const lastOptimized = ref(null);
     const currentSolutionId = ref(null);
+    const lastOptimizationUpdate = ref(null); // For Gatekeeper approval flow
 
     function mapSolutionToFrontend(solutionData) {
         if (!solutionData || !solutionData.routes) return [];
@@ -83,6 +84,17 @@ export const useDispatchStore = defineStore('dispatch', () => {
                 routes.value = mapSolutionToFrontend(res.data);
                 if (res.data.id) currentSolutionId.value = res.data.id; // Store ID
                 lastOptimized.value = new Date();
+                
+                // Store optimization update for Gatekeeper approval flow
+                if (res.data.requiresApproval !== undefined) {
+                    lastOptimizationUpdate.value = {
+                        requiresApproval: res.data.requiresApproval,
+                        approvalId: res.data.approvalId,
+                        justification: res.data.justification,
+                        warnings: res.data.warnings || [],
+                        scoreChangePercent: res.data.scoreChangePercent || 0
+                    };
+                }
             }
         } catch (e) {
             console.error("Optimization failed", e);
@@ -219,6 +231,7 @@ export const useDispatchStore = defineStore('dispatch', () => {
         constraints,
         loading,
         lastOptimized,
+        lastOptimizationUpdate, // For Gatekeeper approval flow
         fetchLatestPlan,
         fetchUnassignedOrders,
         runOptimization,

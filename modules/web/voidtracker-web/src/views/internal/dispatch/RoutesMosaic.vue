@@ -1,18 +1,18 @@
 <template>
-  <div class="h-full flex flex-col overflow-hidden">
+  <div class="h-full flex flex-col overflow-hidden bg-void-black text-void-cyan-400">
     <!-- Header Controls -->
-    <div class="flex justify-between items-center mb-4 px-1">
-      <h2 class="text-xl font-bold text-gray-800">Dispatch Board</h2>
+    <div class="flex justify-between items-center mb-4 px-4 py-2 border-b border-void-cyan-900">
+      <h2 class="text-xl font-bold text-void-cyan-300 font-mono">Routes Mosaic</h2>
         <div class="flex gap-3 items-center">
-         <button @click="showConstraintsModal = true" class="text-gray-600 hover:text-gray-900 px-3 py-2 border rounded bg-white flex items-center gap-2 shadow-sm">
+         <button @click="showConstraintsModal = true" class="text-void-cyan-400 hover:text-void-cyan-300 px-3 py-2 border border-void-cyan-800 rounded bg-void-cyan-950 flex items-center gap-2 hover:bg-void-cyan-900 transition-colors">
             <span>⚙️</span> Constraints
          </button>
-         <select v-model="selectedModel" class="border rounded px-3 py-2 bg-white shadow-sm">
+         <select v-model="selectedModel" class="border border-void-cyan-800 rounded px-3 py-2 bg-void-black text-void-cyan-300 focus:border-void-cyan-600 focus:outline-none">
           <option value="PUDO_CLUSTER">PUDO Cluster (Locker/PUDO)</option>
           <option value="DYNAMIC_SIMULATION">Digital Twin (Simulation)</option>
           <option value="STRICT_CONSTRAINT">Strict AETR (Legal)</option>
         </select>
-        <button @click="runOptimization" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 shadow flex items-center gap-2">
+        <button @click="runOptimization" class="bg-void-cyan-600 text-void-black px-4 py-2 rounded hover:bg-void-cyan-500 shadow-lg shadow-void-cyan-900/20 flex items-center gap-2 font-bold transition-colors">
           <span>⚡</span> Optimize Routes
         </button>
       </div>
@@ -21,22 +21,22 @@
     <div class="flex-1 flex gap-6 min-h-0">
         <!-- Main: Active Routes Grid -->
         <div class="flex-1 flex flex-col min-w-0">
-            <h3 class="font-semibold text-gray-500 mb-2 uppercase text-xs tracking-wider">Plan: {{ routes.length }} Routes</h3>
+            <h3 class="font-semibold text-void-cyan-500 mb-2 uppercase text-xs tracking-wider px-2">Plan: {{ routes.length }} Routes</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 overflow-y-auto pr-2 pb-2">
                 <div v-for="route in routes" :key="route.id" 
-                    class="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col h-[500px]">
+                    class="bg-void-cyan-950 border border-void-cyan-800 rounded-xl shadow-lg hover:shadow-void-cyan-900/50 hover:border-void-cyan-600 transition-all duration-200 flex flex-col h-[500px]">
                     
                     <!-- Route Header -->
-                    <div class="p-4 border-b border-gray-100">
+                    <div class="p-4 border-b border-void-cyan-900">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h3 class="font-bold text-lg text-gray-900">{{ route.name }}</h3>
+                                <h3 class="font-bold text-lg text-void-cyan-300">{{ route.name }}</h3>
                                 <div class="flex items-center gap-2 mt-1">
-                                    <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{{ route.vehicle }}</span>
-                                    <span v-if="route.driver !== 'Unassigned'" class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <span class="text-xs bg-void-cyan-900 text-void-cyan-400 px-2 py-0.5 rounded-full">{{ route.vehicle }}</span>
+                                    <span v-if="route.driver !== 'Unassigned'" class="text-xs bg-void-cyan-900 text-void-cyan-300 px-2 py-0.5 rounded-full flex items-center gap-1">
                                         👤 {{ route.driver }}
                                     </span>
-                                    <span v-else class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded-full">
+                                    <span v-else class="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded-full">
                                         ⚠️ No Driver
                                     </span>
                                 </div>
@@ -49,57 +49,57 @@
                         <!-- Stats Row -->
                         <div class="grid grid-cols-3 gap-2 mt-4">
                             <div class="text-center">
-                                <div class="text-lg font-bold text-gray-800">{{ route.stops }}</div>
-                                <div class="text-[10px] text-gray-400 uppercase">Stops</div>
+                                <div class="text-lg font-bold text-void-cyan-300">{{ route.stops }}</div>
+                                <div class="text-[10px] text-void-cyan-500 uppercase">Stops</div>
                             </div>
-                            <div class="text-center border-l border-gray-100">
-                                <div class="text-lg font-bold text-gray-800">{{ route.distance }}<span class="text-xs font-normal text-gray-500">km</span></div>
-                                <div class="text-[10px] text-gray-400 uppercase">Dist</div>
+                            <div class="text-center border-l border-void-cyan-900">
+                                <div class="text-lg font-bold text-void-cyan-300">{{ route.distance }}<span class="text-xs font-normal text-void-cyan-500">km</span></div>
+                                <div class="text-[10px] text-void-cyan-500 uppercase">Dist</div>
                             </div>
-                            <div class="text-center border-l border-gray-100">
-                                <div class="text-lg font-bold text-gray-800">{{ route.time }}<span class="text-xs font-normal text-gray-500">h</span></div>
-                                <div class="text-[10px] text-gray-400 uppercase">Time</div>
+                            <div class="text-center border-l border-void-cyan-900">
+                                <div class="text-lg font-bold text-void-cyan-300">{{ route.time }}<span class="text-xs font-normal text-void-cyan-500">h</span></div>
+                                <div class="text-[10px] text-void-cyan-500 uppercase">Time</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Stops List (Scrollable) -->
-                    <div class="flex-1 overflow-y-auto p-2 space-y-1 bg-gray-50/50" 
+                    <div class="flex-1 overflow-y-auto p-2 space-y-1 bg-void-black/50" 
                          @dragover.prevent 
                          @drop="onDrop($event, route.id, -1)">
                          
-                        <div v-if="route.legs.length === 0" class="h-full flex flex-col items-center justify-center text-gray-400 text-sm">
+                        <div v-if="route.legs.length === 0" class="h-full flex flex-col items-center justify-center text-void-cyan-600 text-sm">
                             <span>Empty Route</span>
                             <span class="text-xs">Drag orders here</span>
                         </div>
 
                         <div v-for="(stop, index) in route.legs" :key="index" 
-                            class="group flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200 shadow-sm cursor-move hover:border-blue-300 transition-colors"
+                            class="group flex items-center gap-3 p-3 bg-void-black rounded-lg border border-void-cyan-800 shadow-sm cursor-move hover:border-void-cyan-600 transition-colors"
                             draggable="true"
                             @dragstart="onDragStart($event, route.id, index, stop)">
                             
-                            <div class="w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-bold flex-shrink-0 group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                            <div class="w-6 h-6 rounded-full bg-void-cyan-900 text-void-cyan-400 flex items-center justify-center text-xs font-bold flex-shrink-0 group-hover:bg-void-cyan-800 group-hover:text-void-cyan-300 transition-colors">
                                 {{ index + 1 }}
                             </div>
                             <div class="flex-1 min-w-0">
-                                <div class="truncate font-medium text-gray-800 text-sm">{{ stop.address }}</div>
-                                <div class="text-xs text-gray-400 flex items-center gap-2">
-                                    <span>🆔 {{ stop.orderId.substring(0,6) }}</span>
-                                    <span>🕒 {{ stop.eta }}</span>
+                                <div class="truncate font-medium text-void-cyan-300 text-sm">{{ stop.address }}</div>
+                                <div class="text-xs text-void-cyan-500 flex items-center gap-2">
+                                    <span>🆔 {{ stop.orderId?.substring(0,6) || 'N/A' }}</span>
+                                    <span>🕒 {{ stop.eta || '--:--' }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Actions Footer -->
-                    <div class="p-3 border-t border-gray-100 bg-white rounded-b-xl flex gap-1">
-                        <button @click="openAssignModal(route)" class="flex-1 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 rounded hover:bg-blue-100 transition-colors">
+                    <div class="p-3 border-t border-void-cyan-900 bg-void-cyan-950 rounded-b-xl flex gap-1">
+                        <button @click="openAssignModal(route)" class="flex-1 py-1.5 text-xs font-medium text-void-cyan-300 bg-void-cyan-900 rounded hover:bg-void-cyan-800 transition-colors">
                             Assign Driver
                         </button>
-                        <button @click="openRouteDetails(route)" class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                        <button @click="openRouteDetails(route)" class="px-3 py-1.5 text-xs font-medium text-void-cyan-400 bg-void-black rounded hover:bg-void-cyan-950 transition-colors">
                             Details
                         </button>
-                        <button @click="publishRoute(route)" class="px-3 py-1.5 text-xs font-medium text-purple-600 bg-purple-50 rounded hover:bg-purple-100 transition-colors">
+                        <button @click="publishRoute(route)" class="px-3 py-1.5 text-xs font-medium text-green-300 bg-green-900/30 rounded hover:bg-green-900/50 transition-colors">
                             Publish
                         </button>
                     </div>
@@ -142,6 +142,18 @@
             </div>
         </div>
     </div>
+
+    <!-- Gatekeeper Approval Modal -->
+    <GatekeeperApprovalModal
+      :show="showGatekeeperModal"
+      :approval-id="gatekeeperData.approvalId"
+      :justification="gatekeeperData.justification"
+      :warnings="gatekeeperData.warnings"
+      :score-change-percent="gatekeeperData.scoreChangePercent"
+      @close="showGatekeeperModal = false"
+      @approved="handleApproval"
+      @rejected="handleRejection"
+    />
 
     <!-- Modals ... (Keep existing modals) -->
     <div v-if="showAssignModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -194,10 +206,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed } from 'vue';
+import { ref, onMounted, reactive, computed, watch } from 'vue';
 import { useDispatchStore } from '../../../stores/dispatchStore';
 import { planningApi } from '../../../api/axios';
 import { generateManifest } from '../../../utils/pdfGenerator';
+import GatekeeperApprovalModal from '../../../components/GatekeeperApprovalModal.vue';
 
 const dispatchStore = useDispatchStore();
 
@@ -245,7 +258,29 @@ const assignDriver = async () => {
 };
 
 const showConstraintsModal = ref(false);
-const constraints = dispatchStore.constraints; 
+const constraints = dispatchStore.constraints;
+
+// Gatekeeper Approval Modal
+const showGatekeeperModal = ref(false);
+const gatekeeperData = ref({
+  approvalId: null,
+  justification: null,
+  warnings: [],
+  scoreChangePercent: 0
+});
+
+// Watch for approval requirements from optimization updates
+watch(() => dispatchStore.lastOptimizationUpdate, (update) => {
+  if (update && update.requiresApproval) {
+    gatekeeperData.value = {
+      approvalId: update.approvalId || `GK-${Date.now()}`,
+      justification: update.justification || 'Wymagana weryfikacja rozwiązania optymalizacji.',
+      warnings: update.warnings || [],
+      scoreChangePercent: update.scoreChangePercent || 0
+    };
+    showGatekeeperModal.value = true;
+  }
+}, { deep: true }); 
 
 // Drag and Drop State
 const draggedItem = ref(null);
@@ -328,9 +363,32 @@ const openRouteDetails = (route) => {
     alert(`Route: ${route.name}\nVehicle: ${route.vehicle}\nDriver: ${route.driver}\nStops: ${route.stops}\nDistance: ${route.distance}km`);
 };
 
+const handleApproval = (response) => {
+  console.log('Solution approved:', response);
+  alert('✅ Rozwiązanie zatwierdzone! Publikowanie do kierowców...');
+  showGatekeeperModal.value = false;
+  // Trigger route publication
+  // dispatchStore.publishRoutes();
+};
+
+const handleRejection = (response) => {
+  console.log('Solution rejected:', response);
+  alert('❌ Rozwiązanie odrzucone. Optymalizacja nie zostanie opublikowana.');
+  showGatekeeperModal.value = false;
+};
+
+const getStatusClass = (status) => {
+  const classes = {
+    'PLANNED': 'bg-blue-900/50 text-blue-300',
+    'ACTIVE': 'bg-green-900/50 text-green-300',
+    'COMPLETED': 'bg-void-cyan-900/50 text-void-cyan-300',
+    'CANCELLED': 'bg-red-900/50 text-red-300'
+  };
+  return classes[status] || 'bg-gray-900/50 text-gray-300';
+};
+
 onMounted(async () => {
     await dispatchStore.fetchLatestPlan();
-    // Also fetch unassigned orders if endpoint exists?
-    // dispatchStore.fetchUnassignedOrders(); 
+    await dispatchStore.fetchUnassignedOrders();
 });
 </script>

@@ -11,14 +11,22 @@ const router = useRouter()
 const route = useRoute()
 
 onMounted(async () => {
-    const token = route.params.token as string
+    // Check for token in route params (legacy: /auth/magic/:token)
+    const paramToken = route.params.token as string
+    // Check for token in query (new: /auth?token=xxx)
+    const queryToken = route.query.token as string
+    const token = paramToken || queryToken
+    
     if (token) {
         loading.value = true
         try {
             await authStore.loginWithToken(token)
-            router.push('/route') // Redirect to Route View
-        } catch (e) {
-            alert('Invalid Magic Link')
+            // Redirect to intended destination or default to /route
+            const redirect = route.query.redirect as string || '/route'
+            router.push(redirect)
+        } catch (e: any) {
+            console.error('Login error:', e)
+            alert(e.message || 'Invalid or expired magic link')
             loading.value = false
         }
     }

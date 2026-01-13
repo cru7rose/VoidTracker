@@ -6,27 +6,33 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+/**
+ * WebSocket Configuration for Planning Service
+ * 
+ * Enables real-time updates to frontend during Timefold optimization
+ * Endpoint: /ws-planning (STOMP over SockJS)
+ * Topics: /topic/optimization-updates (BestSolutionChangedEvent broadcasts)
+ */
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        // Enable a simple memory-based message broker to carry the greeting messages
-        // back to the client on destinations prefixed with "/topic"
+        // Enable simple broker for topics (in-memory, suitable for single-instance)
+        // For production with multiple instances, use RabbitMQ or Redis broker
         config.enableSimpleBroker("/topic");
-        // Designates the "/app" prefix for messages that are bound for
-        // @MessageMapping-annotated methods.
+        
+        // Prefix for application destinations (client -> server)
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Register the "/ws-planning" endpoint, enabling the SockJS protocol options.
-        // Allow all origins for simplicity in this internal tool environment.
+        // Register STOMP endpoint with SockJS fallback
+        // Frontend connects to: /ws-planning
         registry.addEndpoint("/ws-planning")
-                .setAllowedOriginPatterns("*")
-                .setAllowedOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:81", "http://127.0.0.1:5173")
-                .withSockJS();
+                .setAllowedOriginPatterns("*") // Allow all origins (configure for production)
+                .withSockJS(); // Enable SockJS fallback for browsers without WebSocket support
     }
 }
