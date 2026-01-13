@@ -12,9 +12,6 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +25,12 @@ public class HubSeederService implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        // Skip during build/test - only run when actually starting the application
+        if (isBuildOrTestPhase(args)) {
+            log.debug("Skipping hub seeding during build/test phase");
+            return;
+        }
+
         if (hubRepository.count() > 0) {
             log.info("Hubs already seeded. Skipping migration.");
             return;
@@ -88,5 +91,14 @@ public class HubSeederService implements CommandLineRunner {
             case NUMERIC -> String.valueOf((int) cell.getNumericCellValue());
             default -> "";
         };
+    }
+
+    private boolean isBuildOrTestPhase(String... args) {
+        // Check if running during Maven build (common indicators)
+        String classpath = System.getProperty("java.class.path", "");
+        return classpath.contains("maven") || 
+               classpath.contains("surefire") ||
+               System.getProperty("maven.test.skip") != null ||
+               System.getProperty("skipTests") != null;
     }
 }

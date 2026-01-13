@@ -95,7 +95,7 @@ fi
 MODE="${1:-default}"
 if [ "$MODE" = "docker" ] || [ "$MODE" = "all" ]; then
     echo -e "\n${CYAN}🐳 Stopping Docker containers...${NC}"
-    docker-compose -f docker-compose.yml down || true
+    docker compose -f docker-compose.yml down || true
 fi
 
 # Success

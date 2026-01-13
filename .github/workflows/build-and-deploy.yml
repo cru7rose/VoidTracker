@@ -1,0 +1,222 @@
+name: Build and Deploy Services
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'modules/**'
+      - 'pom.xml'
+      - '.github/workflows/build-and-deploy.yml'
+  workflow_dispatch:
+    inputs:
+      services:
+        description: 'Services to deploy (comma-separated: iam,order,planning)'
+        required: false
+        default: 'iam,order,planning'
+      skip_tests:
+        description: 'Skip tests'
+        type: boolean
+        default: true
+      deploy:
+        description: 'Deploy to server after build'
+        type: boolean
+        default: true
+
+env:
+  JAVA_VERSION: '21'
+  MAVEN_OPTS: '-Xmx2g -XX:ActiveProcessorCount=2'
+
+jobs:
+  build:
+    name: Build Services
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        service:
+          - name: iam
+            module: modules/nexus/iam-service
+            jar: iam-app-1.0.0-SNAPSHOT.jar
+          - name: order
+            module: modules/nexus/order-service
+            jar: order-service-1.0.0-SNAPSHOT.jar
+          - name: planning
+            module: modules/flux/planning-service
+            jar: planning-service-1.0.0-SNAPSHOT.jar
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build danxils-commons (dependency)
+        run: |
+          cd modules/nexus/danxils-commons
+          mvn clean install -DskipTests -T 1C
+
+      - name: Build ${{ matrix.service.name }} Service
+        id: build
+        run: |
+          cd ${{ matrix.service.module }}
+          if [ "${{ github.event.inputs.skip_tests }}" = "true" ] || [ "${{ github.event_name }}" = "push" ]; then
+            mvn clean package -DskipTests -T 1C
+          else
+            mvn clean package -T 1C
+          fi
+          
+          # Verify JAR exists
+          if [ ! -f "target/${{ matrix.service.jar }}" ]; then
+            echo "❌ JAR not found: target/${{ matrix.service.jar }}"
+            exit 1
+          fi
+          
+          # Get JAR size
+          JAR_SIZE=$(du -h "target/${{ matrix.service.jar }}" | cut -f1)
+          echo "✅ Built: ${{ matrix.service.jar }} ($JAR_SIZE)"
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.service.name }}-jar
+          path: ${{ matrix.service.module }}/target/${{ matrix.service.jar }}
+          retention-days: 7
+
+  deploy:
+    name: Deploy to Server
+    needs: build
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true') ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all JAR artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*-jar'
+          merge-multiple: false
+
+      - name: Determine services to deploy
+        id: services
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            SERVICES="${{ github.event.inputs.services }}"
+          else
+            SERVICES="iam,order,planning"
+          fi
+          echo "services=$SERVICES" >> $GITHUB_OUTPUT
+          echo "📦 Services to deploy: $SERVICES"
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Test SSH connection
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+              -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+              "echo '✅ SSH connection successful'"
+
+      - name: Create backup directory
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+              -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+              "mkdir -p ${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}/.deploy-backups/$(date +%Y%m%d_%H%M%S)"
+
+      - name: Deploy IAM Service
+        if: contains(steps.services.outputs.services, 'iam')
+        run: |
+          REMOTE_BASE="${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
+          REMOTE_DIR="$REMOTE_BASE/modules/nexus/iam-service/target"
+          
+          # Backup old JAR
+          ssh -o StrictHostKeyChecking=no \
+              -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+              "mkdir -p $REMOTE_DIR && \
+               if [ -f '$REMOTE_DIR/iam-app-1.0.0-SNAPSHOT.jar' ]; then \
+                 cp '$REMOTE_DIR/iam-app-1.0.0-SNAPSHOT.jar' '$REMOTE_BASE/.deploy-backups/$(date +%Y%m%d_%H%M%S)/iam-app-1.0.0-SNAPSHOT.jar' 2>/dev/null || true; \
+               fi"
+          
+          # Deploy new JAR
+          scp -o StrictHostKeyChecking=no \
+              -P ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              iam-jar/iam-app-1.0.0-SNAPSHOT.jar \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:$REMOTE_DIR/
+          
+          echo "✅ IAM Service deployed"
+
+      - name: Deploy Order Service
+        if: contains(steps.services.outputs.services, 'order')
+        run: |
+          REMOTE_BASE="${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
+          REMOTE_DIR="$REMOTE_BASE/modules/nexus/order-service/target"
+          
+          # Backup old JAR
+          ssh -o StrictHostKeyChecking=no \
+              -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+              "mkdir -p $REMOTE_DIR && \
+               if [ -f '$REMOTE_DIR/order-service-1.0.0-SNAPSHOT.jar' ]; then \
+                 cp '$REMOTE_DIR/order-service-1.0.0-SNAPSHOT.jar' '$REMOTE_BASE/.deploy-backups/$(date +%Y%m%d_%H%M%S)/order-service-1.0.0-SNAPSHOT.jar' 2>/dev/null || true; \
+               fi"
+          
+          # Deploy new JAR
+          scp -o StrictHostKeyChecking=no \
+              -P ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              order-jar/order-service-1.0.0-SNAPSHOT.jar \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:$REMOTE_DIR/
+          
+          echo "✅ Order Service deployed"
+
+      - name: Deploy Planning Service
+        if: contains(steps.services.outputs.services, 'planning')
+        run: |
+          REMOTE_BASE="${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
+          REMOTE_DIR="$REMOTE_BASE/modules/flux/planning-service/target"
+          
+          # Backup old JAR
+          ssh -o StrictHostKeyChecking=no \
+              -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+              "mkdir -p $REMOTE_DIR && \
+               if [ -f '$REMOTE_DIR/planning-service-1.0.0-SNAPSHOT.jar' ]; then \
+                 cp '$REMOTE_DIR/planning-service-1.0.0-SNAPSHOT.jar' '$REMOTE_BASE/.deploy-backups/$(date +%Y%m%d_%H%M%S)/planning-service-1.0.0-SNAPSHOT.jar' 2>/dev/null || true; \
+               fi"
+          
+          # Deploy new JAR
+          scp -o StrictHostKeyChecking=no \
+              -P ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              planning-jar/planning-service-1.0.0-SNAPSHOT.jar \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:$REMOTE_DIR/
+          
+          echo "✅ Planning Service deployed"
+
+      - name: Deployment Summary
+        run: |
+          echo "╔════════════════════════════════════════╗"
+          echo "║   DEPLOYMENT COMPLETE ✅                ║"
+          echo "╚════════════════════════════════════════╝"
+          echo ""
+          echo "📦 Services deployed: ${{ steps.services.outputs.services }}"
+          echo ""
+          echo "💡 Next steps on server:"
+          echo "   ssh ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}"
+          echo "   cd ${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
+          echo "   SKIP_BUILD=1 ./stop-iam.sh && SKIP_BUILD=1 ./start-iam.sh"
+          echo "   SKIP_BUILD=1 ./stop-order.sh && SKIP_BUILD=1 ./start-order.sh"
+          echo "   SKIP_BUILD=1 ./stop-planning.sh && SKIP_BUILD=1 ./start-planning.sh"

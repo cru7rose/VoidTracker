@@ -11,6 +11,8 @@ export default defineConfig({
     }
   },
   server: {
+    host: '0.0.0.0', // Nasłuchuj na wszystkich interfejsach (dostęp z zewnątrz)
+    port: 5173,
     proxy: {
       '/api/auth': {
         target: 'http://localhost:8081',

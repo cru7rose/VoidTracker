@@ -37,7 +37,7 @@ public class FleetVehicleEntity {
     private Double capacityVolume;
 
     @Builder.Default
-    @Column(nullable = true)
+    @Column(name = "available", nullable = true)
     private Boolean available = true;
 
     @Column(name = "driver_id")

@@ -1,6 +1,6 @@
 # 🌌 VoidTracker Project Management - Manifest
 
-**Ostatnia aktualizacja:** 2026-01-03 14:00  
+**Ostatnia aktualizacja:** 2026-01-12 12:30  
 **Status Projektu:** Hyper-Innovation Phase (Revolution 2026)  
 **Model Operacyjny:** The Liquid Enterprise (Event-Driven EAV Architecture)  
 **Język Projektu:** Hybrid (PL: Zarządzanie / EN: Implementacja)  
@@ -40,6 +40,18 @@
 - **The Gatekeeper:** AI sugeruje, człowiek zatwierdza. Żadne dane nie wychodzą na zewnątrz bez autoryzacji.
 - **Offline Mode:** Moduły mobilne (PWA) muszą działać bez sieci.
 
+### 4. Infrastructure Optimization Protocol (Timeout Management)
+- **Server Timeouts:** Wszystkie timeouty są zoptymalizowane dla stabilności i niezawodności.
+  - Health checks: 180s (3 minuty) z exponential backoff
+  - Port checks: 120s (2 minuty) z retry logic
+  - Connection pools: 30s timeout, 5-20 connections
+  - TCP keepalive: 300s time, 30s interval, 5 probes
+- **Startup Scripts:** `start-all.sh` i `start-sup.sh` mają wbudowane retry logic i lepsze raportowanie błędów.
+- **System Configuration:** Skrypt `scripts/configure-system-timeouts.sh` konfiguruje TCP, connection tracking i file descriptors.
+- **Spring Boot Optimization:** Connection pools (HikariCP), Kafka timeouts i Tomcat settings są zoptymalizowane.
+
+**Reference:** `updates/2026-01-12_1230_Server_Timeout_Optimization.md`
+
 ---
 
 ## 📂 STRUKTURA PLIKÓW
@@ -48,4 +60,55 @@ PROJECT_MANAGEMENT/
 ├── task.md                              # Plan wykonawczy
 ├── IDEA.md                              # Wizja "The Void Protocol"
 ├── plans/                               # Strategie szczegółowe
+├── updates/                             # Raporty aktualizacji (protokół)
 └── logs/                                # Logi systemowe
+
+---
+
+## ⚡ INFRASTRUCTURE OPTIMIZATION (2026-01-12)
+
+### Server Timeout Configuration
+**Status:** ✅ COMPLETED
+
+**Key Optimizations:**
+1. **Script Timeouts:**
+   - Health checks: 180s (was 60s)
+   - Port checks: 120s (was 60s)
+   - Exponential backoff retry logic
+   - Enhanced error reporting
+
+2. **System-Level Settings:**
+   - TCP keepalive: 300s time, 30s interval
+   - Connection tracking: 262144 entries
+   - TCP connection queue: 4096
+   - File descriptors: 1048576
+
+3. **Spring Boot Services:**
+   - HikariCP connection pool: 30s timeout, 5-20 connections
+   - Kafka: 30s request timeout, 2min delivery timeout
+   - Tomcat: 60s connection timeout, 200 max threads
+
+**Configuration Script:**
+```bash
+./scripts/configure-system-timeouts.sh  # One-time system setup
+```
+
+**Startup Process:**
+```bash
+./start-sup.sh    # Infrastructure (PostgreSQL, Kafka, Neo4j)
+./start-all.sh    # Application services (IAM, Order, Planning)
+```
+
+**Benefits:**
+- ✅ Eliminated timeout issues during startup
+- ✅ Better resilience to slow infrastructure
+- ✅ Improved error messages with troubleshooting hints
+- ✅ Optimized connection pool management
+- ✅ Enhanced network stability
+
+**Documentation:**
+- Full details: `updates/2026-01-12_1230_Server_Timeout_Optimization.md`
+- Scripts: `start-all.sh`, `start-sup.sh`
+- System config: `scripts/configure-system-timeouts.sh`
+
+---

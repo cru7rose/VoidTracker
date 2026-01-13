@@ -48,6 +48,7 @@ public class OrderService {
     private final AppProperties appProperties;
     private final OrderSpecification orderSpecification;
     private final ObjectMapper objectMapper;
+    private final AddressMediatorService addressMediatorService; // Address issue logging integration
 
     public OrderService(OrderRepository orderRepository,
             ClientRepository clientRepository,
@@ -56,7 +57,8 @@ public class OrderService {
             OrderMapper orderMapper,
             AppProperties appProperties,
             OrderSpecification orderSpecification,
-            ObjectMapper objectMapper) {
+            ObjectMapper objectMapper,
+            AddressMediatorService addressMediatorService) {
         this.orderRepository = orderRepository;
         this.clientRepository = clientRepository;
         this.assetRepository = assetRepository;
@@ -65,6 +67,7 @@ public class OrderService {
         this.appProperties = appProperties;
         this.orderSpecification = orderSpecification;
         this.objectMapper = objectMapper;
+        this.addressMediatorService = addressMediatorService;
     }
 
     private static final Map<OrderStatus, Set<OrderStatus>> validTransitions = Map.of(
@@ -141,6 +144,34 @@ public class OrderService {
 
         OrderEntity savedOrder = orderRepository.save(newOrder);
         log.info("Zlecenie zapisane pomyślnie z ID: {}", savedOrder.getId());
+
+        // Verify addresses and log issues (after saving, so we have orderId)
+        if (savedOrder.getPickupAddress() != null && request.getPickupAddress() != null) {
+            try {
+                addressMediatorService.verifyAndNormalizeWithLogging(
+                        request.getPickupAddress(),
+                        savedOrder.getId(),
+                        savedOrder.getPickupAddress().getId(),
+                        "NOMINATIM"
+                );
+            } catch (Exception e) {
+                log.warn("Address verification failed for pickup address: {}", e.getMessage());
+            }
+        }
+
+        if (savedOrder.getDeliveryAddress() != null && request.getDeliveryAddress() != null) {
+            try {
+                com.example.danxils_commons.dto.AddressDto deliveryDto = orderMapper.mapToAddressDto(savedOrder.getDeliveryAddress());
+                addressMediatorService.verifyAndNormalizeWithLogging(
+                        deliveryDto,
+                        savedOrder.getId(),
+                        savedOrder.getDeliveryAddress().getId(),
+                        "NOMINATIM"
+                );
+            } catch (Exception e) {
+                log.warn("Address verification failed for delivery address: {}", e.getMessage());
+            }
+        }
 
         OrderCreatedEvent event = orderMapper.mapToCreatedEvent(savedOrder);
         saveToOutbox("ORDER", savedOrder.getId().toString(),

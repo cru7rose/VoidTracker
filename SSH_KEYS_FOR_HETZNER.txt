@@ -1,0 +1,29 @@
+================================================================================
+KLUCZE SSH DO DODANIA W HETZNER CONSOLE
+================================================================================
+
+Kopiuj poniższe klucze i dodaj je w Hetzner Console → Security → SSH Keys
+================================================================================
+
+KLUCZ 1: VoidTracker ED25519 (Rekomendowany)
+================================================================================
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK7lVrwN26abP8Jn8jIXxOQ/cqDI+otJFzQ4tERxsCps voidtracker-ed25519-20260112
+
+================================================================================
+KLUCZ 2: VoidTracker RSA 4096 (Kompatybilność)
+================================================================================
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDamfeAuWyDBdCQheWwvDUaU9fJbcj26wIJB7gg4nTla2iN4OjiAWPYMSpFuS5WBRi9Q6ULtNNOD9BunevXy78/YrcGC9/cvr7dQ9g0C/AAIIvMy0MNfJyN7vXVfVAtpahzU85g8L3pIJ43VVHb78UvwxHnlnowraMV0ughXfJLbOUZKwOoyfn+trrXFh9vPuiu7EDudEh7q+mLBelwok+cvISxd12zfcSLTnVsa6qKoYmBmwboeff6lxgxcniAVUe+MYjosHafvnEoTpvOCAsR5Lwkl6sDc/Afg5vsnwNvbSo3aXi5OcsRFouaTcU0IJwIK6Iz/ESCGRlIlfLBV7ap/GhlXlqbA+47cOYaJnquLSBuLozf3irtLJihaHbnGMxbel9EEu8J/bRq2kwBGnOuolZpG8qSgYTYqqhHTwAI+d4IDs9/nMsybDTtCsZ5+Tyl8HgmwI+iKAK8TXh0G4BSGSHRWnDw/pBhQKK19MJd0Kf27MwCayq5RxVKN9lsRbz6fUErskfvjhWM3znAE+hXs+HJJCjquaIJ3cUapLdS9JCq0bgJL2+TrslN2oINbEYZkSbvqKmjnaaXkFw6uhfAKnjhwLf9M2yUxySwPkA8pa2dKpV5o4XVi0RkhLTWBKuoOI8KqEaNZbkl94EbyfkZb5PpkLwneExxB4Oy5KiowQ== voidtracker-rsa-20260112
+
+================================================================================
+INSTRUKCJE:
+================================================================================
+1. Zaloguj się do Hetzner Console: https://console.hetzner.cloud/
+2. Przejdź do: Security → SSH Keys
+3. Kliknij "Add SSH Key" lub "New SSH Key"
+4. Wklej pierwszy klucz (ED25519), nazwij go "VoidTracker ED25519"
+5. Powtórz dla drugiego klucza (RSA), nazwij go "VoidTracker RSA 4096"
+6. Upewnij się, że oba klucze są przypisane do Twojego serwera
+
+================================================================================
+Pełna dokumentacja znajduje się w: SSH_SETUP_HETZNER.md
+================================================================================

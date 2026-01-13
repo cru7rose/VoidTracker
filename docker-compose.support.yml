@@ -1,10 +1,9 @@
-version: '3.8'
-
 services:
   # --- MailHog (Email Testing) ---
   mailhog:
-    image: mailhog/mailhog
+    image: jcalonso/mailhog:latest
     container_name: mailhog
+    platform: linux/arm64
     ports:
       - "1025:1025" # SMTP server
       - "8025:8025" # Web UI

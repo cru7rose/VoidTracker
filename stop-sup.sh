@@ -24,19 +24,19 @@ echo -e "${NC}"
 
 # Stop Support Services
 echo -e "${CYAN}🛠️  Stopping Support Services (MailHog, n8n)...${NC}"
-docker-compose -f docker-compose.support.yml down || true
+docker compose -f docker-compose.support.yml down || true
 echo -e "${GREEN}✅ Support services stopped${NC}"
 
 # Stop Infrastructure
 if [ "$MODE" = "preserve" ]; then
     echo -e "${YELLOW}📦 Stopping infrastructure (PRESERVING DATA)...${NC}"
-    docker-compose -f docker-compose.infra.yml stop
+    docker compose -f docker-compose.infra.yml stop
 elif [ "$MODE" = "nuke" ]; then
     echo -e "${RED}💣 Stopping infrastructure + REMOVING VOLUMES (DATA LOSS)...${NC}"
     read -p "Are you sure? Type 'YES' to confirm: " -r
     echo
     if [[ $REPLY == "YES" ]]; then
-        docker-compose -f docker-compose.infra.yml down -v --remove-orphans
+        docker compose -f docker-compose.infra.yml down -v --remove-orphans
         echo -e "${RED}✅ Infrastructure nuked (volumes deleted)${NC}"
     else
         echo -e "${YELLOW}❌ Cancelled${NC}"
@@ -44,7 +44,7 @@ elif [ "$MODE" = "nuke" ]; then
     fi
 else
     echo -e "${CYAN}🏗️  Stopping infrastructure (default)...${NC}"
-    docker-compose -f docker-compose.infra.yml down
+    docker compose -f docker-compose.infra.yml down
 fi
 
 echo -e "${GREEN}✅ Infrastructure stopped${NC}"

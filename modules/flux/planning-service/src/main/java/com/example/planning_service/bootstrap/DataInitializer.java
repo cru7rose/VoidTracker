@@ -20,6 +20,12 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+        // Skip during build/test - only run when actually starting the application
+        if (isBuildOrTestPhase(args)) {
+            log.debug("Skipping data initialization during build/test phase");
+            return;
+        }
+
         log.info("Initializing Planning Service Data...");
 
         // Create Default Fleet Vehicles (matching UI Vehicle Profiles)
@@ -28,6 +34,15 @@ public class DataInitializer implements CommandLineRunner {
         createVehicleIfNotFound("Reefer Van", 1100.0, 11.5);
 
         log.info("Planning Service Data Initialization completed. Total vehicles: {}", vehicleRepository.count());
+    }
+
+    private boolean isBuildOrTestPhase(String... args) {
+        // Check if running during Maven build (common indicators)
+        String classpath = System.getProperty("java.class.path", "");
+        return classpath.contains("maven") || 
+               classpath.contains("surefire") ||
+               System.getProperty("maven.test.skip") != null ||
+               System.getProperty("skipTests") != null;
     }
 
     private void createVehicleIfNotFound(String name, Double capacityWeight, Double capacityVolume) {

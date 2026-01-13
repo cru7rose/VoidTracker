@@ -24,6 +24,15 @@ spring:
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
+    # Connection pool optimization for timeout prevention
+    hikari:
+      connection-timeout: 30000  # 30 seconds to establish connection
+      maximum-pool-size: 20       # Max connections in pool
+      minimum-idle: 5             # Min idle connections
+      idle-timeout: 600000        # 10 minutes before idle connection is removed
+      max-lifetime: 1800000       # 30 minutes max connection lifetime
+      leak-detection-threshold: 60000  # Detect connection leaks after 60s
+      connection-test-query: SELECT 1
   jpa:
     hibernate:
       ddl-auto: update
@@ -43,8 +52,14 @@ spring:
       # Konfiguracja dla idempotentnego producenta (gwarancja exactly-once)
       acks: all
       enable-idempotence: true
-      retries: 3
+      retries: 5  # Increased retries
       max-in-flight-requests-per-connection: 5
+      request-timeout-ms: 30000  # 30 seconds request timeout
+      delivery-timeout-ms: 120000  # 2 minutes delivery timeout
+    consumer:
+      session-timeout-ms: 30000  # 30 seconds session timeout
+      heartbeat-interval-ms: 10000  # 10 seconds heartbeat
+      max-poll-interval-ms: 300000  # 5 minutes max poll interval
 
 # --- Właściwości Aplikacji ---
 app:
@@ -82,6 +97,16 @@ jwt:
 server:
   # Updated to match Vite proxy (Port 8081)
   port: 8081
+  # Connection timeout settings
+  connection-timeout: 60000  # 60 seconds connection timeout
+  # Tomcat thread pool optimization
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 10
+    accept-count: 100
+    max-connections: 10000
+    connection-timeout: 60000
 
 logging:
   level:

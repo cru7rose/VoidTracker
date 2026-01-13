@@ -246,6 +246,19 @@
              </div>
         </div>
     </div>
+    
+    <!-- Gatekeeper Approval Modal -->
+    <GatekeeperApprovalModal
+        :show="showGatekeeperModal"
+        :solution-id="pendingApproval?.solutionId"
+        :score-change="pendingApproval?.scoreChange"
+        :justification="pendingApproval?.justification"
+        :warnings="pendingApproval?.warnings"
+        :vehicle-count="pendingApproval?.vehicleCount"
+        @close="closeGatekeeperModal"
+        @approved="onApprovalApproved"
+        @rejected="onApprovalRejected"
+    />
   </div>
 </template>
 
@@ -255,13 +268,19 @@ import { Deck } from '@deck.gl/core';
 import { ScatterplotLayer, ArcLayer, PathLayer, PolygonLayer } from '@deck.gl/layers';
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer } from '@deck.gl/layers';
-import axios from 'axios';
+import { orderApi, planningApi } from '../../api/axios';
 import { useAuthStore } from '../../stores/authStore';
 import webSocketService from '../../services/WebSocketService';
 import AssignmentEditModal from '../../components/AssignmentEditModal.vue';
+import GatekeeperApprovalModal from '../../components/GatekeeperApprovalModal.vue';
+import { useWebSocketStore } from '../../stores/websocketStore';
+import { useGatekeeperStore } from '../../stores/gatekeeperStore';
 
 // --- STATE ---
 const authStore = useAuthStore();
+const websocketStore = useWebSocketStore();
+const gatekeeperStore = useGatekeeperStore();
+
 const sidebarOpen = ref(true);
 const activeTab = ref('orders');
 const isOptimizing = ref(false);
@@ -277,7 +296,10 @@ const pendingOrderIds = ref([]);
 const assignments = ref([]);
 const showEditModal = ref(false);
 const selectedAssignment = ref(null);
-// const stompClient = ref(null); // Removed in favor of WebSocketService
+
+// Gatekeeper approval modal
+const showGatekeeperModal = ref(false);
+const pendingApproval = ref(null);
 
 const layers = reactive({
     arcs: true,
@@ -347,6 +369,7 @@ onMounted(() => {
 onUnmounted(() => {
     if (deckInstance.value) deckInstance.value.finalize();
     webSocketService.disconnect();
+    websocketStore.disconnect();
 });
 
 watch(layers, () => updateLayers());
@@ -421,16 +444,13 @@ async function fetchRouteGeometry(from, to) {
 
 
 async function fetchData() {
-    const headers = { Authorization: `Bearer ${authStore.token}` };
-    
     // 1. Fetch Orders (Created/New) - INDEPENDENT
     try {
         console.log("🔄 Fetching Unassigned Orders...");
-        const orderRes = await axios.get('/api/orders', {
-            params: { statuses: 'NEW' },
-            headers
+        const orderRes = await orderApi.get('/api/orders', {
+            params: { statuses: ['NEW'] }
         });
-        unassignedOrders.value = orderRes.data.content || [];
+        unassignedOrders.value = orderRes.data.content || orderRes.data || [];
         console.log(`✅ Loaded ${unassignedOrders.value.length} unassigned orders`);
     } catch (e) {
         console.error("❌ Failed to fetch orders:", e);
@@ -441,10 +461,10 @@ async function fetchData() {
     try {
         console.log("🔄 Fetching Latest Optimization...");
         // Use /solution endpoint which returns proper DTO format
-        const solRes = await axios.post('/api/planning/optimization/solution', {
+        const solRes = await planningApi.post('/api/planning/optimization/solution', {
             orderIds: [],
             vehicleIds: []
-        }, { headers });
+        });
         solutionData.value = parseSolution(solRes.data);
         console.log(`✅ Loaded ${solutionData.value?.routes?.length || 0} routes`);
     } catch (e) {
@@ -458,13 +478,34 @@ async function fetchData() {
     // Always update map layers (even if planning failed)
     updateLayers();
 
-    // Connect WS using Service
+    // Connect WS using Service (legacy)
     webSocketService.connect(
         () => {
             webSocketService.subscribe('/topic/optimization-updates', handleOptimizationUpdate);
         },
         (err) => console.error("WS Connect Error", err)
     );
+    
+    // Connect using new WebSocket Store
+    websocketStore.connect();
+    
+    // Listen for optimization updates from WebSocket store
+    window.addEventListener('optimization-update', (event) => {
+        const update = event.detail;
+        handleOptimizationUpdate(update);
+        
+        // Check if approval is required
+        if (update.requiresApproval) {
+            pendingApproval.value = {
+                solutionId: update.solutionId || 'unknown',
+                scoreChange: update.scoreChangePercent || 0,
+                justification: update.justification || '',
+                warnings: update.warnings || [],
+                vehicleCount: update.routes?.length || 0
+            };
+            showGatekeeperModal.value = true;
+        }
+    });
     
     // Fetch saved assignments
     await fetchAssignments();
@@ -475,8 +516,7 @@ async function fetchData() {
  */
 async function fetchAssignments() {
     try {
-        const headers = { Authorization: `Bearer ${authStore.token}` };
-        const res = await axios.get('/api/planning/assignments', { headers });
+        const res = await planningApi.get('/api/planning/assignments');
         assignments.value = res.data || [];
         console.log(`✅ Loaded ${assignments.value.length} route assignments`);
     } catch (e) {
@@ -510,8 +550,6 @@ function handleOptimizationUpdate(update) {
 async function triggerOptimization() {
     isOptimizing.value = true;
     try {
-        const headers = { Authorization: `Bearer ${authStore.token}` };
-        
         // Use pending orders from OrderList if available, otherwise empty (= all unassigned)
         const orderIds = pendingOrderIds.value.length > 0 
             ? pendingOrderIds.value 
@@ -528,7 +566,7 @@ async function triggerOptimization() {
         }
         
         // Trigger FULL solution optimization (includes all Timefold metadata)
-        const res = await axios.post('/api/planning/optimization/solution', payload, { headers });
+        const res = await planningApi.post('/api/planning/optimization/solution', payload);
         solutionData.value = parseSolution(res.data);
         
         // Auto-save routes as assignments to database
@@ -577,7 +615,7 @@ async function saveRoutesAsAssignments(solutionData) {
         }));
         
         // Batch save to backend
-        const response = await axios.post('/api/planning/assignments/batch', assignments, { headers });
+        const response = await planningApi.post('/api/planning/assignments/batch', assignments);
         console.log(`✅ Saved ${response.data.length} route assignments to database`);
         
         // Refresh assignments list to show newly created routes
@@ -592,7 +630,6 @@ async function publishRoutes() {
     if (!solutionData.value) return;
     isPublishing.value = true;
     try {
-        const headers = { Authorization: `Bearer ${authStore.token}` };
         const publishedLinks = [];
 
         // Publish each route individually
@@ -600,10 +637,10 @@ async function publishRoutes() {
             if (!route.vehicle) return null;
 
             try {
-                const res = await axios.post('/api/planning/routes/publish', {
+                const res = await planningApi.post('/api/planning/routes/publish', {
                     vehicleId: route.vehicle.id,
                     driverName: route.vehicle.name || `Driver ${index+1}`
-                }, { headers });
+                });
 
                 return {
                     vehicle: route.vehicle.id,
@@ -836,6 +873,25 @@ async function onAssignmentPublished() {
     // Refresh assignments list to update status
     await fetchAssignments();
     console.log('✅ Assignment published and list refreshed');
+}
+
+function closeGatekeeperModal() {
+    showGatekeeperModal.value = false;
+    pendingApproval.value = null;
+}
+
+async function onApprovalApproved(solutionId) {
+    console.log('✅ Solution approved:', solutionId);
+    // Solution is now approved, can proceed with publishing
+    showGatekeeperModal.value = false;
+    pendingApproval.value = null;
+}
+
+async function onApprovalRejected(solutionId) {
+    console.log('❌ Solution rejected:', solutionId);
+    // Solution rejected, don't allow publishing
+    showGatekeeperModal.value = false;
+    pendingApproval.value = null;
 }
 
 function getStatusClass(status) {

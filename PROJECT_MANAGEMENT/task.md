@@ -34,8 +34,8 @@
 ## 1. 💎 MODULE: NEXUS (OMS)
 *Quantum Ingestion & Order Management.*
 
-- [ ] **Data Core (EAV Engine)** `#NexusCore`
-  - [ ] Refactor `Order` entity: `properties` JSONB for dynamic attributes
+- [x] **Data Core (EAV Engine)** `#NexusCore`
+  - [x] Refactor `Order` entity: `properties` JSONB for dynamic attributes **Status: 100%** (Verified 2026-01-12)
   - [x] Implement `IngestionService`: API -> Validation -> DB
 - [ ] **Smart Import**
   - [x] API Endpoint for external integrations (ERP hooks)
@@ -123,3 +123,19 @@
 | **TITAN (TMS)** | ⚠️ ALPHA | Routing works, Sentinel pending |
 | **CRM** | 🌑 CONCEPT | Needs Entity Structure |
 | **Void-Mesh** | ✅ RELEASE | Graph Model Expanded (Driver/Route) |
+| **Infrastructure** | ✅ OPTIMIZED | Timeout management complete (2026-01-12) |
+
+---
+
+## 🔧 INFRASTRUCTURE OPTIMIZATION (2026-01-12)
+
+- [x] **Server Timeout Configuration** ✅
+  - [x] Increased script timeouts (180s health, 120s ports)
+  - [x] Added exponential backoff retry logic
+  - [x] Enhanced error reporting with troubleshooting hints
+  - [x] System-level TCP keepalive configuration
+  - [x] Spring Boot connection pool optimization (HikariCP)
+  - [x] Kafka timeout settings (30s request, 2min delivery)
+  - [x] Tomcat server optimization (60s timeout, 200 threads)
+
+**Reference:** `PROJECT_MANAGEMENT/updates/2026-01-12_1230_Server_Timeout_Optimization.md`

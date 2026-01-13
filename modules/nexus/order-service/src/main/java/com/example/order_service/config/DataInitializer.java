@@ -24,6 +24,24 @@ public class DataInitializer implements CommandLineRunner {
         @Override
         @Transactional
         public void run(String... args) throws Exception {
+                // Skip during build/test - only run when actually starting the application
+                if (isBuildOrTestPhase(args)) {
+                        log.debug("Skipping data initialization during build/test phase");
+                        return;
+                }
                 // Seed logic with ClientEntity
+        }
+
+        /**
+         * Check if we're in a build or test phase to prevent database connections during Maven build
+         */
+        private boolean isBuildOrTestPhase(String... args) {
+                // Check if running during Maven build (common indicators)
+                String classpath = System.getProperty("java.class.path", "");
+                return classpath.contains("maven") || 
+                       classpath.contains("surefire") ||
+                       System.getProperty("maven.test.skip") != null ||
+                       System.getProperty("skipTests") != null ||
+                       System.getProperty("spring.profiles.active", "").contains("test");
         }
 }

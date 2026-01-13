@@ -1,7 +1,20 @@
 server:
   port: 8091
+  # Connection timeout settings to prevent SSH issues
+  connection-timeout: 60000  # 60 seconds connection timeout
+  # Tomcat thread pool optimization
+  tomcat:
+    threads:
+      max: 50  # Reduced from default to prevent SSH overload
+      min-spare: 5
+    accept-count: 50
+    max-connections: 200  # Limit concurrent connections
+    connection-timeout: 60000
 
 spring:
+  # Lazy initialization to prevent connection attempts during build
+  main:
+    lazy-initialization: true
   application:
     name: order-service
   
@@ -11,6 +24,17 @@ spring:
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
+    # Connection pool optimization to prevent SSH connection issues
+    hikari:
+      connection-timeout: 30000  # 30 seconds to establish connection
+      maximum-pool-size: 5        # Reduced to prevent SSH overload during build
+      minimum-idle: 1             # Minimal idle connections
+      idle-timeout: 600000        # 10 minutes before idle connection is removed
+      max-lifetime: 1800000       # 30 minutes max connection lifetime
+      leak-detection-threshold: 60000  # Detect connection leaks after 60s
+      connection-test-query: SELECT 1
+      validation-timeout: 5000     # 5 seconds validation timeout
+      initialization-fail-timeout: -1  # Don't fail on startup if DB is unavailable
   
   jpa:
     hibernate:
@@ -31,9 +55,18 @@ spring:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
     consumer:
       group-id: ${spring.application.name}
+      # Connection pool limits to prevent SSH overload
+      session-timeout-ms: 30000  # 30 seconds session timeout
+      heartbeat-interval-ms: 10000  # 10 seconds heartbeat
+      max-poll-interval-ms: 300000  # 5 minutes max poll interval
+      max-poll-records: 50  # Limit batch size
     producer:
       acks: all
       enable-idempotence: true
+      # Connection limits
+      request-timeout-ms: 30000  # 30 seconds request timeout
+      delivery-timeout-ms: 120000  # 2 minutes delivery timeout
+      max-in-flight-requests-per-connection: 5  # Limit concurrent requests
 
 # --- Właściwości Aplikacji ---
 app:

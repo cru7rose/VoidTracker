@@ -1,0 +1,25 @@
+# VoidTracker Deploy Configuration
+# Copy this file to deploy.conf and fill in your server details
+
+# Server connection details
+DEPLOY_SERVER_HOST="your-server.com"
+DEPLOY_SERVER_USER="root"
+DEPLOY_SERVER_PORT="22"
+DEPLOY_SSH_KEY="~/.ssh/id_rsa"  # Path to SSH key (optional, uses default if not set)
+
+# Remote paths
+DEPLOY_REMOTE_BASE_DIR="/root/VoidTracker"
+DEPLOY_REMOTE_JAR_DIR="${DEPLOY_REMOTE_BASE_DIR}/modules"
+
+# Services to deploy (set to 1 to deploy, 0 to skip)
+DEPLOY_IAM_SERVICE=1
+DEPLOY_ORDER_SERVICE=1
+DEPLOY_PLANNING_SERVICE=1
+
+# Build options
+BUILD_PARALLEL_THREADS="1C"  # Maven threads (1C = 1 core, 2C = 2 cores, etc.)
+BUILD_SKIP_TESTS=1           # Skip tests during build (1 = yes, 0 = no)
+
+# Deploy options
+DEPLOY_BACKUP_OLD_JARS=1     # Backup old JARs before deploying (1 = yes, 0 = no)
+DEPLOY_RESTART_SERVICES=0    # Restart services after deploy (1 = yes, 0 = no) - requires SSH access

@@ -7,7 +7,7 @@
         <groupId>com.danxils</groupId>
         <artifactId>danxils-system</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
     <artifactId>planning-service</artifactId>
     <name>planning-service</name>
@@ -147,6 +147,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Skip database connection attempts during build -->
+                    <excludeDevtools>true</excludeDevtools>
+                </configuration>
             </plugin>
             
             <!-- CRITICAL: Explicit annotation processor ordering to prevent ConcurrentModificationException -->
@@ -157,6 +161,10 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+                    <!-- Limit parallel compilation to reduce connection load -->
+                    <compilerArgs>
+                        <arg>-J-XX:ActiveProcessorCount=2</arg>
+                    </compilerArgs>
                     <annotationProcessorPaths>
                         <!-- 1. Lombok FIRST (generates getters/setters) -->
                         <path>

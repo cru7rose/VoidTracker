@@ -14,6 +14,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
+@lombok.RequiredArgsConstructor
 public class GatekeeperService {
 
     @Value("${n8n.webhook.url:http://n8n:5678/webhook/optimization-review}")
@@ -58,7 +59,16 @@ public class GatekeeperService {
                 report.setRequiresApproval(true);
                 report.setScoreImprovementPercentage(pct.doubleValue());
 
-                triggerN8nWebhook(current, warnings);
+                // Generate LLM justification in Polish
+                try {
+                    String justification = llmJustificationService.generateJustification(warnings, pct.doubleValue());
+                    report.setJustification(justification);
+                    log.info("Generated LLM justification: {}", justification != null ? justification.substring(0, Math.min(100, justification.length())) : "null");
+                } catch (Exception e) {
+                    log.warn("Failed to generate LLM justification, continuing without it", e);
+                }
+
+                triggerN8nWebhook(current, warnings, report.getJustification());
             }
         }
 
@@ -66,7 +76,7 @@ public class GatekeeperService {
         return report;
     }
 
-    private void triggerN8nWebhook(VehicleRoutingSolution solution, List<String> warnings) {
+    private void triggerN8nWebhook(VehicleRoutingSolution solution, List<String> warnings, String justification) {
         try {
             Map<String, Object> payload = new HashMap<>();
             payload.put("solutionId", solution.getOptimizationId());
@@ -75,6 +85,7 @@ public class GatekeeperService {
             payload.put("softScore", solution.getScore().softScore()); // Profit info
             payload.put("totalProfit", solution.getTotalProfit());
             payload.put("warnings", warnings);
+            payload.put("justification", justification); // LLM-generated Polish justification
             payload.put("vehicleCount", solution.getVehicles().size());
             payload.put("unassignedStops", solution.getUnassignedStopsCount());
 
@@ -88,10 +99,13 @@ public class GatekeeperService {
         }
     }
 
+    private final LLMJustificationService llmJustificationService;
+
     @lombok.Data
     public static class SafetyReport {
         private boolean requiresApproval;
         private List<String> warnings;
         private double scoreImprovementPercentage;
+        private String justification; // LLM-generated Polish justification
     }
 }
