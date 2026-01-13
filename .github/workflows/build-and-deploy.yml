@@ -29,11 +29,47 @@ env:
   MAVEN_OPTS: '-Xmx2g -XX:ActiveProcessorCount=2'
 
 jobs:
+  build-commons:
+    name: Build danxils-commons
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build danxils-commons
+        run: |
+          cd modules/nexus/danxils-commons
+          mvn clean install -DskipTests -T 1C
+          
+          # Verify build success
+          if [ ! -f "target/danxils-commons-1.0.0-SNAPSHOT.jar" ]; then
+            echo "❌ danxils-commons build failed"
+            exit 1
+          fi
+          echo "✅ danxils-commons built successfully"
+
+      - name: Upload danxils-commons artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: danxils-commons
+          path: modules/nexus/danxils-commons/target/*.jar
+          retention-days: 7
+
   build:
     name: Build Services
+    needs: build-commons
     runs-on: ubuntu-latest
     
     strategy:
+      fail-fast: false
       matrix:
         service:
           - name: iam
@@ -57,24 +93,69 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Build danxils-commons (dependency)
+      - name: Download danxils-commons
+        uses: actions/download-artifact@v4
+        with:
+          name: danxils-commons
+          path: modules/nexus/danxils-commons/target
+
+      - name: Install danxils-commons to local Maven repo
         run: |
-          cd modules/nexus/danxils-commons
-          mvn clean install -DskipTests -T 1C
+          echo "📦 Installing danxils-commons to local Maven repository..."
+          
+          # Find the JAR file
+          JAR_FILE=$(find modules/nexus/danxils-commons/target -name "*.jar" -not -name "*-sources.jar" -not -name "*-javadoc.jar" | head -1)
+          
+          if [ -z "$JAR_FILE" ]; then
+            echo "❌ danxils-commons JAR not found"
+            ls -la modules/nexus/danxils-commons/target/ || true
+            exit 1
+          fi
+          
+          echo "📦 Found JAR: $JAR_FILE"
+          
+          # Install to local Maven repo
+          mvn install:install-file \
+            -Dfile="$JAR_FILE" \
+            -DgroupId=com.danxils \
+            -DartifactId=danxils-commons \
+            -Dversion=1.0.0-SNAPSHOT \
+            -Dpackaging=jar \
+            -DgeneratePom=true
+          
+          echo "✅ danxils-commons installed to local Maven repo"
 
       - name: Build ${{ matrix.service.name }} Service
         id: build
         run: |
           cd ${{ matrix.service.module }}
+          
+          echo "🔨 Building ${{ matrix.service.name }} Service..."
+          echo "📦 Module: ${{ matrix.service.module }}"
+          echo "📦 JAR: ${{ matrix.service.jar }}"
+          
+          # Build with error handling
           if [ "${{ github.event.inputs.skip_tests }}" = "true" ] || [ "${{ github.event_name }}" = "push" ]; then
-            mvn clean package -DskipTests -T 1C
+            mvn clean package -DskipTests -T 1C -X 2>&1 | tee build.log || {
+              echo "❌ Build failed for ${{ matrix.service.name }}"
+              echo "📋 Last 50 lines of build log:"
+              tail -50 build.log
+              exit 1
+            }
           else
-            mvn clean package -T 1C
+            mvn clean package -T 1C -X 2>&1 | tee build.log || {
+              echo "❌ Build failed for ${{ matrix.service.name }}"
+              echo "📋 Last 50 lines of build log:"
+              tail -50 build.log
+              exit 1
+            }
           fi
           
           # Verify JAR exists
           if [ ! -f "target/${{ matrix.service.jar }}" ]; then
             echo "❌ JAR not found: target/${{ matrix.service.jar }}"
+            echo "📋 Available files in target/:"
+            ls -la target/ || true
             exit 1
           fi
           
