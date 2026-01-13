@@ -52,6 +52,49 @@
 
 **Reference:** `updates/2026-01-12_1230_Server_Timeout_Optimization.md`
 
+### 5. CI/CD Build Protocol (No Build on Server) ⚠️ CRITICAL
+- **Zasada Nadrzędna:** **NIGDY nie budujemy Java/Maven na serwerze** - wszystkie buildy przez GitHub Actions CI/CD.
+- **Problem:** Buildy Maven/Java na serwerze powodują zerwanie połączenia SSH z Cursorem z powodu przeciążenia zasobów.
+- **Rozwiązanie:** 
+  - Wszystkie buildy Java/Maven → GitHub Actions CI/CD
+  - Buildy są rozdzielone na moduły (danxils-commons, iam, order, planning) dla łatwego zbierania logów
+  - Logi buildu są zbierane nawet gdy build failed (upload-artifact zawsze)
+  - Na serwerze tylko: uruchamianie infrastruktury Docker i frontend dev server
+- **Service Restart Protocol (Sequential with Delays):** ⚠️ **KRYTYCZNE - ZAPAMIĘTAĆ**
+  - **Problem:** Restartowanie wszystkich usług jednocześnie przeciąża serwer i zrywa połączenie SSH
+  - **Rozwiązanie:** 
+    - Usługi są restartowane **sekwencyjnie** (jedna po drugiej), nie równolegle
+    - **Opóźnienie 15 sekund** między restartami różnych usług
+    - To zapobiega przeciążeniu serwera podczas równoczesnego uruchamiania wielu JVM
+    - Workflow pokazuje postęp: "Restarting X Service (1/3)..."
+    - **Lekcja:** Zawsze restartować usługi z opóźnieniami, nigdy równolegle
+- **Automatyczne Zbieranie Logów Buildu:** 🔍 **AGENT MUSI SPRAWDZAĆ TO PRZY KAŻDYM PROBLEMIE Z BUILDEM**
+  - Każdy build automatycznie zapisuje pełne logi Maven do plików
+  - Logi są uploadowane jako artifacts (zawsze, nawet przy failed build)
+  - Artifacts dostępne: `commons-build-logs`, `iam-build-logs`, `order-build-logs`, `planning-build-logs`
+  - Job `build-summary` automatycznie analizuje logi i tworzy podsumowanie (Markdown)
+  - **Agent powinien:** Poprosić użytkownika o wklejenie `build-summary` lub pobranie artifacts z GitHub Actions
+  - **Lokalizacja:** GitHub Actions → Workflow Run → Artifacts
+  - **Dokumentacja:** `GITHUB_ACTIONS_LOGS.md` - pełny przewodnik dostępu do logów
+- **Frontend:**
+  - Dev server (`npm run dev`) uruchamiany na serwerze (lekki, nie powoduje problemów)
+  - Frontend NIE jest budowany w CI/CD - tylko restart przez CI/CD po deploy backend services
+- **Workflow po restarcie serwera:**
+  1. `./start-sup.sh` - uruchamia infrastrukturę Docker (PostgreSQL, Kafka, Neo4j, etc.)
+  2. `./start-frontend.sh` - uruchamia frontend dev server (`npm run dev`)
+  3. Backend services (IAM, Order, Planning) są deployowane przez CI/CD:
+     - Push do GitHub → GitHub Actions buduje moduły
+     - Zbudowane JAR-y są uploadowane jako artifacts
+     - Deploy job pobiera artifacts i deployuje na serwer przez SCP
+     - Serwer restartuje serwisy (nie buduje!)
+- **Skrypty na serwerze:**
+  - `start-sup.sh` - Docker Compose (infrastruktura) - **JEDYNY skrypt który może uruchamiać buildy (Docker images)**
+  - `start-frontend.sh` - Frontend dev server (`npm run dev`) - lekki, nie powoduje problemów
+  - `start-iam.sh`, `start-order.sh`, `start-planning.sh` - **TYLKO** uruchamianie już zbudowanych JAR-ów (sprawdzają czy JAR istnieje, jeśli nie - błąd)
+  - `stop-*.sh` - zatrzymywanie serwisów
+
+**Reference:** `.github/workflows/build-and-deploy.yml`, `CICD_QUICK_START.md`
+
 ---
 
 ## 📂 STRUKTURA PLIKÓW

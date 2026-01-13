@@ -507,40 +507,51 @@ jobs:
       - name: Restart Services on Server
         if: success()
         run: |
-          echo "🔄 Restarting services on server..."
+          echo "🔄 Restarting services on server (sequential with delays)..."
           REMOTE_BASE="${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
           SERVICES="${{ steps.services.outputs.services }}"
           
           IFS=',' read -ra SERVICE_ARRAY <<< "$SERVICES"
+          SERVICE_COUNT=${#SERVICE_ARRAY[@]}
+          CURRENT=0
+          
           for service in "${SERVICE_ARRAY[@]}"; do
             service=$(echo "$service" | xargs)
+            CURRENT=$((CURRENT + 1))
             
             case "$service" in
               iam)
-                echo "🔄 Restarting IAM Service..."
+                echo "🔄 Restarting IAM Service ($CURRENT/$SERVICE_COUNT)..."
                 ssh -o StrictHostKeyChecking=no \
                     -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
                     ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
                     "cd $REMOTE_BASE && ./stop-iam.sh 2>/dev/null || true && sleep 2 && ./start-iam.sh" || echo "⚠️  Failed to restart IAM"
                 ;;
               order)
-                echo "🔄 Restarting Order Service..."
+                echo "🔄 Restarting Order Service ($CURRENT/$SERVICE_COUNT)..."
                 ssh -o StrictHostKeyChecking=no \
                     -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
                     ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
                     "cd $REMOTE_BASE && ./stop-order.sh 2>/dev/null || true && sleep 2 && ./start-order.sh" || echo "⚠️  Failed to restart Order"
                 ;;
               planning)
-                echo "🔄 Restarting Planning Service..."
+                echo "🔄 Restarting Planning Service ($CURRENT/$SERVICE_COUNT)..."
                 ssh -o StrictHostKeyChecking=no \
                     -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
                     ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
                     "cd $REMOTE_BASE && ./stop-planning.sh 2>/dev/null || true && sleep 2 && ./start-planning.sh" || echo "⚠️  Failed to restart Planning"
                 ;;
             esac
+            
+            # Add delay between service restarts to prevent server overload
+            # Only delay if not the last service
+            if [ $CURRENT -lt $SERVICE_COUNT ]; then
+              echo "⏳ Waiting 15 seconds before next service restart (preventing server overload)..."
+              sleep 15
+            fi
           done
           
-          echo "✅ Services restart initiated"
+          echo "✅ Services restart initiated (sequential with delays)"
 
       - name: Restart Frontend on Server
         if: success()
