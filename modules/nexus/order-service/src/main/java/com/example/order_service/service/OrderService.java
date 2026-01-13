@@ -153,14 +153,51 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public List<OrderEntity> findOrdersByCriteria(OrderQueryRequestDto query) {
-        // Simple implementation - can be extended with more complex criteria
-        // OrderQueryRequestDto structure may vary - adjust based on actual DTO
-        if (query != null) {
-            // Try to extract order IDs if available in the query
-            // This is a placeholder - adjust based on actual OrderQueryRequestDto structure
+        if (query == null) {
             return List.of();
         }
-        return List.of();
+
+        // Build specification from query criteria
+        Specification<OrderEntity> spec = Specification.where(null);
+
+        if (query.getStatuses() != null && !query.getStatuses().isEmpty()) {
+            spec = spec.and((root, criteriaQuery, criteriaBuilder) ->
+                    root.get("status").in(query.getStatuses()));
+        }
+
+        if (query.getCustomerIds() != null && !query.getCustomerIds().isEmpty()) {
+            spec = spec.and((root, criteriaQuery, criteriaBuilder) ->
+                    root.get("client").get("id").in(query.getCustomerIds()));
+        }
+
+        if (query.getPostalCodePrefixes() != null && !query.getPostalCodePrefixes().isEmpty()) {
+            spec = spec.and((root, criteriaQuery, criteriaBuilder) -> {
+                var postalCodePredicate = criteriaBuilder.disjunction();
+                for (String prefix : query.getPostalCodePrefixes()) {
+                    postalCodePredicate = postalCodePredicate.getExpressions().add(
+                            criteriaBuilder.like(root.get("deliveryAddress").get("postalCode"), prefix + "%"));
+                }
+                return postalCodePredicate;
+            });
+        }
+
+        if (query.getPriorities() != null && !query.getPriorities().isEmpty()) {
+            spec = spec.and((root, criteriaQuery, criteriaBuilder) -> {
+                var priorityPredicate = criteriaBuilder.disjunction();
+                for (String priority : query.getPriorities()) {
+                    priorityPredicate = priorityPredicate.getExpressions().add(
+                            criteriaBuilder.equal(
+                                    criteriaBuilder.function("jsonb_extract_path_text",
+                                            String.class,
+                                            root.get("properties"),
+                                            criteriaBuilder.literal("priority")),
+                                    priority));
+                }
+                return priorityPredicate;
+            });
+        }
+
+        return orderRepository.findAll(spec);
     }
 
     @Transactional(readOnly = true)
