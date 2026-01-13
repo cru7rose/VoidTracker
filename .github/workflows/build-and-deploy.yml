@@ -44,14 +44,23 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Install parent POM
+        run: |
+          echo "📦 Installing parent POM (danxils-system)..."
+          mvn install -N -DskipTests
+          echo "✅ Parent POM installed"
+
       - name: Build danxils-commons
         run: |
-          cd modules/nexus/danxils-commons
-          mvn clean install -DskipTests -T 1C
+          echo "📦 Building danxils-commons..."
+          # Build from root with -pl (project list) and -am (also make)
+          mvn clean install -pl modules/nexus/danxils-commons -am -DskipTests -T 1C
           
           # Verify build success
-          if [ ! -f "target/danxils-commons-1.0.0-SNAPSHOT.jar" ]; then
-            echo "❌ danxils-commons build failed"
+          if [ ! -f "modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar" ]; then
+            echo "❌ danxils-commons build failed - JAR not found"
+            echo "📋 Files in target directory:"
+            ls -la modules/nexus/danxils-commons/target/ || true
             exit 1
           fi
           echo "✅ danxils-commons built successfully"
