@@ -172,28 +172,25 @@ public class OrderService {
 
         if (query.getPostalCodePrefixes() != null && !query.getPostalCodePrefixes().isEmpty()) {
             spec = spec.and((root, criteriaQuery, criteriaBuilder) -> {
-                var postalCodePredicate = criteriaBuilder.disjunction();
-                for (String prefix : query.getPostalCodePrefixes()) {
-                    postalCodePredicate = postalCodePredicate.getExpressions().add(
-                            criteriaBuilder.like(root.get("deliveryAddress").get("postalCode"), prefix + "%"));
-                }
-                return postalCodePredicate;
+                var predicates = query.getPostalCodePrefixes().stream()
+                        .map(prefix -> criteriaBuilder.like(
+                                root.get("deliveryAddress").get("postalCode"), prefix + "%"))
+                        .toList();
+                return criteriaBuilder.or(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
             });
         }
 
         if (query.getPriorities() != null && !query.getPriorities().isEmpty()) {
             spec = spec.and((root, criteriaQuery, criteriaBuilder) -> {
-                var priorityPredicate = criteriaBuilder.disjunction();
-                for (String priority : query.getPriorities()) {
-                    priorityPredicate = priorityPredicate.getExpressions().add(
-                            criteriaBuilder.equal(
-                                    criteriaBuilder.function("jsonb_extract_path_text",
-                                            String.class,
-                                            root.get("properties"),
-                                            criteriaBuilder.literal("priority")),
-                                    priority));
-                }
-                return priorityPredicate;
+                var predicates = query.getPriorities().stream()
+                        .map(priority -> criteriaBuilder.equal(
+                                criteriaBuilder.function("jsonb_extract_path_text",
+                                        String.class,
+                                        root.get("properties"),
+                                        criteriaBuilder.literal("priority")),
+                                priority))
+                        .toList();
+                return criteriaBuilder.or(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
             });
         }
 
@@ -335,7 +332,8 @@ public class OrderService {
         entity.setHeight(dto.getHeight());
         entity.setBarcode1(dto.getBarcode1());
         entity.setBarcode2(dto.getBarcode2());
-        entity.setDescription(dto.getDescription());
+        // PackageDto doesn't have description, but PackageEntity does - set it to null or empty
+        entity.setDescription(null);
         entity.setColli(dto.getColli());
         entity.setVolume(dto.getVolume());
         entity.setAdr(dto.getAdr());

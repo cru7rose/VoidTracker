@@ -25,7 +25,9 @@ public class TmsForwardingConsumer {
         log.info("Odebrano OrderCreatedEvent dla orderId: {}. Przekazywanie do TMS...", event.getOrderId());
         try {
             log.info("Pomyślnie przekazano zlecenie {} do TMS (symulacja).", event.getOrderId());
-            orderService.markAsForwardedToTms(event.getOrderId());
+            // Convert String orderId to UUID
+            java.util.UUID orderUuid = java.util.UUID.fromString(event.getOrderId());
+            orderService.markAsForwardedToTms(orderUuid);
 
         } catch (Exception e) {
             log.error("Nie udało się przekazać zlecenia {} do TMS. Błąd: {}. Wiadomość zostanie ponowiona.",
