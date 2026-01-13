@@ -1,0 +1,62 @@
+name: Server Sync & Build (After Push)
+
+on:
+  workflow_run:
+    workflows: ["Build and Deploy Services"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      services:
+        description: 'Services to sync and build (comma-separated)'
+        required: false
+        default: 'iam,order,planning'
+
+jobs:
+  trigger-server-sync:
+    name: Trigger Server Pull & Build
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    
+    steps:
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Determine services
+        id: services
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            SERVICES="${{ github.event.inputs.services }}"
+          else
+            SERVICES="iam,order,planning"
+          fi
+          echo "services=$SERVICES" >> $GITHUB_OUTPUT
+          echo "📦 Services to sync: $SERVICES"
+
+      - name: Trigger Server Pull & Build
+        run: |
+          echo "🔄 Triggering pull & build on server..."
+          
+          ssh -o StrictHostKeyChecking=no \
+              -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+              "cd ${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }} && \
+               ./scripts/git-sync-and-build.sh '${{ steps.services.outputs.services }}' 2>&1 | \
+               tee -a logs/server-sync.log" || {
+            echo "⚠️  Server sync failed"
+            exit 1
+          }
+
+      - name: Summary
+        run: |
+          echo "╔════════════════════════════════════════╗"
+          echo "║   SERVER SYNC COMPLETE ✅              ║"
+          echo "╚════════════════════════════════════════╝"
+          echo ""
+          echo "📦 Services synced: ${{ steps.services.outputs.services }}"
+          echo ""
+          echo "📊 View logs on server:"
+          echo "   ssh ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}"
+          echo "   tail -f ${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}/logs/server-sync.log"

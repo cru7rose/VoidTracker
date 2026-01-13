@@ -206,6 +206,116 @@ jobs:
           
           echo "✅ Planning Service deployed"
 
+      - name: Trigger Server Pull & Build
+        if: success()
+        run: |
+          echo "🔄 Triggering pull & build on server..."
+          
+          # Try webhook first (if configured)
+          if [ -n "${{ secrets.DEPLOY_WEBHOOK_URL }}" ]; then
+            SERVICES="${{ steps.services.outputs.services }}"
+            curl -X POST "${{ secrets.DEPLOY_WEBHOOK_URL }}?services=$SERVICES" \
+              -H "X-GitHub-Event: workflow_run" \
+              -H "X-GitHub-Delivery: ${{ github.run_id }}" \
+              --max-time 30 \
+              --silent --show-error || echo "⚠️  Webhook failed, using SSH fallback"
+          fi
+          
+          # SSH fallback: trigger pull & build on server
+          ssh -o StrictHostKeyChecking=no \
+              -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+              ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+              "cd ${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }} && \
+               ./scripts/git-sync-and-build.sh '${{ steps.services.outputs.services }}' || true" || \
+          echo "⚠️  SSH trigger failed (server may pull manually)"
+
+      - name: Restart Services on Server
+        if: success()
+        run: |
+          echo "🔄 Restarting services on server..."
+          REMOTE_BASE="${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
+          SERVICES="${{ steps.services.outputs.services }}"
+          
+          # Restart each service
+          IFS=',' read -ra SERVICE_ARRAY <<< "$SERVICES"
+          for service in "${SERVICE_ARRAY[@]}"; do
+            service=$(echo "$service" | xargs) # trim whitespace
+            
+            case "$service" in
+              iam)
+                echo "🔄 Restarting IAM Service..."
+                ssh -o StrictHostKeyChecking=no \
+                    -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+                    ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+                    "cd $REMOTE_BASE && \
+                     SKIP_BUILD=1 ./stop-iam.sh 2>/dev/null || true && \
+                     sleep 2 && \
+                     SKIP_BUILD=1 ./start-iam.sh" || echo "⚠️  Failed to restart IAM Service"
+                ;;
+              order)
+                echo "🔄 Restarting Order Service..."
+                ssh -o StrictHostKeyChecking=no \
+                    -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+                    ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+                    "cd $REMOTE_BASE && \
+                     SKIP_BUILD=1 ./stop-order.sh 2>/dev/null || true && \
+                     sleep 2 && \
+                     SKIP_BUILD=1 ./start-order.sh" || echo "⚠️  Failed to restart Order Service"
+                ;;
+              planning)
+                echo "🔄 Restarting Planning Service..."
+                ssh -o StrictHostKeyChecking=no \
+                    -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+                    ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+                    "cd $REMOTE_BASE && \
+                     SKIP_BUILD=1 ./stop-planning.sh 2>/dev/null || true && \
+                     sleep 2 && \
+                     SKIP_BUILD=1 ./start-planning.sh" || echo "⚠️  Failed to restart Planning Service"
+                ;;
+            esac
+          done
+          
+          echo "✅ Services restart initiated"
+
+      - name: Verify Services Health
+        if: success()
+        run: |
+          echo "🏥 Verifying services health..."
+          REMOTE_BASE="${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
+          SERVICES="${{ steps.services.outputs.services }}"
+          
+          sleep 10  # Wait for services to start
+          
+          # Check health endpoints
+          IFS=',' read -ra SERVICE_ARRAY <<< "$SERVICES"
+          for service in "${SERVICE_ARRAY[@]}"; do
+            service=$(echo "$service" | xargs)
+            
+            case "$service" in
+              iam)
+                PORT="8090"
+                ;;
+              order)
+                PORT="8091"
+                ;;
+              planning)
+                PORT="8093"
+                ;;
+              *)
+                continue
+                ;;
+            esac
+            
+            echo "🔍 Checking $service on port $PORT..."
+            ssh -o StrictHostKeyChecking=no \
+                -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
+                ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
+                "curl -s -f http://localhost:$PORT/actuator/health > /dev/null && \
+                 echo '✅ $service is healthy' || \
+                 echo '⚠️  $service health check failed'" || \
+            echo "⚠️  Could not check $service health"
+          done
+
       - name: Deployment Summary
         run: |
           echo "╔════════════════════════════════════════╗"
@@ -213,10 +323,11 @@ jobs:
           echo "╚════════════════════════════════════════╝"
           echo ""
           echo "📦 Services deployed: ${{ steps.services.outputs.services }}"
+          echo "🔄 Services restarted automatically"
           echo ""
-          echo "💡 Next steps on server:"
+          echo "🔗 View deployment logs:"
+          echo "   https://github.com/cru7rose/VoidTracker/actions/runs/${{ github.run_id }}"
+          echo ""
+          echo "💡 Server logs:"
           echo "   ssh ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}"
-          echo "   cd ${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}"
-          echo "   SKIP_BUILD=1 ./stop-iam.sh && SKIP_BUILD=1 ./start-iam.sh"
-          echo "   SKIP_BUILD=1 ./stop-order.sh && SKIP_BUILD=1 ./start-order.sh"
-          echo "   SKIP_BUILD=1 ./stop-planning.sh && SKIP_BUILD=1 ./start-planning.sh"
+          echo "   tail -f ${{ secrets.DEPLOY_REMOTE_BASE || '/root/VoidTracker' }}/logs/*.log"
