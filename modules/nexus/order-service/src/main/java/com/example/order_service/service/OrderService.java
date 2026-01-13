@@ -8,13 +8,16 @@ import com.example.order_service.dto.request.AssignDriverRequestDto;
 import com.example.order_service.dto.request.ConfirmPickupRequestDto;
 import com.example.order_service.dto.request.CreateOrderRequestDto;
 import com.example.order_service.dto.request.UpdateOrderMetricsRequestDto;
+import com.example.order_service.dto.request.UpdateStatusRequestDto;
 import com.example.order_service.dto.request.WmsOrderRequestDto;
 import com.example.order_service.entity.AddressEntity;
 import com.example.order_service.entity.ClientEntity;
 import com.example.order_service.entity.OrderEntity;
+import com.example.order_service.entity.OutboxEventEntity;
 import com.example.order_service.entity.PackageEntity;
 import com.example.order_service.repository.ClientRepository;
 import com.example.order_service.repository.OrderRepository;
+import com.example.order_service.repository.OutboxEventRepository;
 import com.example.order_service.repository.specification.OrderSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +40,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ClientRepository clientRepository;
     private final OrderSpecification orderSpecification;
+    private final OutboxEventRepository outboxEventRepository;
 
     @Transactional
     public OrderEntity createOrder(CreateOrderRequestDto request) {
@@ -287,6 +291,45 @@ public class OrderService {
         order.addProperty("forwardedToTmsAt", Instant.now());
 
         orderRepository.save(order);
+    }
+
+    @Transactional
+    public OrderEntity updateStatus(UUID orderId, UpdateStatusRequestDto request, String userId) {
+        log.info("Updating status for order {} to {} by user {}", orderId, request.getNewStatus(), userId);
+
+        OrderEntity order = findOrderById(orderId);
+
+        // Validate state transition
+        OrderStatus currentStatus = order.getStatus();
+        OrderStatus newStatus = request.getNewStatus();
+
+        if (!currentStatus.canTransitionTo(newStatus)) {
+            throw new IllegalStateException(
+                    String.format("Niedozwolona zmiana statusu z %s na %s dla zlecenia %s", 
+                            currentStatus, newStatus, orderId));
+        }
+
+        // Update status
+        order.setStatus(newStatus);
+        order.addProperty("statusUpdatedBy", userId);
+        order.addProperty("statusUpdatedAt", Instant.now());
+
+        OrderEntity saved = orderRepository.save(order);
+
+        // Create outbox event for status change
+        OutboxEventEntity outboxEvent = new OutboxEventEntity();
+        outboxEvent.setId(UUID.randomUUID());
+        outboxEvent.setAggregateType("Order");
+        outboxEvent.setAggregateId(orderId.toString());
+        outboxEvent.setEventType("orders-status-changed");
+        outboxEvent.setPayload(String.format(
+                "{\"orderId\":\"%s\",\"oldStatus\":\"%s\",\"newStatus\":\"%s\",\"updatedBy\":\"%s\",\"updatedAt\":\"%s\"}",
+                orderId, currentStatus, newStatus, userId, Instant.now()));
+        outboxEvent.setCreatedAt(Instant.now());
+        outboxEventRepository.save(outboxEvent);
+
+        log.info("Status updated for order {} from {} to {}", orderId, currentStatus, newStatus);
+        return saved;
     }
 
     // Helper methods for mapping DTOs to entities
