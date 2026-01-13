@@ -135,10 +135,10 @@
               <div v-if="unassignedOrders.length === 0" class="text-gray-500 dark:text-spotify-gray-500 text-sm text-center py-8">
                 No unassigned orders found.
               </div>
-              <div v-for="order in unassignedOrders" :key="order.id" class="playlist-item">
+              <div v-for="order in unassignedOrders" :key="order.id || order.orderId" class="playlist-item">
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">#{{ order.id.substring(0, 8) }}</p>
-                  <p class="text-xs text-gray-600 dark:text-spotify-gray-400 truncate">{{ order.address }}</p>
+                  <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">#{{ (order.id || order.orderId || '').substring(0, 8) }}</p>
+                  <p class="text-xs text-gray-600 dark:text-spotify-gray-400 truncate">{{ order.address || order.deliveryAddress?.city || 'N/A' }}</p>
                 </div>
               </div>
             </div>
