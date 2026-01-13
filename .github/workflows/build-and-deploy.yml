@@ -53,7 +53,9 @@ jobs:
       - name: Build danxils-commons
         run: |
           echo "📦 Building danxils-commons..."
-          mvn clean install -pl modules/nexus/danxils-commons -am -DskipTests -T 1C
+          mkdir -p build-logs
+          mvn clean install -pl modules/nexus/danxils-commons -am -DskipTests -T 1C 2>&1 | tee build-logs/commons-build.log
+          BUILD_EXIT_CODE=${PIPESTATUS[0]}
           
           if [ ! -f "modules/nexus/danxils-commons/target/danxils-commons-1.0.0-SNAPSHOT.jar" ]; then
             echo "❌ danxils-commons build failed - JAR not found"
@@ -61,6 +63,19 @@ jobs:
             exit 1
           fi
           echo "✅ danxils-commons built successfully"
+          
+          if [ $BUILD_EXIT_CODE -ne 0 ]; then
+            exit $BUILD_EXIT_CODE
+          fi
+
+      - name: Upload Commons Build Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: commons-build-logs
+          path: build-logs/commons-build.log
+          retention-days: 7
+          if-no-files-found: ignore
 
       - name: Upload danxils-commons artifact
         uses: actions/upload-artifact@v4
@@ -73,6 +88,9 @@ jobs:
     name: Build IAM Service
     needs: build-commons
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.services, 'iam') || github.event.inputs.services == ''))
     
     steps:
       - name: Checkout code
@@ -109,7 +127,9 @@ jobs:
       - name: Build IAM Service
         run: |
           cd modules/nexus/iam-service
-          mvn clean package -DskipTests -T 1C
+          mkdir -p ../../build-logs
+          mvn clean package -DskipTests -T 1C 2>&1 | tee ../../build-logs/iam-build.log
+          BUILD_EXIT_CODE=${PIPESTATUS[0]}
           
           if [ ! -f "target/iam-app-1.0.0-SNAPSHOT.jar" ]; then
             echo "❌ IAM Service build failed"
@@ -117,6 +137,19 @@ jobs:
           fi
           JAR_SIZE=$(du -h "target/iam-app-1.0.0-SNAPSHOT.jar" | cut -f1)
           echo "✅ Built: iam-app-1.0.0-SNAPSHOT.jar ($JAR_SIZE)"
+          
+          if [ $BUILD_EXIT_CODE -ne 0 ]; then
+            exit $BUILD_EXIT_CODE
+          fi
+
+      - name: Upload IAM Build Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iam-build-logs
+          path: build-logs/iam-build.log
+          retention-days: 7
+          if-no-files-found: ignore
 
       - name: Upload IAM JAR
         uses: actions/upload-artifact@v4
@@ -129,6 +162,9 @@ jobs:
     name: Build Order Service
     needs: build-commons
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.services, 'order') || github.event.inputs.services == ''))
     
     steps:
       - name: Checkout code
@@ -165,7 +201,9 @@ jobs:
       - name: Build Order Service
         run: |
           cd modules/nexus/order-service
-          mvn clean package -DskipTests -T 1C
+          mkdir -p ../../build-logs
+          mvn clean package -DskipTests -T 1C 2>&1 | tee ../../build-logs/order-build.log
+          BUILD_EXIT_CODE=${PIPESTATUS[0]}
           
           if [ ! -f "target/order-service-1.0.0-SNAPSHOT.jar" ]; then
             echo "❌ Order Service build failed"
@@ -173,6 +211,19 @@ jobs:
           fi
           JAR_SIZE=$(du -h "target/order-service-1.0.0-SNAPSHOT.jar" | cut -f1)
           echo "✅ Built: order-service-1.0.0-SNAPSHOT.jar ($JAR_SIZE)"
+          
+          if [ $BUILD_EXIT_CODE -ne 0 ]; then
+            exit $BUILD_EXIT_CODE
+          fi
+
+      - name: Upload Order Build Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: order-build-logs
+          path: build-logs/order-build.log
+          retention-days: 7
+          if-no-files-found: ignore
 
       - name: Upload Order JAR
         uses: actions/upload-artifact@v4
@@ -185,6 +236,9 @@ jobs:
     name: Build Planning Service
     needs: build-commons
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.services, 'planning') || github.event.inputs.services == ''))
     
     steps:
       - name: Checkout code
@@ -221,7 +275,9 @@ jobs:
       - name: Build Planning Service
         run: |
           cd modules/flux/planning-service
-          mvn clean package -DskipTests -T 1C
+          mkdir -p ../../build-logs
+          mvn clean package -DskipTests -T 1C 2>&1 | tee ../../build-logs/planning-build.log
+          BUILD_EXIT_CODE=${PIPESTATUS[0]}
           
           if [ ! -f "target/planning-service-1.0.0-SNAPSHOT.jar" ]; then
             echo "❌ Planning Service build failed"
@@ -229,12 +285,102 @@ jobs:
           fi
           JAR_SIZE=$(du -h "target/planning-service-1.0.0-SNAPSHOT.jar" | cut -f1)
           echo "✅ Built: planning-service-1.0.0-SNAPSHOT.jar ($JAR_SIZE)"
+          
+          if [ $BUILD_EXIT_CODE -ne 0 ]; then
+            exit $BUILD_EXIT_CODE
+          fi
+
+      - name: Upload Planning Build Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: planning-build-logs
+          path: build-logs/planning-build.log
+          retention-days: 7
+          if-no-files-found: ignore
 
       - name: Upload Planning JAR
         uses: actions/upload-artifact@v4
         with:
           name: planning-jar
           path: modules/flux/planning-service/target/planning-service-1.0.0-SNAPSHOT.jar
+          retention-days: 7
+
+  build-summary:
+    name: Build Summary & Analysis
+    needs: [build-commons, build-iam, build-order, build-planning]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Download all build logs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*-build-logs'
+          merge-multiple: false
+      
+      - name: Generate Build Summary
+        run: |
+          mkdir -p build-summary
+          echo "# 📊 Build Summary" > build-summary/summary.md
+          echo "" >> build-summary/summary.md
+          echo "**Workflow Run:** ${{ github.run_number }}" >> build-summary/summary.md
+          echo "**Commit:** ${{ github.sha }}" >> build-summary/summary.md
+          echo "**Branch:** ${{ github.ref_name }}" >> build-summary/summary.md
+          echo "**Triggered by:** ${{ github.actor }}" >> build-summary/summary.md
+          echo "" >> build-summary/summary.md
+          echo "## Build Status" >> build-summary/summary.md
+          echo "" >> build-summary/summary.md
+          
+          # Analyze each service
+          for service in commons iam order planning; do
+            log_file=""
+            case $service in
+              commons) log_file="commons-build-logs/commons-build.log" ;;
+              iam) log_file="iam-build-logs/iam-build.log" ;;
+              order) log_file="order-build-logs/order-build.log" ;;
+              planning) log_file="planning-build-logs/planning-build.log" ;;
+            esac
+            
+            if [ -f "$log_file" ]; then
+              # Check for errors
+              if grep -q "BUILD FAILURE\|ERROR\|Failed to execute goal" "$log_file"; then
+                echo "❌ **$service**: Build Failed" >> build-summary/summary.md
+                # Extract key errors
+                echo "\`\`\`" >> build-summary/summary.md
+                grep -E "ERROR|BUILD FAILURE|Failed to execute" "$log_file" | head -5 >> build-summary/summary.md
+                echo "\`\`\`" >> build-summary/summary.md
+              elif grep -q "BUILD SUCCESS" "$log_file"; then
+                echo "✅ **$service**: Build Success" >> build-summary/summary.md
+                # Extract build time if available
+                if grep -q "Total time:" "$log_file"; then
+                  build_time=$(grep "Total time:" "$log_file" | tail -1 | sed 's/.*Total time: //' | sed 's/ s.*//')
+                  echo "   - Build time: ${build_time}s" >> build-summary/summary.md
+                fi
+              else
+                echo "⚠️ **$service**: Status Unknown" >> build-summary/summary.md
+              fi
+            else
+              echo "❓ **$service**: Log not found" >> build-summary/summary.md
+            fi
+            echo "" >> build-summary/summary.md
+          done
+          
+          echo "## Full Logs" >> build-summary/summary.md
+          echo "" >> build-summary/summary.md
+          echo "Download build logs from artifacts:" >> build-summary/summary.md
+          echo "- commons-build-logs" >> build-summary/summary.md
+          echo "- iam-build-logs" >> build-summary/summary.md
+          echo "- order-build-logs" >> build-summary/summary.md
+          echo "- planning-build-logs" >> build-summary/summary.md
+          
+          cat build-summary/summary.md
+      
+      - name: Upload Build Summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-summary
+          path: build-summary/summary.md
           retention-days: 7
 
   deploy:
@@ -261,7 +407,22 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             SERVICES="${{ github.event.inputs.services }}"
           else
-            SERVICES="iam,order,planning"
+            # On push, build all services that were actually built
+            SERVICES=""
+            if [ -f "iam-jar/iam-app-1.0.0-SNAPSHOT.jar" ]; then
+              SERVICES="${SERVICES}iam,"
+            fi
+            if [ -f "order-jar/order-service-1.0.0-SNAPSHOT.jar" ]; then
+              SERVICES="${SERVICES}order,"
+            fi
+            if [ -f "planning-jar/planning-service-1.0.0-SNAPSHOT.jar" ]; then
+              SERVICES="${SERVICES}planning,"
+            fi
+            # Remove trailing comma or default to all
+            SERVICES=$(echo "$SERVICES" | sed 's/,$//')
+            if [ -z "$SERVICES" ]; then
+              SERVICES="iam,order,planning"
+            fi
           fi
           echo "services=$SERVICES" >> $GITHUB_OUTPUT
           echo "📦 Services to deploy: $SERVICES"
@@ -360,21 +521,21 @@ jobs:
                 ssh -o StrictHostKeyChecking=no \
                     -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
                     ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
-                    "cd $REMOTE_BASE && SKIP_BUILD=1 ./stop-iam.sh 2>/dev/null || true && sleep 2 && SKIP_BUILD=1 ./start-iam.sh" || echo "⚠️  Failed to restart IAM"
+                    "cd $REMOTE_BASE && ./stop-iam.sh 2>/dev/null || true && sleep 2 && ./start-iam.sh" || echo "⚠️  Failed to restart IAM"
                 ;;
               order)
                 echo "🔄 Restarting Order Service..."
                 ssh -o StrictHostKeyChecking=no \
                     -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
                     ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
-                    "cd $REMOTE_BASE && SKIP_BUILD=1 ./stop-order.sh 2>/dev/null || true && sleep 2 && SKIP_BUILD=1 ./start-order.sh" || echo "⚠️  Failed to restart Order"
+                    "cd $REMOTE_BASE && ./stop-order.sh 2>/dev/null || true && sleep 2 && ./start-order.sh" || echo "⚠️  Failed to restart Order"
                 ;;
               planning)
                 echo "🔄 Restarting Planning Service..."
                 ssh -o StrictHostKeyChecking=no \
                     -p ${{ secrets.DEPLOY_SSH_PORT || '22' }} \
                     ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }} \
-                    "cd $REMOTE_BASE && SKIP_BUILD=1 ./stop-planning.sh 2>/dev/null || true && sleep 2 && SKIP_BUILD=1 ./start-planning.sh" || echo "⚠️  Failed to restart Planning"
+                    "cd $REMOTE_BASE && ./stop-planning.sh 2>/dev/null || true && sleep 2 && ./start-planning.sh" || echo "⚠️  Failed to restart Planning"
                 ;;
             esac
           done
