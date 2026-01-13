@@ -47,93 +47,30 @@ jobs:
             <localRepository>~/.m2/repository</localRepository>
           </settings>' > ~/.m2/settings.xml
 
-      - name: Build parent POM and install dependencies
+      - name: Install parent POM to local repository
         run: |
           mvn clean install -DskipTests -N
-          echo "✅ Parent POM installed"
+          echo "✅ Parent POM installed to local Maven repository"
 
       - name: Build danxils-commons (required by all services)
         run: |
           cd modules/nexus/danxils-commons
           mvn clean install -DskipTests
-          echo "✅ danxils-commons built"
+          echo "✅ danxils-commons built and installed"
 
-      - name: Build IAM Service
+      - name: Build all services from root (respects module dependencies)
         run: |
-          cd modules/nexus/iam-service
-          mvn clean package -DskipTests
-          echo "✅ IAM Service built"
-
-      - name: Build Order Service
-        run: |
-          cd modules/nexus/order-service
-          mvn clean package -DskipTests
-          echo "✅ Order Service built"
-
-      - name: Build Planning Service
-        run: |
-          cd modules/flux/planning-service
-          mvn clean package -DskipTests
-          echo "✅ Planning Service built"
-
-      - name: Build Tracking Service
-        run: |
-          cd modules/titan/tracking-service
-          mvn clean package -DskipTests
-          echo "✅ Tracking Service built"
-
-      - name: Build Event Emitter Service
-        run: |
-          cd modules/titan/event-emitter-service
-          mvn clean package -DskipTests
-          echo "✅ Event Emitter Service built"
-
-      - name: Build Analytics Service
-        run: |
-          cd modules/nexus/analytics-service
-          mvn clean package -DskipTests
-          echo "✅ Analytics Service built"
-
-      - name: Build Dashboard Service
-        run: |
-          cd modules/nexus/dashboard-service
-          mvn clean package -DskipTests
-          echo "✅ Dashboard Service built"
-
-      - name: Build Admin Panel Service
-        run: |
-          cd modules/nexus/admin-panel-service
-          mvn clean package -DskipTests
-          echo "✅ Admin Panel Service built"
-
-      - name: Build Address Verification Service
-        run: |
-          cd modules/nexus/address-verification-service
-          mvn clean package -DskipTests
-          echo "✅ Address Verification Service built"
-
-      - name: Build Driver App Service
-        run: |
-          cd modules/titan/driver-app-service
-          mvn clean package -DskipTests
-          echo "✅ Driver App Service built"
-
-      - name: Build Audit Service
-        run: |
-          cd modules/titan/audit-service
-          mvn clean package -DskipTests
-          echo "✅ Audit Service built"
-
-      - name: Build CRM Service
-        run: |
-          cd modules/nexus/crm-service
-          mvn clean package -DskipTests
-          echo "✅ CRM Service built"
+          # Build all modules from root - Maven will handle dependencies automatically
+          mvn clean install -DskipTests
+          echo "✅ All services built"
 
       - name: List built JARs
         run: |
           echo "📦 Built JAR files:"
-          find modules -name "*.jar" -not -name "*-original.jar" -type f | head -20
+          find modules -name "*.jar" -not -name "*-original.jar" -type f | head -30
+          echo ""
+          echo "📊 JAR count:"
+          find modules -name "*.jar" -not -name "*-original.jar" -type f | wc -l
 
       - name: Upload build artifacts
         if: always()
