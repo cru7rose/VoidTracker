@@ -217,7 +217,7 @@ export const useDispatchStore = defineStore('dispatch', () => {
                     email: email
                 }
             });
-            return { token: res.data, link: `http://localhost:5173/driver/login?token=${res.data}` };
+            return { token: res.data, link: `${window.location.origin}/driver/login?token=${res.data}` };
         } catch (e) {
             console.error("Failed to send magic link", e);
             throw e;
